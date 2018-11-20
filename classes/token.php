@@ -5,10 +5,9 @@ class Token {
     }
 
     public static function check($token) {
-        $tokenName = Config::get('sessions/token_name');
-
-        if(Session::exists($tokenName) && $token === Session::get($tokenName)) {
-            Session::delete($tokenName);
+   
+        if(Session::exists('logIngToken') && $token === Session::get('logIngToken')) {
+            Session::delete('logIngToken');
             return true;
         }
 

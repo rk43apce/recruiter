@@ -5,23 +5,22 @@ require_once '../core/init.php';
 require_once '../functions/sanitize.php'; 
 
 if (Input::exists('post')) {
-   
-    $username = escape(Input::get('username')) ;
-    $password = escape(Input::get('password')) ;
 
-    $userLogin = new Login();
 
-    $userLogin->username = $username;
-    $userLogin->password = $password;
+    if (Token::check(Input::get('token'))) {
+  
+        $userLogin = new Login();
 
-    
-    
-    $userLogin->queryselect();
+        $userLogin->username = escape(Input::get('username'));
+        $userLogin->password = escape(Input::get('password'));   
+
+        $userLogin->queryselect();
+
+    }    
+
 }
 
 
-
-var_dump(Session::get('logIngToken'));
 
 
 
