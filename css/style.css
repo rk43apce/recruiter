@@ -1,0 +1,19 @@
+/*
+    DEMO STYLE
+*/
+@import "https://fonts.googleapis.com/css?family=Montserrat|Open+Sans:300,400,500,600,700";
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #fafafa;
+}
+.card {
+	padding: 25px;
+}
+.loginform  {
+	margin-top: 15%;
+	max-width: 786px;
+	margin-left: auto;
+	margin-right: auto;
+}
