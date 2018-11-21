@@ -6,23 +6,23 @@ require_once '../functions/sanitize.php';
 
 if (Input::exists('post')) {
 
-
     if (Token::check(Input::get('token'))) {
-  
+        
+        $username =  escape(Input::get('username'));
+
+        $password = escape(Input::get('password'));   
+
         $userLogin = new Login();
 
-        $userLogin->username = escape(Input::get('username'));
-        $userLogin->password = escape(Input::get('password'));   
+        if ($userLogin->checkUser($username, $password)) {
+       
+               Redirect::to('./dashboard.php');
 
-        $userLogin->queryselect();
+            }    
 
     }    
 
 }
-
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -47,11 +47,11 @@ if (Input::exists('post')) {
                 <legend>Log In</legend>                
                 <div class="form-group">
                   <label for="exampleInputEmail1"> Username / Email address</label>
-                  <input type="email" name="username" class="form-control"   placeholder="Enter email">                
+                  <input type="email" name="username" class="form-control" value="<?php echo Input::get('username') ?>">                
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input type="password" name="password" class="form-control"  placeholder="Password">
+                  <input type="text" name="password" class="form-control"  value="<?php echo Input::get('password') ?>">
                 </div>      
                  <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">  
                 <button type="submit" class="btn btn-primary">Log In</button>
@@ -59,6 +59,7 @@ if (Input::exists('post')) {
             </form>
         </div>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <!-- Popper.JS -->

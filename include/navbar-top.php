@@ -13,16 +13,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Page</a>
+                    <a class="nav-link" href="#">Ongoing Assingment</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Page</a>
+                    <a class="nav-link" href="#">Past Assingment</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Page</a>
+                    <a class="nav-link" href="#">Companies</a>
+                </li>
+                   <li class="nav-item">
+                    <a class="nav-link" href="#">Employees</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Page</a>
+                    <a class="nav-link" href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
