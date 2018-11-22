@@ -1,14 +1,16 @@
+<?php 
+    require_once '../core/init.php'; 
 
-<?php require_once '../core/init.php'; 
-    
-    $userLogin =    new Login();
-    // $userLogin->isUserLoggedIn('admin');
+    Login::isUservalid('admin');  
 
-    if (!$userLogin->isUserLoggedIn('admin')) {
-        # code...
-        Redirect::to('./index.php');
+    $assingment = new Assingment();  
+
+    $result =  $assingment->getOnGoingAssingment();
+
+    if (!$result = $assingment->getOnGoingAssingment()) {
+
+        Session::put("errorMsg", 'Sorry, No record found!');
     }
-    
 ?>
 
 <!DOCTYPE html>
@@ -32,11 +34,16 @@
 
                 <div class="card">    
 
-                    <h2>Ongoing Assingment</h2>      
-
+                    <h2>Ongoing Assingment</h2>    
+                       <a href="./new-assingment.php" class="btn-link" >+ Create new assingment</a>   
                     <div class="line"></div>
 
-                    
+                     <?php  
+                     
+                        if ($result) {
+                            # code...
+
+                            ?>
 
                     <table id="example" class="table table-striped table-bordered nowrap" style="max-width:100%">
                         <thead>
@@ -68,44 +75,55 @@
 
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>varun</td>
-                                <td>Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>25</td>
-                                <td>2011/04/25</td> 
-                                <td>Edinburgh</td>
-                                <td>25</td>
-                                <td>2011/04/25</td>     
-                                 <td>Edit</td>                             
-                            </tr>
-                             <tr>
-                                <td>Vivek</td>
-                                <td>Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>25</td>
-                                <td>2011/04/25</td> 
-                                <td>Edinburgh</td>
-                                <td>25</td>
-                                <td>2011/04/25</td>   
-                                  <td>Edit</td>                                 
-                            </tr>
-                             <tr>
-                                <td>Vivek</td>
-                                <td>Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>25</td>
-                                <td>2011/04/25</td> 
-                                <td>Edinburgh</td>
-                                <td>25</td>
-                                <td>2011/04/25</td>    
-                                 <td>Edit</td>                          
-                            </tr>
+
+                             <?php  
+
+                                             
+
+                                 foreach ($result as $key => $value) { ?>
+                                        
+                                    <tr>
+                                        <td><?php echo $value['id']; ?></td>
+                                        <td><?php echo $value['assingmentId']; ?></td>
+                                        <td><?php echo $value['companyId']; ?></td>
+                                        <td><?php echo $value['jobRoleId']; ?></td>
+                                        <td><?php echo $value['jobCity']; ?></td>
+                                        <td><?php echo $value['noOfPosition']; ?></td> 
+                                        <td><?php echo $value['spocId']; ?></td>
+                                        <td><?php echo $value['createdOn']; ?></td>
+                                        <td><?php echo $value['createdAt']; ?></td>     
+                                        <td><?php echo $value['id']; ?></td>                             
+                                    </tr>
+
+                            <?php  }    ?>   
+                                                                             
                         </tbody>
                     </table>
+
+
+                            <?php
+                        } else {
+
+                            ?>
+
+
+                             <table>                                 
+                                 <tr> 
+                                    <td> 
+
+                                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>      
+
+                                    </td>
+                                </tr>
+                             </table>   
+
+
+                            <?php
+                        }
+
+                      ?>   
+
+                  
 
                 </div>
             </div>
