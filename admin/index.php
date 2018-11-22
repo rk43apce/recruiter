@@ -6,6 +6,7 @@ require_once '../functions/sanitize.php';
 
 if (Input::exists('post')) {
 
+
     if (Token::check(Input::get('token'))) {
         
         $username =  escape(Input::get('username'));
@@ -51,7 +52,7 @@ if (Input::exists('post')) {
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input type="text" name="password" class="form-control"  value="<?php echo Input::get('password') ?>">
+                  <input type="password" name="password" class="form-control"  value="<?php echo Input::get('password') ?>">
                 </div>      
                  <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">  
                 <button type="submit" class="btn btn-primary">Log In</button>

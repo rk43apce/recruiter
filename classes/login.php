@@ -13,7 +13,7 @@ class Login
 
 	}
 
-	public function isUserLoggedIn($userType)
+	public static function isUserLoggedIn($userType)
 	{	
 		
 
@@ -34,11 +34,22 @@ class Login
 
 	}
 
+	public function isUservalid($userType)
+	{
+		# code...
+
+		  if (!Login::isUserLoggedIn($userType)) {
+        # code...
+        Redirect::to('./index.php');
+
+    	}
+	}
+
 
 	public function checkUser($username, $password)
 	{
 
-		$sql = "SELECT * FROM user where email = '$username' AND  password = '$password'";
+	echo	$sql = "SELECT * FROM user where email = '$username' AND  password = '$password'";
 
 		$result =  $this->db->querySelect($sql);
 

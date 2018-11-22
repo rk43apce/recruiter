@@ -44,7 +44,7 @@
 
             <ul class="list-unstyled CTAs">               
                 <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="download">Back to Dashboard</a>
+                    <a href="./dashboard.php" class="download">Back to Dashboard</a>
                 </li>
             </ul>
         </nav>

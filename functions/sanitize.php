@@ -11,3 +11,9 @@ function varDump($string) {
 	echo '<pre>';
 		
 }
+
+function arraCount($array)
+{
+	# code...
+	return count($array);
+}

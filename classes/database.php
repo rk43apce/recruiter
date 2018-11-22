@@ -17,14 +17,30 @@ class Database
 	public function  querySelect($sql)
 	{
 
+		return	$result =$this->db->mysqli->query($sql);
+
+	}
+
+	public function  queryInset($sql) 
+	{
+
+	 return	$result =$this->db->mysqli->query($sql);
+
+	}
+
+	public function  queryInsert($sql)
+	{
+
 	return	$result =$this->db->mysqli->query($sql);
 
 	}
 
+
+
 	public function  checkResultCountZero($result)
 	{
 
-		return	$result->num_rows > 0;
+		return	$result->num_rows == 0;
 
 	}
 
