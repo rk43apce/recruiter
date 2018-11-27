@@ -35,6 +35,27 @@ class Assingment
 	}
 
 
+	public function getOnGoingAssingmentById($assingmentId)
+	{
+			
+	 echo	$sql = " SELECT *  FROM assingment   where assingmentId = '$assingmentId'";	
+
+		$result =  $this->db->querySelect($sql);
+
+		if ($this->db->isResultCountOne($result)) {
+			# code...
+			// return $this->db->processRowSet($result);
+			return $this->db->processRowSet($result, true);
+			// return false;
+
+		} else {
+
+			return false;
+		}
+
+	}
+
+
 	public function assignAssingmnetToEmployee($assingmentId, $recruiters, $createdOn)
 	{
 	
@@ -71,5 +92,25 @@ class Assingment
     }
 
 
+	public  function updateAssingment($assingmentData, $assingmentId)
+	{
+
+		$out = array();
+		foreach ($data as $column => $value) {
+		array_push($out, "$column='$value'");
+		}
+		$set = implode(', ', $out);
+
+		echo $sql = "UPDATE assingment SET $set assingmentId = '$assingmentId'";
+
+		// $result = mysqli_query($this->dbc, $sql);
+
+		// echo $sql;
+
+		// if ($result) {
+		// return true;
+		// } //end of valid if
+
+	}
 
 }

@@ -2,7 +2,6 @@
 
 Login::isUservalid('admin');  
 
-
 if (Input::exists('post')) {
 
 	if (Token::check2('newAssingment', Input::get('token'))) {
@@ -48,6 +47,20 @@ if (Input::exists('post')) {
 		
 	}
 
+}elseif (Input::exists('get')) {	
+
+
+		$assingmentId = Input::get('assingmentId');
+
+		$assingment =  new Assingment();	
+		 
+		 $assingmentData = $assingment->getOnGoingAssingmentById($assingmentId);
+		 echo "<pre>";
+		 var_dump($assingmentData);
+		 echo "</pre>";
+
+		echo  $assingmentData['assingmentId'] ;
+
 }    
     
 ?>
@@ -79,7 +92,7 @@ if (Input::exists('post')) {
             <div class="container">
 
                 <div class="card">    
-
+                	
                     <h2>New Assingment</h2>    
 
                     <span> 
@@ -102,82 +115,61 @@ if (Input::exists('post')) {
 							<div class="col-md-6">
 								<div class="form-group">
 							      <label for="companyId">Company</label>
-							      <select class="form-control" id="companyName" name="companyId" autofocus>
-							        <option value="1">Company 1</option>
-							        <option value="2">Company 2</option>
-							        <option value="3">Company 3</option>
-							        <option value="4">Company 4</option>
-							        <option value="5">Company 5</option>
-							      </select>
+
+							      <input type="" class="form-control" id="companyName" name="companyId" value="companyName" readonly>
+							      
 							    </div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-							      <label for="jobRoleId">Role</label>
-								      <select class="form-control" id="jobRoleId" name="jobRoleId">
-								        <option value="1">Role 1</option>
-								        <option value="2">Role 2</option>
-								        <option value="3">Role 3</option>
-								        <option value="4">Role 4</option>
-								        <option value="5">Role 5</option>
-								      </select>
-							    	</div>
+									<label for="jobRoleId">Role</label>
+									<input type="" class="form-control" id="jobRoleId" name="jobRoleId" value="companyName" readonly>
 								</div>
+							</div>
 					    </div>
 					      <div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-							      <label for="jobCity">City</label>
-							      <select class="form-control" id="jobCity" name="jobCity">
-							      	<option >Choose city</option>
-							        <option value="Haryana">City 1</option>
-							        <option value="Pune">City 2</option>
-							        <option value="Mumbai">City 3</option>
-							        <option value="Kolkata">City 4</option>
-							        <option value="Chennai">City 5</option>
-							      </select>
+							      <label for="jobCity">City</label>																	
+									<input type="" class="form-control" id="jobCity" name="jobCity" value="companyName" readonly>
 							    </div>
 							</div>
-							<div class="col-md-6">
-								<label for="noOfPosition" >Number of position</label>
+							<div class="col-md-6">								
 								<div class="form-group">
-								    <select class="custom-select" id="noOfPosition" name="noOfPosition">
-								      <option >Choose position</option>
-								      <option value="1">One</option>
-								      <option value="2">Two</option>
-								      <option value="3">Three</option>
-								    </select>
+									<label for="noOfPosition" >Number of position</label>
+									<input type="" class="form-control" id="noOfPosition" name="noOfPosition" value="companyName" required="">								    
 								  </div>
 							</div>
 					    </div>
 
 					    <div class="form-group">
 					      <label for="clientBrief">Client brief note</label>
-					      <textarea class="form-control" rows="3" placeholder="Write here..." id="clientBrief" name="clientBrief"></textarea>
+					      <textarea class="form-control" rows="3" id="clientBrief" name="clientBrief">
+					      	Client brief note
+					      </textarea>
 					    </div>
 
 					   <div class="form-group">
-							<label for="spocId">Assign SPOC</label>
-							<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">
-								<option value=""> Choose SPOC </option>
-								<option  value="SPOC 1">SPOC 1</option>
+							<label for="spocId">Chnage SPOC</label>
+							<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">					
+								<option  value="SPOC 1" selected="">SPOC 1</option>
 								<option  value="SPOC 2">SPOC 2</option>
 								<option  value="SPOC 3">SPOC 3</option>
 								<option  value="SPOC 4">SPOC 4</option>
 							</select>
 					    </div>	
 					     <div class="form-group">
-							<label for="recruiters">Assign additional recruiters (Optional)</label>
+							<label for="recruiters">Chnage additional recruiters (Optional)</label>
 							<select class="ui fluid search dropdown" multiple=""  id="recruiters" name="recruiters[]">
 								<option value=""> Choose Employee(multiple) </option>
-								<option  value="Employee 1">Employee 1</option>
-								<option  value="Employee 2">Employee 2</option>
+								<option  value="Employee 1" selected="">Employee 1</option>
+								<option  value="Employee 2" selected="">Employee 2</option>
 								<option  value="Employee 3">Employee 3</option>
 							</select>			   
 					    </div>						 
 					  <input type="hidden" name="token" value="<?php echo Token::generate2('newAssingment'); ?>">  
-					  <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Launch Assingment</button>
-					  <a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
+					  	<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Update Assingment</button>
+						<a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
 					  </fieldset>
 					</form>                 
                 </div>
@@ -193,15 +185,11 @@ if (Input::exists('post')) {
 	    .dropdown();
     </script>
 
-  <script type="text/javascript">
-   
-    function confirmFormSubmit() {
-
-    	return confirm('Are you sure you want to save this thing into the database?');
-
-    }
-
-   </script> 
+	  <script type="text/javascript">
+	    function confirmFormSubmit() {
+	    	return confirm('Are you sure you want to save this thing into the database?');
+	    }
+	   </script> 
   </body>
 
 </html>

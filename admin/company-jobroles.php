@@ -1,14 +1,30 @@
-<?php 
-    require_once '../core/init.php'; 
+<?php require_once '../core/init.php';
+require_once '../functions/sanitize.php';
 
-    Login::isUservalid('admin');  
+Login::isUservalid('admin');  
 
-    $assingment = new Assingment();  
+(!Input::exists('get')) ?  Redirect::to('./companies.php') : "";
 
-    if (!$result = $assingment->getOnGoingAssingment()) {
+if (Input:: get('companyId') ) {
+	# code...
+	$company = new Company();  
+	
+    if ($companyDaTas = $company->getCompanyById(escape(Input::get('companyId')))) {
 
-        Session::put("errorMsg", 'Sorry, No record found!');
+    	$companyName =  $companyDaTas['companyName']; 
+    	$companyId =  $companyDaTas['companyId'];
+
+    	$jobrole = new Jobrole();
+
+    	$compnayJobroles =  $jobrole->getJobRoleByCompanyId();
+
+    } else {
+
+    	Session::put("errorMsg", 'Sorry, No record found!');
     }
+
+}  
+    
 ?>
 
 <!DOCTYPE html>
@@ -32,14 +48,22 @@
 
                 <div class="card">    
 
-                    <h2>Ongoing Assingment</h2>    
-                    <span><a href="./new-assingment.php" class="btn-link" >+ Create new assingment</a></span>
+                    <h2><?php echo $companyName; ?></h2>    
+                    <span><a href="./new-job-role.php?companyId=<?php echo $companyId;?>" class="btn-link" >+ Add new Job Role</a></span>
+                   <span> 
+
+                        <p class="text-success">
+
+                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
+                      </p>
+                    </span> 
+                    
                         
                     <div class="line"></div>
 
                      <?php  
                      
-                        if ($result) {
+                        if ($compnayJobroles) {
                             # code...
 
                             ?>
@@ -47,51 +71,31 @@
                     <table id="example" class="table table-striped table-bordered nowrap" style="max-width:100%">
                         <thead>
                             <tr>
-                                <th>Company Name</th>
-                                <th>Role</th>
+                                <th>Name</th>
                                 <th>City</th>
-                                <th>CTC</th>
-                                <th>Experience</th>
-                                <th>Open On</th>  
-                                <th>Days Old</th> 
-                                <th>Last work on</th> 
-                                <th>SPOC</th>     
-                                <th>Action</th>                           
+                                <th>Industry</th>  
+                                 <td>Action</td>                              
                             </tr>
 
                             <tr>
-                                <td>Company Name</td>
-                                <td>Role</td>
+                                <td>Name</td>
                                 <td>City</td>
-                                <td>CTC</td>
-                                <td>Experience</td>
-                                <td>Open On</td>  
-                                <td>Days Old</td> 
-                                <td>Last work on</td> 
-                                <td>SPOC</td>     
-                                <td>Action</td>                           
+                                <td>Industry</td>
+                                <td>Action</td>
+                                                                            
                             </tr>
 
                         </thead>
                         <tbody>
 
                              <?php  
-
-                                             
-
-                                 foreach ($result as $key => $value) { ?>
+                                 foreach ($compnayJobroles as $key => $Jobrole) { ?>
                                         
                                     <tr>
-                                        <td><?php echo $value['id']; ?></td>
-                                        <td><?php echo $value['assingmentId']; ?></td>
-                                        <td><?php echo $value['companyId']; ?></td>
-                                        <td><?php echo $value['jobRoleId']; ?></td>
-                                        <td><?php echo $value['jobCity']; ?></td>
-                                        <td><?php echo $value['noOfPosition']; ?></td> 
-                                        <td><?php echo $value['spocId']; ?></td>
-                                        <td><?php echo $value['createdOn']; ?></td>
-                                        <td><?php echo $value['createdAt']; ?></td>     
-                                        <td><a class="btn btn-link" href="./update-assingment.php?assingmentId=<?php echo $value['assingmentId']; ?>    ">Edit</a></td>                             
+                                        <td><a href="./company-jobroles.php?companyId=<?php echo $value['companyId']; ?>" class="btn btn-link"><?php echo $Jobrole['jobRoleTitle']; ?></a></td>
+                                        <td><?php echo $Jobrole['jobRoleTitle']; ?></td>
+                                        <td><?php echo $Jobrole['jobRoleTitle']; ?></td>
+                                         <td><a href="./new-job-role.php?companyId=<?php echo $value['companyId']; ?>" class="btn-link">View Profile</a> </td>
                                     </tr>
 
                             <?php  }    ?>   
@@ -104,7 +108,6 @@
                         } else {
 
                             ?>
-
 
                              <table>                                 
                                  <tr> 

@@ -3,9 +3,9 @@
 
     Login::isUservalid('admin');  
 
-    $assingment = new Assingment();  
+    $employee = new Employee();  
 
-    if (!$result = $assingment->getOnGoingAssingment()) {
+    if (!$result = $employee->getAllEmployee()) {
 
         Session::put("errorMsg", 'Sorry, No record found!');
     }
@@ -32,8 +32,16 @@
 
                 <div class="card">    
 
-                    <h2>Ongoing Assingment</h2>    
-                    <span><a href="./new-assingment.php" class="btn-link" >+ Create new assingment</a></span>
+                    <h2>All Employees</h2>    
+                    <span><a href="./new-employee.php" class="btn-link" >+ Add new employee</a></span>
+                   <span> 
+
+                        <p class="text-success">
+
+                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
+                      </p>
+                    </span> 
+                    
                         
                     <div class="line"></div>
 
@@ -47,51 +55,36 @@
                     <table id="example" class="table table-striped table-bordered nowrap" style="max-width:100%">
                         <thead>
                             <tr>
-                                <th>Company Name</th>
-                                <th>Role</th>
-                                <th>City</th>
-                                <th>CTC</th>
-                                <th>Experience</th>
-                                <th>Open On</th>  
-                                <th>Days Old</th> 
-                                <th>Last work on</th> 
-                                <th>SPOC</th>     
-                                <th>Action</th>                           
+                                <th>Name</th>
+                                <th>Mobile No</th>
+                                <th>Email Id</th>
+                                <th>Category</th>                                
+                                <th>Status</th>
+                                                     
                             </tr>
 
                             <tr>
-                                <td>Company Name</td>
-                                <td>Role</td>
-                                <td>City</td>
-                                <td>CTC</td>
-                                <td>Experience</td>
-                                <td>Open On</td>  
-                                <td>Days Old</td> 
-                                <td>Last work on</td> 
-                                <td>SPOC</td>     
-                                <td>Action</td>                           
+                                <td>Name</td>
+                                <td>Mobile No</td>
+                                <td>Email Id</td>
+                                <td>Category</td>                              
+                                <td>Status</td>
+                                                  
                             </tr>
 
                         </thead>
                         <tbody>
 
                              <?php  
-
-                                             
-
                                  foreach ($result as $key => $value) { ?>
                                         
                                     <tr>
-                                        <td><?php echo $value['id']; ?></td>
-                                        <td><?php echo $value['assingmentId']; ?></td>
-                                        <td><?php echo $value['companyId']; ?></td>
-                                        <td><?php echo $value['jobRoleId']; ?></td>
-                                        <td><?php echo $value['jobCity']; ?></td>
-                                        <td><?php echo $value['noOfPosition']; ?></td> 
-                                        <td><?php echo $value['spocId']; ?></td>
-                                        <td><?php echo $value['createdOn']; ?></td>
-                                        <td><?php echo $value['createdAt']; ?></td>     
-                                        <td><a class="btn btn-link" href="./update-assingment.php?assingmentId=<?php echo $value['assingmentId']; ?>    ">Edit</a></td>                             
+                                        <td><?php echo $value['employeeName']; ?></td>
+                                        <td><?php echo $value['employeeMobileNumber']; ?></td>
+                                        <td><?php echo $value['employeeEmailId']; ?></td>
+                                        <td><?php echo $value['employeeRoleName']; ?></td>
+                                        <td>Inactive</td>
+                                                                  
                                     </tr>
 
                             <?php  }    ?>   
@@ -104,7 +97,6 @@
                         } else {
 
                             ?>
-
 
                              <table>                                 
                                  <tr> 
