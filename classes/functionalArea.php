@@ -2,7 +2,7 @@
 /**
  * 
  */
-class FunctionalArea 
+class FunctionalArea  extends Skill
 {
 	public $db;
 	

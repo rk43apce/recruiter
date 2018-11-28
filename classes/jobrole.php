@@ -3,7 +3,7 @@
 /**
  * 
  */
-class Jobrole 
+class Jobrole extends FunctionalArea
 {	
 	public $db;
 	public $jobRoleData;
@@ -50,6 +50,7 @@ class Jobrole
 			return false;
 		}
 
+		Session::put('errorMsg', 'Success!,  Jobrole  added in database!');
 		return true;
     }
 
@@ -71,10 +72,10 @@ class Jobrole
 	}
 
 
-		public function getJobRoleByCompanyId()
+		public function getJobRoleByCompanyId($companyId)
 	{
 			
-		$sql = " SELECT *  FROM  jobrole";	
+		$sql = " SELECT *  FROM  jobrole inner join  functionalareas on jobrole.functionalAreaId = functionalareas.functionalareaId where jobrole.companyId =  $companyId";	
 
 		$result =  $this->db->querySelect($sql);
 

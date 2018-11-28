@@ -3,7 +3,7 @@
 /**
  * 
  */
-class Company  {
+class Company extends City  {
 			
 	public $db;
 
@@ -41,7 +41,9 @@ class Company  {
 	public function getAllCompany($value='')
 	{
 			
-		$sql = " SELECT *  FROM company";	
+		$sql = " SELECT *  FROM company";
+
+		// $sql = " SELECT *  FROM company inner join cities on company.companyCity = cities.";	
 
 		$result =  $this->db->querySelect($sql);
 
@@ -61,7 +63,9 @@ class Company  {
 	public function getCompanyById($companyId)
 	{	
 		
-		$sql = " SELECT companyId, companyName, companyCity  FROM company where companyId ='$companyId'";	
+		// $sql = " SELECT companyId, companyName, companyCity  FROM company where companyId ='$companyId'";
+
+		$sql = " SELECT companyId, companyName, cityName  FROM company inner join cities on company.companyCity = cities.cityId where companyId ='$companyId'";	
 
 		$result =  $this->db->querySelect($sql);
 

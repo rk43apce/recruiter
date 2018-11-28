@@ -48,8 +48,22 @@ if (Input::exists('post')) {
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"/>
+		
 	<?php require_once  '../include/css.php'; ?>   
+
+
+	<style type="">
+	.card {
+		max-width: 786px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+
+		.card label {
+    text-align: right;
+		}
+	</style>
 </head>
 
 <body>
@@ -67,7 +81,7 @@ if (Input::exists('post')) {
 
                 <div class="card">    
 
-                    <h2>Add new employee</h2>    
+                    <h5>Add new employee</h5>    
 
                     <span> 
 
@@ -81,43 +95,37 @@ if (Input::exists('post')) {
 
                     <form method="post" action="">
 					  <fieldset>
-
-					    <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Name</label>
-								  <input type="text" class="form-control" placeholder="Employee Name" id="employeeName" name="employeeName" required="">
+				  		<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Name</label>
+								<div class="col-sm-6">
+								  <input type="text" class="form-control" placeholder="Employee Name" id="employeeName" name="employeeName" required="" autofocus="">
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Date of birth</label>
-								  <input type="date" class="form-control" placeholder="Employee DOB" id="employeeDOB" name="employeeDOB" required="">
+
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">DOB</label>
+								<div class="col-sm-4">
+								<input type="date" class="form-control" placeholder="Employee DOB" id="employeeDOB" name="employeeDOB" required="">
 								</div>
-								</div>
-					    </div>
-					    <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Mobile No</label>
+							</div>
+
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Mobile No</label>
+								<div class="col-sm-6">
 								  <input type="text" class="form-control" placeholder="Employee Mobile No" id="employeeMobileNumber" name="employeeMobileNumber" required="">
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Email</label>
-								  <input type="email" class="form-control" placeholder="Employee Email ID" id="employeeEmailId" name="employeeEmailId" required="">
+
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Email</label>
+								<div class="col-sm-6">
+								    <input type="email" class="form-control" placeholder="Employee Email ID" id="employeeEmailId" name="employeeEmailId" required="">
 								</div>
 							</div>
-					    </div>
-
-
-					      <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-								
-							<label for="spocId">Employee Role</label>
-							<select class="ui fluid search dropdown"  required="" id="employeeTypeId" name="employeeTypeId" >
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Role</label>
+								<div class="col-sm-6">
+								    <select class="ui fluid search dropdown"  required="" id="employeeTypeId" name="employeeTypeId" >
 								
 								<option  value="">Choose Employee Role</option>
 						
@@ -126,7 +134,7 @@ if (Input::exists('post')) {
 
 								foreach ($roles as $key => $role) { ?>
 
-									<option value="<?php echo	$employeeRole['employeeRoleId']; ?>">
+									<option value="<?php echo	$role['employeeRoleId']; ?>">
 
 									<?php echo	$role['employeeRoleName']; ?>
 
@@ -137,12 +145,13 @@ if (Input::exists('post')) {
 								?>
 
 							</select>
-					    </div>	
+								</div>
 							</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="spocId">Team Leader (If employee is recruiter)</label>
-								<select class="ui fluid search dropdown"  id="employeeTeamLeaderId" name="employeeTeamLeaderId">
+
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Team Leader<br> (If employee is recruiter)</label>
+								<div class="col-sm-6">
+								    <select class="ui fluid search dropdown"  id="employeeTeamLeaderId" name="employeeTeamLeaderId">
 								<option value=""> Choose Team Leader </option>
 								<?php 
 								foreach ($leaders as $key => $leader) { ?>
@@ -155,12 +164,20 @@ if (Input::exists('post')) {
 
 								<?php } ?>
 								</select>
+								</div>
 							</div>
-						</div>
-					</div>					   						 
-					  <input type="hidden" name="token" value="<?php echo Token::generate2('addNewEmployee'); ?>">  
+
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label"></label>
+								<div class="col-sm-6">
+								    <input type="hidden" name="token" value="<?php echo Token::generate2('addNewEmployee'); ?>">  
 					  <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Add Employee</button>
 					  <a class="btn btn-link" href="./dashboard.php">Back to Dashboard</a>
+								</div>
+							</div>	
+
+					  				   						 
+					 
 					  </fieldset>
 					</form>                 
                 </div>

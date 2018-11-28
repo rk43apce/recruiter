@@ -55,7 +55,7 @@ if (Input::exists('post')) {
                   <input type="password" name="password" class="form-control"  value="<?php echo Input::get('password') ?>">
                 </div>      
                  <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">  
-                <button type="submit" class="btn btn-primary">Log In</button>
+                <button type="submit" class="btn btn-primary" autofocus="">Log In</button>
               </fieldset>
             </form>
         </div>

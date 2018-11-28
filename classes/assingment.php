@@ -1,12 +1,12 @@
 <?php
 
-/**
- * 
- */
-class Assingment 
+class Assingment extends Company
 {	
 	public $db;
-	
+	public $assingmentData;
+	public $recruiters;
+	public $assingmentId;	
+
 	function __construct()
 	{
 
@@ -16,7 +16,7 @@ class Assingment
 
 	public function getOnGoingAssingment($value='')
 	{
-			
+		
 		$sql = " SELECT *  FROM assingment";	
 
 		$result =  $this->db->querySelect($sql);
@@ -37,8 +37,8 @@ class Assingment
 
 	public function getOnGoingAssingmentById($assingmentId)
 	{
-			
-	 echo	$sql = " SELECT *  FROM assingment   where assingmentId = '$assingmentId'";	
+		
+		echo	$sql = " SELECT *  FROM assingment   where assingmentId = '$assingmentId'";	
 
 		$result =  $this->db->querySelect($sql);
 
@@ -56,40 +56,56 @@ class Assingment
 	}
 
 
-	public function assignAssingmnetToEmployee($assingmentId, $recruiters, $createdOn)
-	{
-	
-		foreach ($recruiters as $recruiterId) {
+	public function assignAssingmnetToEmployee()
+	{		
+		foreach ($this->recruiters as $recruiterId) {
 
-		  $sql = "INSERT INTO recruiterassingment (assingmentId, recruiterId, createdOn) values ('$assingmentId', '$recruiterId', '$createdOn')";
+		echo	$sql = "INSERT INTO recruiterassingment (assingmentId, recruiterId) values ('$this->assingmentId', '$recruiterId')";
 
-		  	 $result =  $this->db->queryInset($sql);	
-	
+		echo "<br>";
+
+			if (!$this->db->queryInset($sql)) {
+		  	 	# code...
+				return false;
+			}		
 		}
-
-		return $result;
-
+		return true;
 	}
 
 
-	public  function createNewAssingment($assingmentData)
-    {
+	public  function createNewAssingment()
+	{
 
 		$columns = "";
 		$values = "";
 
-		foreach ($assingmentData as $column => $value) {
-		    $columns .= ($columns == "") ? "" : ", ";
-		    $columns .= $column;
-		    $values .= ($values == "") ? "" : ", ";
-		    $values .= "'" . $value . "'";
+		foreach ($this->assingmentData as $column => $value) {
+			$columns .= ($columns == "") ? "" : ", ";
+			$columns .= $column;
+			$values .= ($values == "") ? "" : ", ";
+			$values .= "'" . $value . "'";
 		}
-
 		$sql = "INSERT INTO assingment ($columns) values ($values)";
 
-		return $this->db->queryInset($sql);	
+		if (!$this->db->queryInset($sql)) {
+			
+			return false;
+		}
 
-    }
+		if (!count($this->assingmentId)) {
+
+			Session::put('errorMsg', 'Success! Jobrole  added in database!');
+			return true;
+		} 
+
+		if (!$this->assignAssingmnetToEmployee()) {
+		# code...
+			return false;
+		}
+
+		Session::put('errorMsg', 'Success! Jobrole  added in database!');
+		return true;		
+	}
 
 
 	public  function updateAssingment($assingmentData, $assingmentId)
@@ -97,7 +113,7 @@ class Assingment
 
 		$out = array();
 		foreach ($data as $column => $value) {
-		array_push($out, "$column='$value'");
+			array_push($out, "$column='$value'");
 		}
 		$set = implode(', ', $out);
 

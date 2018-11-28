@@ -2,7 +2,7 @@
 /**
  * 
  */
-class Skill 
+class Skill extends City
 {
 	public $db;
 	

@@ -28,12 +28,20 @@
         <!-- Sidebar Holder -->
         <?php require_once  '../include/navbar-top.php'; ?>           
 
-            <div class="container-fluid">
+            <div class="container">
 
                 <div class="card">    
 
-                    <h2>Ongoing Assingment</h2>    
+                    <h5>Ongoing Assingment</h5>    
                     <span><a href="./new-assingment.php" class="btn-link" >+ Create new assingment</a></span>
+
+                    <span> 
+
+                        <!-- <p class="text-success"> -->
+
+                      <?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>". Session::flash('errorMsg') : ""; ?>  
+                      <!-- </p> -->
+                    </span>    
                         
                     <div class="line"></div>
 
@@ -44,7 +52,7 @@
 
                             ?>
 
-                    <table id="example" class="table table-striped table-bordered nowrap" style="max-width:100%">
+                    <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
                         <thead>
                             <tr>
                                 <th>Company Name</th>
@@ -57,19 +65,6 @@
                                 <th>Last work on</th> 
                                 <th>SPOC</th>     
                                 <th>Action</th>                           
-                            </tr>
-
-                            <tr>
-                                <td>Company Name</td>
-                                <td>Role</td>
-                                <td>City</td>
-                                <td>CTC</td>
-                                <td>Experience</td>
-                                <td>Open On</td>  
-                                <td>Days Old</td> 
-                                <td>Last work on</td> 
-                                <td>SPOC</td>     
-                                <td>Action</td>                           
                             </tr>
 
                         </thead>
@@ -134,28 +129,7 @@
     
     <script type="text/javascript">
     $(document).ready(function() {
-    $('#example').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.header()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
-
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        }
-    } );
+        $('#example').DataTable();
     } );
     </script>
 

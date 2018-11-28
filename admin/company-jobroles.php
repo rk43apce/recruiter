@@ -16,7 +16,7 @@ if (Input:: get('companyId') ) {
 
     	$jobrole = new Jobrole();
 
-    	$compnayJobroles =  $jobrole->getJobRoleByCompanyId();
+    	$jobrolesData =  $jobrole->getJobRoleByCompanyId($companyId);
 
     } else {
 
@@ -44,18 +44,20 @@ if (Input:: get('companyId') ) {
         <!-- Sidebar Holder -->
         <?php require_once  '../include/navbar-top.php'; ?>           
 
-            <div class="container-fluid">
+            <div class="container">
 
                 <div class="card">    
 
-                    <h2><?php echo $companyName; ?></h2>    
+                    <h5><?php echo $companyName; ?></h5>    
                     <span><a href="./new-job-role.php?companyId=<?php echo $companyId;?>" class="btn-link" >+ Add new Job Role</a></span>
+
+                    
                    <span> 
 
-                        <p class="text-success">
+                       <!--  <p class="text-success"> -->
 
                       <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                      </p>
+                 <!--      </p> -->
                     </span> 
                     
                         
@@ -63,39 +65,35 @@ if (Input:: get('companyId') ) {
 
                      <?php  
                      
-                        if ($compnayJobroles) {
+                        if ($jobrolesData) {
                             # code...
 
                             ?>
 
-                    <table id="example" class="table table-striped table-bordered nowrap" style="max-width:100%">
+                    <table id="example" class="table table-bordered nowrap" style="max-width:100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>City</th>
-                                <th>Industry</th>  
-                                 <td>Action</td>                              
+                                <th>Jobrole Title</th>
+                                <th>Functional Area</th>
+                                <th>CTC Range</th> 
+                                <th>Experience Range</th> 
+                                 <th>Minimum Qualification</th>    
+                                  <td>Action</td>                           
                             </tr>
-
-                            <tr>
-                                <td>Name</td>
-                                <td>City</td>
-                                <td>Industry</td>
-                                <td>Action</td>
-                                                                            
-                            </tr>
-
+                         
                         </thead>
                         <tbody>
 
                              <?php  
-                                 foreach ($compnayJobroles as $key => $Jobrole) { ?>
+                                 foreach ($jobrolesData as $key => $Jobrole) { ?>
                                         
                                     <tr>
-                                        <td><a href="./company-jobroles.php?companyId=<?php echo $value['companyId']; ?>" class="btn btn-link"><?php echo $Jobrole['jobRoleTitle']; ?></a></td>
                                         <td><?php echo $Jobrole['jobRoleTitle']; ?></td>
-                                        <td><?php echo $Jobrole['jobRoleTitle']; ?></td>
-                                         <td><a href="./new-job-role.php?companyId=<?php echo $value['companyId']; ?>" class="btn-link">View Profile</a> </td>
+                                        <td><?php echo $Jobrole['functionalareaName']; ?></td>
+                                        <td><?php echo $Jobrole['minFixedSalary']; ?> to <?php echo $Jobrole['maxFixedSalary']; ?> </td>
+                                         <td><?php echo $Jobrole['minWorkExperience']; ?> to <?php echo $Jobrole['maxWorkExperience']; ?></td>
+                                         <td>Minimum Qualification</td>
+                                          <td><a href="">Edit</a> </td> 
                                     </tr>
 
                             <?php  }    ?>   
@@ -135,30 +133,9 @@ if (Input:: get('companyId') ) {
     <?php require_once  '../include/footer.php'; ?>
 
     
-    <script type="text/javascript">
+ <script type="text/javascript">
     $(document).ready(function() {
-    $('#example').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.header()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
-
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        }
-    } );
+        $('#example').DataTable();
     } );
     </script>
 

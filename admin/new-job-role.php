@@ -1,44 +1,36 @@
 <?php require_once '../core/init.php';
 require_once '../functions/sanitize.php';
 
-
 Login::isUservalid('admin');  
 
-if (Input::exists('get')) {	
-
-	if (Input:: get('companyId') ) {
-		# code...
-		$company = new Company();  
-
-	    if ($result = $company->getCompanyById( escape(Input::get('companyId')))) {
-
-				$functionalArea = new FunctionalArea();
-
-				$jobfunctionalAreas = $functionalArea->getFunctionalAreas();
-
-
-				$city = new City();
-
-				$cities = $city->getCities();
-
-
-				$skill = new Skill();
-
-				$skills = $skill->getSkills();
-
-	        
-	    } else {
-
-	    	Session::put("errorMsg", 'Sorry, No record found!');
-	    }
-
-	}
-
-} else {
+if (!Input::exists('get')) {
 
 	Redirect::to('./companies.php');
-}    
-    
+	die();
+}   
+# code...
+
+$companyId = escape(Input::get('companyId')); //
+
+$company = new Company();  
+
+if (!$result = $company->getCompanyById($companyId)) {
+
+	Redirect::to('./companies.php');  
+	
+	die();      
+}
+
+$jobrole = new Jobrole();
+
+$jobfunctionalAreas = $jobrole->getFunctionalAreas();
+$skills = $jobrole->getSkills();
+$cities = $jobrole->getCities();
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -94,7 +86,7 @@ if (Input::exists('get')) {
 
 								<div class="form-group">
 								  <label class="col-form-label" for="inputDefault">City</label>
-								  <input type="text" class="form-control" value="<?php echo $result['companyCity'];?>" disabled="">
+								  <input type="text" class="form-control" value="<?php echo $result['cityName'];?>" disabled="">
 								</div>
 							</div>
 						</div>
@@ -231,7 +223,7 @@ if (Input::exists('get')) {
 					 	
 					  <input type="hidden" name="companyId" value="<?php echo escape(Input::get('companyId')); ?>"> 
 					  <input type="hidden" name="token" value="<?php echo Token::generate2('newJobRole'); ?>">  
-					  <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Launch Assingment</button>
+					  <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Save JobRole</button>
 					  </fieldset>
 					</form>                 
                 </div>

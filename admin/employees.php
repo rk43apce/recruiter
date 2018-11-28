@@ -28,18 +28,18 @@
         <!-- Sidebar Holder -->
         <?php require_once  '../include/navbar-top.php'; ?>           
 
-            <div class="container-fluid">
+            <div class="container">
 
                 <div class="card">    
-
-                    <h2>All Employees</h2>    
+                        
+                    <h5>All Employees</h5>    
                     <span><a href="./new-employee.php" class="btn-link" >+ Add new employee</a></span>
                    <span> 
 
-                        <p class="text-success">
+                       <!--  <p class="text-success"> -->
 
                       <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                      </p>
+         <!--              </p> -->
                     </span> 
                     
                         
@@ -52,26 +52,15 @@
 
                             ?>
 
-                    <table id="example" class="table table-striped table-bordered nowrap" style="max-width:100%">
+                  <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Mobile No</th>
                                 <th>Email Id</th>
                                 <th>Category</th>                                
-                                <th>Status</th>
-                                                     
-                            </tr>
-
-                            <tr>
-                                <td>Name</td>
-                                <td>Mobile No</td>
-                                <td>Email Id</td>
-                                <td>Category</td>                              
-                                <td>Status</td>
-                                                  
-                            </tr>
-
+                                <th>Status</th>                                                     
+                            </tr>                       
                         </thead>
                         <tbody>
 
@@ -124,32 +113,13 @@
     <?php require_once  '../include/footer.php'; ?>
 
     
-    <script type="text/javascript">
+   <script type="text/javascript">
     $(document).ready(function() {
-    $('#example').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.header()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
-
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        }
-    } );
+        $('#example').DataTable();
     } );
     </script>
+
+
 
 </body>
 

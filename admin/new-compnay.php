@@ -43,7 +43,6 @@ $cityData = $city->getCities();
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"/>
 	<?php require_once  '../include/css.php'; ?>   
 </head>
 
@@ -62,14 +61,14 @@ $cityData = $city->getCities();
 
                 <div class="card">    
 
-                    <h2>Add new company</h2>    
-                    <span><a href="./companies.php" class="btn-link">Back to Company Dashboard</a></span>
+                    <h5>Add new company</h5>    
+                   
                     <span> 
 
-                    	<p class="text-success">
+                    	<!-- <p class="text-success"> -->
 
                       <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                      </p>
+                      <!-- </p> -->
                   	</span>                   
 
                     <div class="line"></div>
@@ -123,6 +122,7 @@ $cityData = $city->getCities();
 					   						 
 						<input type="hidden" name="token" value="<?php echo Token::generate2('addNewCompany'); ?>">  
 						<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Add Company</button>
+					<a href="./companies.php" class="btn-link">Back to Company Dashboard</a>
 					  </fieldset>
 					</form>                 
                 </div>

@@ -1,68 +1,37 @@
 <?php require_once '../core/init.php';
 
-Login::isUservalid('admin');  
+	Login::isUservalid('admin');  
 
+	$assingment = new Assingment();
 
-if (Input::exists('post')) {
+	$companies = $assingment->getAllCompany();
+	$cities = $assingment->getCities();
 
-	if (Token::check2('newAssingment', Input::get('token'))) {
-		# code...
-		$assingmentId =  Input::get('assingmentId');
-		$companyId =  Input::get('companyId');
-		$jobRoleId =  Input::get('jobRoleId');
-		$jobCity =  Input::get('jobCity');
-		$noOfPosition =  Input::get('noOfPosition');
-		$clientBrief =  Input::get('clientBrief');
-		$spocId =  Input::get('spocId');
-		$recruiters =  Input::get('recruiters');
-		$createdOn = date("Y/m/d"); 
-
-		$assingmentData = array("assingmentId"=>$assingmentId, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "jobCity"=>$jobCity, "noOfPosition"=>$noOfPosition, "clientBrief"=>$clientBrief, "spocId"=>$spocId, "createdOn"=>$createdOn);
-
-		$assingment = new Assingment();
-
-		if ($assingment->createNewAssingment($assingmentData)) {				
-
-			if (count($recruiters)) {
-
-				if ($assingment->assignAssingmnetToEmployee($assingmentId, $recruiters, $createdOn)) {
-
-					Session::put('isAssingmentCreated', true);	
-					Session::put('errorMsg', 'Assingment successfully created!');				
-				} else {
-
-					Session::put('errorMsg', 'Assingment created!, but fail to assingment to recruiter!');
-				}
-
-			}
-			else {
-
-				Session::put('assingmentCreated', 'Assingment successfully created!');
-			}
-	
-		} else {
-
-				Session::put('errorMsg', 'Sorry!, fail to create new assingment');
-		}
-
-		
-	}
-
-}    
-    
+	$employee = new Employee();
+	$recruiters = $employee->getRecruiterFromEmployee();
+	$teamLeaders = $employee->getLeaderFromEmployee();
+    	
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"/>
 	<?php require_once  '../include/css.php'; ?>   
-	 <script>
-        window.onload = function () {
-            var assingmentId = new Date().getTime(); // generating student registation by using tim in milliseconds
-
-            document.getElementById( "assingmentId" ).value = assingmentId;
-        };
-    </script> 
+	<script>
+		window.onload = function () {
+		var assingmentId = new Date().getTime(); // generating student registation by using tim in milliseconds
+		document.getElementById( "assingmentId" ).value = assingmentId;
+		};
+	</script> 
+	<style>
+		.card {
+			max-width: 786px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		.card label {
+			text-align: right;
+		}
+	</style>
 </head>
 
 <body>
@@ -80,104 +49,169 @@ if (Input::exists('post')) {
 
                 <div class="card">    
 
-                    <h2>New Assingment</h2>    
+                    <h5>Create New Assingment</h5>    
 
                     <span> 
 
-                    	<p class="text-success">
+                    	<!-- <p class="text-success"> -->
 
                       <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                      </p>
+                      <!-- </p> -->
                   	</span>                   
 
                     <div class="line"></div>
 
-                    <form method="post" action="">
+                    <form method="post" action="./add-assingment.php">
 					  <fieldset>
+					  	<!-- Compusory field -->
+	                    <input type="hidden" name="assingmentId" id="assingmentId" value="">	 
 
-	                    <input type="hidden" name="assingmentId" id="assingmentId" value="">
-	            
-							    						    
-					    <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-							      <label for="companyId">Company</label>
-							      <select class="form-control" id="companyName" name="companyId" autofocus>
-							        <option value="1">Company 1</option>
-							        <option value="2">Company 2</option>
-							        <option value="3">Company 3</option>
-							        <option value="4">Company 4</option>
-							        <option value="5">Company 5</option>
+	                    <div class="form-group row">
+								<label for="companyId" class="col-sm-3 col-form-label">Company</label>
+								<div class="col-sm-8">
+								 <select class="ui fluid search dropdown"  id="companyName" name="companyId" required="" autofocus="">
+
+							      		<option  value="">Choose</option>
+							    		<?php
+
+										foreach ($companies as $key => $company) { ?>
+
+										<option value="<?php echo $company['companyId']; ?>" data-id="<?php echo $company['companyId']; ?>">
+
+										<?php echo	$company['companyName']; ?>
+
+										</option>
+
+										<?php }
+
+										?>
 							      </select>
-							    </div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-							      <label for="jobRoleId">Role</label>
-								      <select class="form-control" id="jobRoleId" name="jobRoleId">
-								        <option value="1">Role 1</option>
-								        <option value="2">Role 2</option>
-								        <option value="3">Role 3</option>
-								        <option value="4">Role 4</option>
-								        <option value="5">Role 5</option>
-								      </select>
-							    	</div>
 								</div>
-					    </div>
-					      <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-							      <label for="jobCity">City</label>
-							      <select class="form-control" id="jobCity" name="jobCity">
-							      	<option >Choose city</option>
-							        <option value="Haryana">City 1</option>
-							        <option value="Pune">City 2</option>
-							        <option value="Mumbai">City 3</option>
-							        <option value="Kolkata">City 4</option>
-							        <option value="Chennai">City 5</option>
+							</div> 
+							 
+							<div class="form-group row">
+								<label for="jobRoleId" class="col-sm-3 col-form-label">Role</label>
+								<div class="col-sm-8">
+									<select class="ui fluid search dropdown"  id="jobRoleId" name="jobRoleId" required="">
+								      	<option value="" selected="">Select Role</option>
+								      </select>
+								</div>
+							</div>      
+
+							<div class="form-group row">
+								<label for="companyId" class="col-sm-3 col-form-label">City</label>
+								<div class="col-sm-8">
+									 <select class="ui fluid search dropdown"  id="jobCity" name="jobCity" required="">
+							      	<option  value="">Choose</option>
+							    		<?php
+
+										foreach ($cities as $key => $city) { ?>
+
+										<option value="<?php echo	$city['cityId']; ?>">
+
+										<?php echo	$city['cityName']; ?>
+
+										</option>
+
+										<?php }
+
+										?>
 							      </select>
-							    </div>
-							</div>
-							<div class="col-md-6">
-								<label for="noOfPosition" >Number of position</label>
-								<div class="form-group">
-								    <select class="custom-select" id="noOfPosition" name="noOfPosition">
-								      <option >Choose position</option>
-								      <option value="1">One</option>
-								      <option value="2">Two</option>
-								      <option value="3">Three</option>
-								    </select>
-								  </div>
-							</div>
-					    </div>
+								</div>
+							</div>   
+						
 
-					    <div class="form-group">
-					      <label for="clientBrief">Client brief note</label>
-					      <textarea class="form-control" rows="3" placeholder="Write here..." id="clientBrief" name="clientBrief"></textarea>
-					    </div>
+							<div class="form-group row">
+								<label for="companyId" class="col-sm-3 col-form-label">Assign SPOC</label>
+								<div class="col-sm-8">
+									<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">
+									<option value="" > Choose SPOC </option>
+									<?php
 
-					   <div class="form-group">
-							<label for="spocId">Assign SPOC</label>
-							<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">
-								<option value=""> Choose SPOC </option>
-								<option  value="SPOC 1">SPOC 1</option>
-								<option  value="SPOC 2">SPOC 2</option>
-								<option  value="SPOC 3">SPOC 3</option>
-								<option  value="SPOC 4">SPOC 4</option>
-							</select>
-					    </div>	
-					     <div class="form-group">
-							<label for="recruiters">Assign additional recruiters (Optional)</label>
-							<select class="ui fluid search dropdown" multiple=""  id="recruiters" name="recruiters[]">
+										foreach ($teamLeaders as $key => $leader) { ?>
+
+										<option value="<?php echo	$leader['employeeId']; ?>">
+
+										<?php echo	$leader['employeeName'];?>
+
+										</option>
+
+										<?php }
+
+										?>
+								</select>
+								</div>
+							</div>
+
+							<div class="form-group row">
+									<label for="companyId" class="col-sm-3 col-form-label">Recruiters (Optional)</label>
+								<div class="col-sm-8">
+									<select class="ui fluid search dropdown" multiple=""  id="recruiters" name="recruiters[]">
 								<option value=""> Choose Employee(multiple) </option>
-								<option  value="Employee 1">Employee 1</option>
-								<option  value="Employee 2">Employee 2</option>
-								<option  value="Employee 3">Employee 3</option>
-							</select>			   
-					    </div>						 
-					  <input type="hidden" name="token" value="<?php echo Token::generate2('newAssingment'); ?>">  
-					  <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Launch Assingment</button>
-					  <a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
+
+										<?php
+
+										foreach ($recruiters as $key => $recruiter) { ?>
+
+										<option value="<?php echo	$recruiter['employeeId']; ?>">
+
+										<?php echo	$recruiter['employeeName']; ?>
+
+										</option>
+
+										<?php }
+
+										?>
+								</select>
+								</div>
+							</div>     
+
+
+						
+	   					<div class="form-group row">
+						
+							<label for="frontingEntitys" class="col-sm-3 col-form-label">Fronting entity</label>
+							<div class="col-sm-8">
+								<select class="ui fluid search dropdown"  required="" id="frontingEntity" name="frontingEntity">
+									<option value=""> Choose BE/UN </option>
+									<option value="Blueyed">Blueyed</option>
+									<option value="Unison">Unison</option>
+								</select>
+							</div>	
+						</div>	
+
+						<div class="form-group row">
+						
+							<label for="frontingEntitys" class="col-sm-3 col-form-label">Assign priority</label>
+							<div class="col-sm-8">
+								<select class="ui fluid search dropdown"  id="priority" name="priority" required="">
+									<option value=""> Choose H/M/L</option>	
+									<option value="Low">Low</option>
+									<option value="Medium">Medium</option>
+									<option value="High">High</option>									
+								</select>	
+							</div>	
+						</div>
+
+						<div class="form-group row">
+						
+							<label for="frontingEntitys" class="col-sm-3 col-form-label">Client brief note</label>
+							<div class="col-sm-8">
+								 <textarea class="form-control" rows="3" placeholder="Write here..." id="clientBrief" name="clientBrief" required=""></textarea>
+							</div>	
+						</div>	
+
+						<div class="form-group row">
+						
+							<label for="frontingEntitys" class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-8">
+								  <input type="hidden" name="token" value="<?php echo Token::generate2('newAssingment'); ?>">  
+							  		<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Launch Assingment</button>
+							  		<a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
+							</div>	
+						</div>					
+					
+					
 					  </fieldset>
 					</form>                 
                 </div>
@@ -202,6 +236,18 @@ if (Input::exists('post')) {
     }
 
    </script> 
+
+   <script>
+   $("#companyName").on("change", function() {
+    var id = $(this).find(':selected').attr("data-id");
+    $("#jobRoleId").find('option:not(:first)').remove();
+    if(id != '') {
+      $.post("getJobRoles.php", {id: id}).done(function(data) {
+        $("#jobRoleId").append(data);
+      });      
+    } 
+  });
+</script>
   </body>
 
 </html>
