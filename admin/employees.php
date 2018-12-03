@@ -47,7 +47,7 @@
 
                 <div class="card">    
                         
-                    <h5>All </h5>    
+                    <h5>All Employees</h5>    
                     <span><a href="./new-employee.php" class="btn-link" >+ Add new employee</a></span>
                    <span> 
 
