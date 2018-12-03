@@ -5,10 +5,12 @@
 
     $company = new Company();  
 
-    if (!$result = $company->getAllCompany()) {
+    if (!$result = $company->getCompaniesJobroles()) {
 
         Session::put("errorMsg", 'Sorry, No record found!');
     }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -52,11 +54,15 @@
 
                             ?>
 
-                <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
+             <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
                         <thead>
                             <tr>
                                 <th>Name</th>                                            
-                                <th>Action</th>                              
+                                <th>City</th> 
+                                <th>Jobs</th>
+                                <th>Assignment</th>
+                                <th>Action</th>   
+                                                      
                             </tr>
 
                             </thead>
@@ -65,11 +71,17 @@
                              <?php  
                                  foreach ($result as $key => $value) { ?>
                                         
-                                    <tr>
-                                    
-                                        <td><a href="./company-jobroles.php?companyId=<?php echo $value['companyId']; ?>"><?php echo $value['companyName']; ?></a></td>
-                                                                   
-                                         <td>Action</td>
+                                    <tr>                                    
+                                        <td>
+                                            <a href="./company-jobroles.php?companyId=<?php echo $value['companyId']; ?>">
+                                            <?php echo $value['companyName'];?>                                            
+                                            </a>
+                                        </td>
+                                        <td><?php echo $value['cityName'];?></td>  
+                                        <td><?php echo $value['jobcount'];?></td>  
+                                        <td><?php echo $company->activeAssignment($value['companyId']); ?></td>                      
+                                        <td>Action</td>
+                                         
                                     </tr>
 
                             <?php  }    ?>   
@@ -91,8 +103,7 @@
 
                                     </td>
                                 </tr>
-                             </table>   
-
+                             </table> 
 
                             <?php
                         }
@@ -105,16 +116,29 @@
             </div>
         </div>
     </div>
-
  
     <?php require_once  '../include/footer.php'; ?>
-
     
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
-    </script>
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $('#example').DataTable( {
+                    responsive: {
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal( {
+                                header: function ( row ) {
+                                    var data = row.data();
+                                    return 'Details for '+data[0]+' '+data[1];
+                                }
+                            } ),
+                            renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                                tableClass: 'table'
+                            } )
+                        }
+                    }
+                } );
+            } );
+        </script>
+
 </body>
 
 </html>

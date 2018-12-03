@@ -73,7 +73,9 @@ $cities = $jobrole->getCities();
 
                     <form method="post" action="./add-JobRole.php">
 					  <fieldset>
-
+					  	<!-- Compulsory field setting unique id for every new jobRole -->
+					  	<input type="hidden" name="jobRoleId" id="jobRoleId" value="">
+					  	<!--  -->
 					  	<div class="row">
 							<div class="col-md-6">
 
@@ -89,11 +91,7 @@ $cities = $jobrole->getCities();
 								  <input type="text" class="form-control" value="<?php echo $result['cityName'];?>" disabled="">
 								</div>
 							</div>
-						</div>
-
-	                    <input type="hidden" name="jobRoleId" id="jobRoleId" value="">
-	            
-							    						    
+						</div>							    						    
 					    <div class="row">
 							<div class="col-md-6">
 

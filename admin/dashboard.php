@@ -1,20 +1,23 @@
 <?php 
-    require_once '../core/init.php'; 
+require_once '../core/init.php'; 
+require_once '../functions/helper.php';
 
-    Login::isUservalid('admin');  
+Login::isUservalid('admin');  
 
-    $assingment = new Assingment();  
+$assingment = new Assingment();  
 
-    if (!$result = $assingment->getOnGoingAssingment()) {
+if (!$result = $assingment->getOnGoingAssingment()) {
 
-        Session::put("errorMsg", 'Sorry, No record found!');
-    }
+    Session::put("errorMsg", 'Sorry, No record found!');
+}
+
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<?php require_once  '../include/css.php'; ?>    
+    <?php require_once  '../include/css.php'; ?>    
 </head>
 
 <body>
@@ -25,74 +28,75 @@
 
         <!-- Page Content Holder -->
         <div id="content">
-        <!-- Sidebar Holder -->
-        <?php require_once  '../include/navbar-top.php'; ?>           
+            <!-- Sidebar Holder -->
+            <?php require_once  '../include/navbar-top.php'; ?>           
 
             <div class="container">
 
                 <div class="card">    
 
-                    <h5>Ongoing Assingment</h5>    
-                    <span><a href="./new-assingment.php" class="btn-link" >+ Create new assingment</a></span>
+                    <h5>Ongoing Assignment</h5>    
+                    <span><a href="./new-assingment.php" class="btn-link" >+ Create new assignment</a></span>
 
                     <span> 
 
                         <!-- <p class="text-success"> -->
 
-                      <?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>". Session::flash('errorMsg') : ""; ?>  
-                      <!-- </p> -->
-                    </span>    
-                        
-                    <div class="line"></div>
+                            <?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>". Session::flash('errorMsg') : ""; ?>  
+                            <!-- </p> -->
+                        </span>    
 
-                     <?php  
-                     
+                        <div class="line"></div>
+
+                        <?php  
+
                         if ($result) {
-                            # code...
+# code...
 
                             ?>
 
-                    <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
-                        <thead>
-                            <tr>
-                                <th>Company Name</th>
-                                <th>Role</th>
-                                <th>City</th>
-                                <th>CTC</th>
-                                <th>Experience</th>
-                                <th>Open On</th>  
-                                <th>Days Old</th> 
-                                <th>Last work on</th> 
-                                <th>SPOC</th>     
-                                <th>Action</th>                           
-                            </tr>
-
-                        </thead>
-                        <tbody>
-
-                             <?php  
-
-                                             
-
-                                 foreach ($result as $key => $value) { ?>
-                                        
+                            <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
+                                <thead>
                                     <tr>
-                                        <td><?php echo $value['id']; ?></td>
-                                        <td><?php echo $value['assingmentId']; ?></td>
-                                        <td><?php echo $value['companyId']; ?></td>
-                                        <td><?php echo $value['jobRoleId']; ?></td>
-                                        <td><?php echo $value['jobCity']; ?></td>
-                                        <td><?php echo $value['noOfPosition']; ?></td> 
-                                        <td><?php echo $value['spocId']; ?></td>
-                                        <td><?php echo $value['createdOn']; ?></td>
-                                        <td><?php echo $value['createdAt']; ?></td>     
-                                        <td><a class="btn btn-link" href="./update-assingment.php?assingmentId=<?php echo $value['assingmentId']; ?>    ">Edit</a></td>                             
+                                        <th>Company Name</th>
+                                        <th>Role</th>
+                                         <th>SPOC</th>  
+                                        <th>City</th>
+                                        <th>CTC</th>
+                                        <th>Experience</th>
+                                        <th>Open On</th> 
+                                        <th>Days Old</th>   
+                                        <th>Last work on</th>    
+                                        <th>Action</th>                           
                                     </tr>
 
-                            <?php  }    ?>   
-                                                                             
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+
+                                    <?php                                              
+
+                                    foreach ($result as $key => $value) { ?>
+
+                                        <tr>
+                                            <td><?php echo $value['companyName']; ?></td>
+                                            <td><?php echo $value['jobRoleTitle']; ?></td>
+                                            <td><?php echo $value['employeeName']; ?></td> 
+                                            <td><?php echo $value['cityName']; ?></td>
+                                            <td><?php echo $value['minFixedSalary']; ?> to <?php echo $value['maxFixedSalary']; ?> </td>                                      
+                                            <td><?php echo $value['minWorkExperience']; ?> to <?php echo $value['maxWorkExperience']; ?> </td> 
+                                            <td><?php echo $value['createdOn']; ?></td>
+                                           
+                                            
+                                             <td> <?php echo noOfDays($value['createdOn']);?> </td>
+                                            <td><?php echo $value['createdOn']; ?></td>
+                                                
+                                            <td><a class="btn btn-link" href="./update-assingment.php?assingmentId=<?php echo $value['assingmentId']; ?>    ">Edit</a></td>                             
+                                        </tr>
+
+                                    <?php  }    ?>   
+
+                                </tbody>
+                            </table>
 
 
                             <?php
@@ -101,38 +105,52 @@
                             ?>
 
 
-                             <table>                                 
-                                 <tr> 
+                            <table>                                 
+                                <tr> 
                                     <td> 
 
-                                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>      
+                                        <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>      
 
                                     </td>
                                 </tr>
-                             </table>   
+                            </table>   
 
 
                             <?php
                         }
 
-                      ?>   
+                        ?>   
 
-                  
 
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <?php require_once  '../include/footer.php'; ?>
+        <?php require_once  '../include/footer.php'; ?>
 
-    
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
-    </script>
 
-</body>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#example').DataTable( {
+                    responsive: {
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal( {
+                                header: function ( row ) {
+                                    var data = row.data();
+                                    return 'Details for '+data[0]+' '+data[1];
+                                }
+                            } ),
+                            renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                                tableClass: 'table'
+                            } )
+                        }
+                    }
+                } );
+            } );
+        </script>
 
-</html>
+    </body>
+
+    </html>

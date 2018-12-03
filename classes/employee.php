@@ -29,11 +29,38 @@ class Employee {
 		    $values .= "'" . $value . "'";
 		}
 
-		echo $sql = "INSERT INTO employee ($columns) values ($values)";
+		 $sql = "INSERT INTO employee ($columns) values ($values)";
 
 		return $this->db->queryInset($sql);	
 
 	}
+
+
+
+	public  function updateEmployeeProfile($employeeDataToUpdate, $employeeId)
+	{
+
+		$out = array();
+
+		foreach ($employeeDataToUpdate as $column => $value) {
+			
+			array_push($out, "$column='$value'");
+		}
+
+		$set = implode(', ', $out);
+
+		$sql = "UPDATE employee SET $set where employeeId = '$employeeId'";	
+		
+		if (!$this->db->queryUpdate($sql)) {
+					
+				return false;
+			}	
+
+			return true;
+
+	}
+
+
 
 	public function getAllEmployee($value='')
 	{
@@ -55,6 +82,26 @@ class Employee {
 
 	}
 
+
+		public function getEmployeeById($employeeId)
+	{
+		
+	$sql = " SELECT *  FROM employee inner join(employeerole)  on employeerole.employeeRoleId = employee.employeeTypeId  where employeeId = '$employeeId' ";	
+
+	$result =  $this->db->querySelect($sql);
+
+	if ($this->db->isResultCountOne($result)) {
+		# code...
+		// return $this->db->processRowSet($result);
+		return $this->db->processRowSet($result,true);
+		// return false;
+
+	} else {
+
+		return false;
+	}
+
+	}
 
 	public function getEmployeeRole($value='')
 	{
@@ -97,6 +144,26 @@ class Employee {
 	}
 
 		public function getRecruiterFromEmployee()
+	{
+
+		$sql = " SELECT employeeId, employeeName  FROM employee where employeeTypeId = '2'";	
+
+		$result =  $this->db->querySelect($sql);
+
+		if (!$this->db->checkResultCountZero($result)) {
+			# code...
+			// return $this->db->processRowSet($result);
+			return $this->db->processRowSet($result);
+			// return false;
+
+		} else {
+
+			return false;
+		}
+
+	}
+
+	public function updateEmployeeStatus()
 	{
 
 		$sql = " SELECT employeeId, employeeName  FROM employee where employeeTypeId = '2'";	

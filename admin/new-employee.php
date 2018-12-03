@@ -51,18 +51,15 @@ if (Input::exists('post')) {
 		
 	<?php require_once  '../include/css.php'; ?>   
 
-
 	<style type="">
 	.card {
 		max-width: 786px;
 		margin-right: auto;
 		margin-left: auto;
 	}
-
-
-		.card label {
-    text-align: right;
-		}
+	.card label {
+		text-align: right;
+	}
 	</style>
 </head>
 
@@ -169,10 +166,10 @@ if (Input::exists('post')) {
 
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label"></label>
-								<div class="col-sm-6">
-								    <input type="hidden" name="token" value="<?php echo Token::generate2('addNewEmployee'); ?>">  
-					  <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Add Employee</button>
-					  <a class="btn btn-link" href="./dashboard.php">Back to Dashboard</a>
+								<div class="col-sm-9">
+									<input type="hidden" name="token" value="<?php echo Token::generate2('addNewEmployee'); ?>">  
+									<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Add Employee</button>
+									<a class="btn btn-link" href="./dashboard.php">Back to Employee Dashboard</a>
 								</div>
 							</div>	
 

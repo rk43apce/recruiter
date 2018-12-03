@@ -33,8 +33,6 @@ $assingment->assingmentData = $assingmentData; // setting  class assingmentData
 $assingment->recruiters = $recruiters;			// setting  class recruiters
 $assingment->assingmentId = $assingmentId;		// setting  class assingmentId
 
-$assingment->createNewAssingment();
-
 if ($assingment->createNewAssingment()) {
 	# code...
 	Redirect::to('./dashboard.php');

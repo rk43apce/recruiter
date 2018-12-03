@@ -35,6 +35,13 @@ class Database
 
 	}
 
+	public function  queryUpdate($sql)
+	{
+
+	return	$result =$this->db->mysqli->query($sql);
+
+	}
+
 
 
 	public function  checkResultCountZero($result)

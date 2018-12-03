@@ -14,7 +14,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php require_once  '../include/css.php'; ?>    
+<?php require_once  '../include/css.php'; ?>   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -47,10 +48,7 @@
 
                      <?php  
                      
-                        if ($result) {
-                            # code...
-
-                            ?>
+                        if ($result) { ?>
 
                   <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
                         <thead>
@@ -59,7 +57,8 @@
                                 <th>Mobile No</th>
                                 <th>Email Id</th>
                                 <th>Category</th>                                
-                                <th>Status</th>                                                     
+                                <th>Status</th> 
+                                                                              
                             </tr>                       
                         </thead>
                         <tbody>
@@ -68,50 +67,36 @@
                                  foreach ($result as $key => $value) { ?>
                                         
                                     <tr>
-                                        <td><?php echo $value['employeeName']; ?></td>
+                                        <td><a href="./employee-profile.php?employeeId=<?php echo $value['employeeId'];?> "><?php echo $value['employeeName']; ?> </a></td>
                                         <td><?php echo $value['employeeMobileNumber']; ?></td>
                                         <td><?php echo $value['employeeEmailId']; ?></td>
                                         <td><?php echo $value['employeeRoleName']; ?></td>
-                                        <td>Inactive</td>
-                                                                  
+                                        <td ><?php echo $value['isActive']; ?></td>                                                         
                                     </tr>
 
-                            <?php  }    ?>   
+                            <?php  }  ?>   
                                                                              
                         </tbody>
                     </table>
+                        <?php  } else {  ?>
 
+                         <table>                                 
+                             <tr> 
+                                <td> 
 
-                            <?php
-                        } else {
+                                  <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>      
 
-                            ?>
+                                </td>
+                            </tr>
+                         </table>  
 
-                             <table>                                 
-                                 <tr> 
-                                    <td> 
-
-                                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>      
-
-                                    </td>
-                                </tr>
-                             </table>   
-
-
-                            <?php
-                        }
-
-                      ?>   
-
-                  
-
+                        <?php } ?>   
                 </div>
             </div>
         </div>
     </div>
 
     <?php require_once  '../include/footer.php'; ?>
-
     
    <script type="text/javascript">
     $(document).ready(function() {
@@ -119,8 +104,7 @@
     } );
     </script>
 
-
-
+ 
 </body>
 
 </html>

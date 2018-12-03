@@ -56,7 +56,7 @@ if (Input:: get('companyId') ) {
 
                        <!--  <p class="text-success"> -->
 
-                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
+                      <?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>".  Session::flash('errorMsg'). "</p>" : ""; ?>  
                  <!--      </p> -->
                     </span> 
                     
@@ -70,7 +70,7 @@ if (Input:: get('companyId') ) {
 
                             ?>
 
-                    <table id="example" class="table table-bordered nowrap" style="max-width:100%">
+                     <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
                         <thead>
                             <tr>
                                 <th>Jobrole Title</th>
@@ -78,7 +78,7 @@ if (Input:: get('companyId') ) {
                                 <th>CTC Range</th> 
                                 <th>Experience Range</th> 
                                  <th>Minimum Qualification</th>    
-                                  <td>Action</td>                           
+                                                      
                             </tr>
                          
                         </thead>
@@ -92,8 +92,7 @@ if (Input:: get('companyId') ) {
                                         <td><?php echo $Jobrole['functionalareaName']; ?></td>
                                         <td><?php echo $Jobrole['minFixedSalary']; ?> to <?php echo $Jobrole['maxFixedSalary']; ?> </td>
                                          <td><?php echo $Jobrole['minWorkExperience']; ?> to <?php echo $Jobrole['maxWorkExperience']; ?></td>
-                                         <td>Minimum Qualification</td>
-                                          <td><a href="">Edit</a> </td> 
+                                         <td>Minimum Qualification</td>                                    
                                     </tr>
 
                             <?php  }    ?>   
@@ -133,11 +132,25 @@ if (Input:: get('companyId') ) {
     <?php require_once  '../include/footer.php'; ?>
 
     
- <script type="text/javascript">
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
-    </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#example').DataTable( {
+                    responsive: {
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal( {
+                                header: function ( row ) {
+                                    var data = row.data();
+                                    return 'Details for '+data[0]+' '+data[1];
+                                }
+                            } ),
+                            renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                                tableClass: 'table'
+                            } )
+                        }
+                    }
+                } );
+            } );
+        </script>
 
 </body>
 

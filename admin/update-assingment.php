@@ -55,9 +55,7 @@ if (Input::exists('post')) {
 		$assingment =  new Assingment();	
 		 
 		 $assingmentData = $assingment->getOnGoingAssingmentById($assingmentId);
-		 echo "<pre>";
-		 var_dump($assingmentData);
-		 echo "</pre>";
+	
 
 		echo  $assingmentData['assingmentId'] ;
 
@@ -93,7 +91,7 @@ if (Input::exists('post')) {
 
                 <div class="card">    
                 	
-                    <h2>New Assingment</h2>    
+                    <h5>Update Assignment</h5>    
 
                     <span> 
 

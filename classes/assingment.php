@@ -17,15 +17,13 @@ class Assingment extends Company
 	public function getOnGoingAssingment($value='')
 	{
 		
-		$sql = " SELECT *  FROM assingment";	
+		$sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.createdOn FROM assingment inner join(company) on company.companyId = assingment.companyId inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId inner join(cities) on cities.cityId = jobrole.locationId inner join(employee) on employee.employeeId = assingment.spocId";	
 
 		$result =  $this->db->querySelect($sql);
 
 		if (!$this->db->checkResultCountZero($result)) {
-			# code...
-			// return $this->db->processRowSet($result);
+		
 			return $this->db->processRowSet($result);
-			// return false;
 
 		} else {
 
