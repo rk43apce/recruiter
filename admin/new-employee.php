@@ -10,8 +10,6 @@ $roles =  $employee->getEmployeeRole();
 $leaders =  $employee->getLeaderFromEmployee();
 
 
-
-
 if (Input::exists('post')) {
 
 	if (Token::check2('addNewEmployee', Input::get('token'))) {
@@ -25,20 +23,13 @@ if (Input::exists('post')) {
 
 		$employeeData = array("employeeName"=>$employeeName, "employeeDOB"=>$employeeDOB, "employeeMobileNumber"=>$employeeMobileNumber, "employeeEmailId"=>$employeeEmailId, "employeeTypeId"=>$employeeTypeId, "employeeTeamLeaderId"=>$employeeTeamLeaderId);
 
-
-		$employee = new Employee();
-
 		if ($employee->addNewEmployee($employeeData)) {	
 
 			Session::put('errorMsg', 'Success!, New employee added to database');			
 
 			Redirect::to('./employees.php');
 
-		} else {
-
-				Session::put('errorMsg', 'Sorry!, fail to add new employee');
-		}
-
+		} 
 		
 	}
 
@@ -84,7 +75,8 @@ if (Input::exists('post')) {
 
                     	<p class="text-success">
 
-                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
+                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?> 
+                      
                       </p>
                   	</span>                   
 

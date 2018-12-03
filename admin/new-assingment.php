@@ -49,7 +49,7 @@
 
                 <div class="card">    
 
-                    <h5>Create New Assingment</h5>    
+                    <h5>Create New Assignment</h5>    
 
                     <span> 
 
@@ -206,7 +206,7 @@
 							<label for="frontingEntitys" class="col-sm-3 col-form-label"></label>
 							<div class="col-sm-8">
 								  <input type="hidden" name="token" value="<?php echo Token::generate2('newAssingment'); ?>">  
-							  		<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Launch Assingment</button>
+							  		<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Launch Assignment</button>
 							  		<a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
 							</div>	
 						</div>					
