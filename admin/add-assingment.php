@@ -35,7 +35,9 @@ $assingment->assingmentId = $assingmentId;		// setting  class assingmentId
 
 if ($assingment->createNewAssingment()) {
 	# code...
+	Session::put('errorMsg', 'Assignment successfully created!');
 	Redirect::to('./dashboard.php');
+
 } else {
 
 	Redirect::to('./new-assingment.php');

@@ -2,78 +2,75 @@
 
 Login::isUservalid('admin');  
 
+$assingment =  new Assingment();
+$employee = new Employee();
+$recruiters = $employee->getRecruiterFromEmployee();
+$teamLeaders = $employee->getLeaderFromEmployee();
+
 if (Input::exists('post')) {
 
-	if (Token::check2('newAssingment', Input::get('token'))) {
+	if (Token::check2('updateAssingment', Input::get('token'))) {
+
 		# code...
-		$assingmentId =  Input::get('assingmentId');
-		$companyId =  Input::get('companyId');
-		$jobRoleId =  Input::get('jobRoleId');
-		$jobCity =  Input::get('jobCity');
+		$assingmentId =  Input::get('assingmentId');	
 		$noOfPosition =  Input::get('noOfPosition');
 		$clientBrief =  Input::get('clientBrief');
 		$spocId =  Input::get('spocId');
 		$recruiters =  Input::get('recruiters');
-		$createdOn = date("Y/m/d"); 
 
-		$assingmentData = array("assingmentId"=>$assingmentId, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "jobCity"=>$jobCity, "noOfPosition"=>$noOfPosition, "clientBrief"=>$clientBrief, "spocId"=>$spocId, "createdOn"=>$createdOn);
+		$assingmentData = array("noOfPosition"=>$noOfPosition, "clientBrief"=>$clientBrief, "spocId"=>$spocId);
 
-		$assingment = new Assingment();
-
-		if ($assingment->createNewAssingment($assingmentData)) {				
-
-			if (count($recruiters)) {
-
-				if ($assingment->assignAssingmnetToEmployee($assingmentId, $recruiters, $createdOn)) {
-
-					Session::put('isAssingmentCreated', true);	
-					Session::put('errorMsg', 'Assingment successfully created!');				
-				} else {
-
-					Session::put('errorMsg', 'Assingment created!, but fail to assingment to recruiter!');
-				}
-
-			}
-			else {
-
-				Session::put('assingmentCreated', 'Assingment successfully created!');
-			}
-	
-		} else {
-
-				Session::put('errorMsg', 'Sorry!, fail to create new assingment');
-		}
-
+		$assingment->updateAssingment($assingmentId, $assingmentData, $recruiters);
 		
 	}
 
 }elseif (Input::exists('get')) {	
 
+	$assingmentId = Input::get('assingmentId');
 
-		$assingmentId = Input::get('assingmentId');
+	$assingmentData = $assingment->getOnGoingAssingmentById($assingmentId);
 
-		$assingment =  new Assingment();	
-		 
-		 $assingmentData = $assingment->getOnGoingAssingmentById($assingmentId);
-	
-
-		echo  $assingmentData['assingmentId'] ;
-
+	$assingmentId =  $assingmentData['assingmentId'];
+	$jobRoleTitle =  $assingmentData['jobRoleTitle'];
+	$companyName =  $assingmentData['companyName'];
+	$spocId =  $assingmentData['spocId'];
+	$cityName =  $assingmentData['cityName'];
+	$noOfPosition =  $assingmentData['noOfPosition'];
+	$clientBrief =  $assingmentData['clientBrief'];
 }    
-    
+  
+	
+ $recruiterData = $assingment->getAssingmentRecruiterByAssingmentId($assingmentId);	
+
+ $arrayrRcruiter = array();
+
+if ($recruiterData) {
+
+ foreach ($recruiterData as $key => $recruiter) {	 	
+
+  	array_push($arrayrRcruiter,$recruiter['recruiterId']);
+
+ }
+}
+
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"/>
-	<?php require_once  '../include/css.php'; ?>   
-	 <script>
-        window.onload = function () {
-            var assingmentId = new Date().getTime(); // generating student registation by using tim in milliseconds
 
-            document.getElementById( "assingmentId" ).value = assingmentId;
-        };
-    </script> 
+	<?php require_once  '../include/css.php'; ?>   
+	
+    <style>
+		
+		.card label {
+			text-align: right;
+		}
+	</style>
 </head>
 
 <body>
@@ -89,87 +86,103 @@ if (Input::exists('post')) {
 
             <div class="container">
 
-                <div class="card">    
-                	
-                    <h5>Update Assignment</h5>    
-
-                    <span> 
+                <div class="card">                   	
+					<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="./dashboard.php"><?php echo $companyName; ?></a></li>
+					<li class="breadcrumb-item"><?php echo $jobRoleTitle; ?></li>
+					<li class="breadcrumb-item active"><?php echo $cityName; ?></li>
+					</ol>
+					<span> 
 
                     	<p class="text-success">
 
                       <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
                       </p>
-                  	</span>                   
-
-                    <div class="line"></div>
+                  	</span>  
+					<div class="line"></div>
+					<div class="card-body">
 
                     <form method="post" action="">
 					  <fieldset>
 
-	                    <input type="hidden" name="assingmentId" id="assingmentId" value="">
-	            
-							    						    
-					    <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-							      <label for="companyId">Company</label>
-
-							      <input type="" class="form-control" id="companyName" name="companyId" value="companyName" readonly>
-							      
-							    </div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="jobRoleId">Role</label>
-									<input type="" class="form-control" id="jobRoleId" name="jobRoleId" value="companyName" readonly>
+           					<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Client brief note</label>
+								<div class="col-sm-8">
+									<textarea class="form-control" rows="3" id="clientBrief" name="clientBrief" required="">
+										<?php echo $clientBrief; ?>
+									</textarea>
 								</div>
 							</div>
-					    </div>
-					      <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-							      <label for="jobCity">City</label>																	
-									<input type="" class="form-control" id="jobCity" name="jobCity" value="companyName" readonly>
-							    </div>
-							</div>
-							<div class="col-md-6">								
-								<div class="form-group">
-									<label for="noOfPosition" >Number of position</label>
-									<input type="" class="form-control" id="noOfPosition" name="noOfPosition" value="companyName" required="">								    
-								  </div>
-							</div>
-					    </div>
 
-					    <div class="form-group">
-					      <label for="clientBrief">Client brief note</label>
-					      <textarea class="form-control" rows="3" id="clientBrief" name="clientBrief">
-					      	Client brief note
-					      </textarea>
-					    </div>
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Number of position</label>
+								<div class="col-sm-2">
+								  <input type="number" class="form-control" name="noOfPosition" value="<?php echo $noOfPosition; ?>" required="" >
+								</div>
+							</div>
 
-					   <div class="form-group">
-							<label for="spocId">Chnage SPOC</label>
-							<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">					
-								<option  value="SPOC 1" selected="">SPOC 1</option>
-								<option  value="SPOC 2">SPOC 2</option>
-								<option  value="SPOC 3">SPOC 3</option>
-								<option  value="SPOC 4">SPOC 4</option>
-							</select>
-					    </div>	
-					     <div class="form-group">
-							<label for="recruiters">Chnage additional recruiters (Optional)</label>
-							<select class="ui fluid search dropdown" multiple=""  id="recruiters" name="recruiters[]">
-								<option value=""> Choose Employee(multiple) </option>
-								<option  value="Employee 1" selected="">Employee 1</option>
-								<option  value="Employee 2" selected="">Employee 2</option>
-								<option  value="Employee 3">Employee 3</option>
-							</select>			   
-					    </div>						 
-					  <input type="hidden" name="token" value="<?php echo Token::generate2('newAssingment'); ?>">  
-					  	<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Update Assingment</button>
-						<a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
+							
+
+					   <div class="form-group row">
+								<label for="companyId" class="col-sm-3 col-form-label">Assigned SPOC</label>
+								<div class="col-sm-8">
+									<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">
+									<option value="" > Choose SPOC </option>
+									<?php
+
+										foreach ($teamLeaders as $key => $leader) { ?>
+
+										<option value="<?php echo	$leader['employeeId']; ?>"  <?php echo ($spocId == $leader['employeeId'])? "selected" : "" ?> >
+
+										<?php echo	$leader['employeeName'];?>
+
+										</option>
+
+										<?php }
+
+									?>
+								</select>
+								</div>
+							</div>
+
+					    <div class="form-group row">
+									<label for="companyId" class="col-sm-3 col-form-label">Recruiters</label>
+								<div class="col-sm-8">
+									<select class="ui fluid search dropdown" multiple=""  id="recruiters" name="recruiters[]">
+									<option value=""> Choose Employee(multiple) </option>
+
+										<?php
+
+										foreach ($recruiters as $key => $recruiter) { ?>
+
+										<option value="<?php echo	$recruiter['employeeId']; ?>" 
+
+											<?php echo Assingment::selected($recruiter['employeeId'], $arrayrRcruiter)? "selected" : "" ?>>
+
+										<?php echo	$recruiter['employeeName']; ?>
+
+										</option>
+
+										<?php }
+
+										?>
+								</select>
+								</div>
+							</div>  
+						<div class="form-group row">
+							<label for="companyId" class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-8">
+								<input type="hidden" name="assingmentId" value="<?php echo $assingmentId; ?>">	
+								<input type="hidden" name="token" value="<?php echo Token::generate2('updateAssingment'); ?>">  
+								<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Update Assignment</button>
+								<a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
+							</div>
+						</div>	
+
+					  
 					  </fieldset>
-					</form>                 
+					</form>              
+					</div>   
                 </div>
             </div>
         </div>

@@ -23,11 +23,7 @@
 		};
 	</script> 
 	<style>
-		.card {
-			max-width: 786px;
-			margin-right: auto;
-			margin-left: auto;
-		}
+		
 		.card label {
 			text-align: right;
 		}
@@ -68,7 +64,7 @@
 
 	                    <div class="form-group row">
 								<label for="companyId" class="col-sm-3 col-form-label">Company</label>
-								<div class="col-sm-8">
+								<div class="col-sm-6">
 								 <select class="ui fluid search dropdown"  id="companyName" name="companyId" required="" autofocus="">
 
 							      		<option  value="">Choose</option>
@@ -91,7 +87,7 @@
 							 
 							<div class="form-group row">
 								<label for="jobRoleId" class="col-sm-3 col-form-label">Role</label>
-								<div class="col-sm-8">
+								<div class="col-sm-6">
 									<select class="ui fluid search dropdown"  id="jobRoleId" name="jobRoleId" required="">
 								      	<option value="" selected="">Select Role</option>
 								      </select>
@@ -100,7 +96,7 @@
 
 							<div class="form-group row">
 								<label for="companyId" class="col-sm-3 col-form-label">City</label>
-								<div class="col-sm-8">
+								<div class="col-sm-3">
 									 <select class="ui fluid search dropdown"  id="jobCity" name="jobCity" required="">
 							      	<option  value="">Choose</option>
 							    		<?php
@@ -123,7 +119,7 @@
 
 							<div class="form-group row">
 								<label for="companyId" class="col-sm-3 col-form-label">Assign SPOC</label>
-								<div class="col-sm-8">
+								<div class="col-sm-6">
 									<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">
 									<option value="" > Choose SPOC </option>
 									<?php
@@ -166,24 +162,9 @@
 								</div>
 							</div>     
 
-
-						
-	   					<div class="form-group row">
-						
-							<label for="frontingEntitys" class="col-sm-3 col-form-label">Fronting entity</label>
-							<div class="col-sm-8">
-								<select class="ui fluid search dropdown"  required="" id="frontingEntity" name="frontingEntity">
-									<option value=""> Choose BE/UN </option>
-									<option value="Blueyed">Blueyed</option>
-									<option value="Unison">Unison</option>
-								</select>
-							</div>	
-						</div>	
-
-						<div class="form-group row">
-						
+						<div class="form-group row">						
 							<label for="frontingEntitys" class="col-sm-3 col-form-label">Assign priority</label>
-							<div class="col-sm-8">
+							<div class="col-sm-3">
 								<select class="ui fluid search dropdown"  id="priority" name="priority" required="">
 									<option value=""> Choose H/M/L</option>	
 									<option value="Low">Low</option>
@@ -192,6 +173,18 @@
 								</select>	
 							</div>	
 						</div>
+						
+	   					<div class="form-group row">
+						
+							<label for="frontingEntitys" class="col-sm-3 col-form-label">Fronting entity</label>
+							<div class="col-sm-3">
+								<select class="ui fluid search dropdown"  required="" id="frontingEntity" name="frontingEntity">
+									<option value=""> Choose BE/UN </option>
+									<option value="Blueyed">Blueyed</option>
+									<option value="Unison">Unison</option>
+								</select>
+							</div>	
+						</div>							
 
 						<div class="form-group row">
 						

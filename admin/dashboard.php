@@ -6,7 +6,7 @@ Login::isUservalid('admin');
 
 $assingment = new Assingment();  
 
-if (!$result = $assingment->getOnGoingAssingment()) {
+if (!$assingmentData = $assingment->getOnGoingAssingment()) {
 
     Session::put("errorMsg", 'Sorry, No record found!');
 }
@@ -50,7 +50,7 @@ if (!$result = $assingment->getOnGoingAssingment()) {
 
                         <?php  
 
-                        if ($result) {
+                        if ($assingmentData) {
 # code...
 
                             ?>
@@ -75,22 +75,23 @@ if (!$result = $assingment->getOnGoingAssingment()) {
 
                                     <?php                                              
 
-                                    foreach ($result as $key => $value) { ?>
+                                    foreach ($assingmentData as $key => $assingment) { ?>
 
                                         <tr>
-                                            <td><?php echo $value['companyName']; ?></td>
-                                            <td><?php echo $value['jobRoleTitle']; ?></td>
-                                            <td><?php echo $value['employeeName']; ?></td> 
-                                            <td><?php echo $value['cityName']; ?></td>
-                                            <td><?php echo $value['minFixedSalary']; ?> to <?php echo $value['maxFixedSalary']; ?> </td>                                      
-                                            <td><?php echo $value['minWorkExperience']; ?> to <?php echo $value['maxWorkExperience']; ?> </td> 
-                                            <td><?php echo $value['createdOn']; ?></td>
+                                            <td><?php echo $assingment['companyName']; ?> </td>
+                                            <td><?php echo $assingment['jobRoleTitle']; ?></td>
+                                            <td><?php echo $assingment['employeeName']; ?></td> 
+                                            <td><?php echo $assingment['cityName']; ?></td>
+                                            <td><?php echo $assingment['minFixedSalary']; ?> to <?php echo $assingment['maxFixedSalary']; ?> </td>                                      
+                                            <td><?php echo $assingment['minWorkExperience']; ?> to <?php echo $assingment['maxWorkExperience']; ?> </td> 
+                                            <td><?php echo $assingment['createdOn']; ?></td>
                                            
                                             
-                                             <td> <?php echo noOfDays($value['createdOn']);?> </td>
-                                            <td><?php echo $value['createdOn']; ?></td>
+                                             <td> <?php echo noOfDays($assingment['createdOn']);?> </td>
+                                            <td><?php echo $assingment['createdOn']; ?></td>
                                                 
-                                            <td><a class="btn btn-link" href="./update-assingment.php?assingmentId=<?php echo $value['assingmentId']; ?>    ">Edit</a></td>                             
+                                            <td>
+                                                <a class="btn btn-link" href="./update-assingment.php?assingmentId=<?php echo $assingment['assingmentId']; ?>">Edit</a></td>                             
                                         </tr>
 
                                     <?php  }    ?>   

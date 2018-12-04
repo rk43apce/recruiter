@@ -17,7 +17,7 @@ class Assingment extends Company
 	public function getOnGoingAssingment($value='')
 	{
 		
-		$sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.createdOn FROM assingment inner join(company) on company.companyId = assingment.companyId inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId inner join(cities) on cities.cityId = jobrole.locationId inner join(employee) on employee.employeeId = assingment.spocId";	
+		$sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn FROM assingment inner join(company) on company.companyId = assingment.companyId inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId inner join(cities) on cities.cityId = jobrole.locationId inner join(employee) on employee.employeeId = assingment.spocId";	
 
 		$result =  $this->db->querySelect($sql);
 
@@ -35,22 +35,41 @@ class Assingment extends Company
 
 	public function getOnGoingAssingmentById($assingmentId)
 	{
-		
-		echo	$sql = " SELECT *  FROM assingment   where assingmentId = '$assingmentId'";	
+		$sql = " SELECT  assingment.assingmentId, company.companyName, jobrole.jobRoleTitle, assingment.spocId, cities.cityName,  assingment.createdOn, assingment.clientBrief, assingment.noOfPosition FROM assingment inner join(company) on company.companyId = assingment.companyId inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId inner join(cities) on cities.cityId = jobrole.locationId inner join(employee) on employee.employeeId = assingment.spocId where assingment.assingmentId = '$assingmentId'";
 
 		$result =  $this->db->querySelect($sql);
 
 		if ($this->db->isResultCountOne($result)) {
-			# code...
-			// return $this->db->processRowSet($result);
 			return $this->db->processRowSet($result, true);
-			// return false;
-
 		} else {
-
 			return false;
 		}
 
+	}
+
+
+	public function getAssingmentRecruiterByAssingmentId($assingmentId)
+	{
+	 $sql = " SELECT ra.recruiterId FROM `recruiterassingment` ra INNER JOIN employee on employee.employeeId = ra.recruiterId WHERE ra.assingmentId = '$assingmentId' and isAssingmentWithdraw = 'No'";
+
+		$result =  $this->db->querySelect($sql);
+
+		if (!$this->db->checkResultCountZero($result)) {
+			return $this->db->processRowSet($result);
+		} else {
+			return false;
+		}
+
+	}
+
+	public static function selected($employeeId, $arrayrRcruiter)
+	{			
+			if (!count($arrayrRcruiter)) {
+				# code...
+				return " ";
+			}
+
+		 return (in_array($employeeId, $arrayrRcruiter))? "selected" : "";
 	}
 
 
@@ -58,9 +77,7 @@ class Assingment extends Company
 	{		
 		foreach ($this->recruiters as $recruiterId) {
 
-		echo	$sql = "INSERT INTO recruiterassingment (assingmentId, recruiterId) values ('$this->assingmentId', '$recruiterId')";
-
-		echo "<br>";
+		echo	$sql = "INSERT INTO recruiterassingment (assingmentId, recruiterId, recruiterAssignOn) values ('$this->assingmentId', '$recruiterId',  NOW())";
 
 			if (!$this->db->queryInset($sql)) {
 		  	 	# code...
@@ -106,25 +123,76 @@ class Assingment extends Company
 	}
 
 
-	public  function updateAssingment($assingmentData, $assingmentId)
-	{
+
+	public  function updateAssingment($assingmentId, $assingmentData, $recruiters)
+	{	
 
 		$out = array();
-		foreach ($data as $column => $value) {
+
+		foreach ($assingmentData as $column => $value) {
+
 			array_push($out, "$column='$value'");
 		}
+
 		$set = implode(', ', $out);
 
-		echo $sql = "UPDATE assingment SET $set assingmentId = '$assingmentId'";
+		$sql = "UPDATE assingment SET $set where assingmentId = '$assingmentId'";	
 
-		// $result = mysqli_query($this->dbc, $sql);
+		if (!$this->db->queryUpdate($sql)) {
 
-		// echo $sql;
+		 	return false;	
 
-		// if ($result) {
-		// return true;
-		// } //end of valid if
+		}
+
+		$this->updateAssignmentRecruiter($assingmentId, $recruiters);
 
 	}
+
+
+	public function updateAssignmentRecruiter($assingmentId, $recruiters)
+	{	
+			
+		$recruiterData = $this->getAssingmentRecruiterByAssingmentId($assingmentId);	
+
+		$arrayrRcruiter = array();
+
+		foreach ($recruiterData as $key => $recruiter) {	 	
+
+			array_push($arrayrRcruiter,$recruiter['recruiterId']);
+
+		}
+		
+		$sql  = "UPDATE `recruiterassingment` SET `isAssingmentWithdraw` = 'Yes', recruiterWithdrawOn = NOW() WHERE recruiterId NOT IN ( '" . implode( "', '" , $recruiters ) . "' ) AND assingmentId = '$assingmentId' ";
+
+			if (!$this->db->queryUpdate($sql)) {
+
+			return false;	
+
+		}
+
+
+
+		$arrayNewRecruiters = array_diff($recruiters, $arrayrRcruiter);
+
+		if ($arrayNewRecruiters) {			
+
+			foreach ($arrayNewRecruiters as $column => $newRecruiter) {
+
+				echo "<br>";
+				echo	$sql = "INSERT INTO recruiterassingment (assingmentId, recruiterId, recruiterAssignOn) values ('$assingmentId', '$newRecruiter', NOW())";
+
+				if (!$this->db->queryInset($sql)) {
+
+				return false;
+				}			
+
+			}
+
+			return true;
+
+		}		
+
+	}
+
 
 }

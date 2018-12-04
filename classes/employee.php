@@ -167,7 +167,7 @@ class Employee {
 	public function getRecruiterFromEmployee()
 	{
 
-		$sql = " SELECT employeeId, employeeName  FROM employee where employeeTypeId = '2'";	
+		$sql = " SELECT employeeId, employeeName  FROM employee where employeeTypeId = '2' AND isActive = 'Active'";	
 
 		$result =  $this->db->querySelect($sql);
 
