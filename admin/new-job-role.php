@@ -44,6 +44,12 @@ $cities = $jobrole->getCities();
             document.getElementById( "jobRoleId" ).value = jobRoleId;
         };
     </script> 
+    	<style>
+		
+		.card label {
+			text-align: right;
+		}
+	</style>
 </head>
 
 <body>
@@ -59,14 +65,17 @@ $cities = $jobrole->getCities();
 
             <div class="container">
 
-                <div class="card">    
+                <div class="card">  
 
-                    <h2>Add new Job Role</h2>    
-                    <span><a href="./companies.php" class="btn-link">Back to Company Dashboard</a></span>
-                    <span> 
-                    <p class="text-success">
-                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                     </p>
+
+                    <ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="company-jobroles.php?companyId=<?php echo escape(Input::get('companyId')); ?>" class="btn-link"><?php echo $result['companyName'];?></a></li>
+						<li class="breadcrumb-item"><?php echo $result['cityName'];?></li>
+						<li class="breadcrumb-item active">Add new Job Role</li>
+					</ol>
+
+                    <span>                  
+                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>                   
                   	</span>                   
 
                     <div class="line"></div>
@@ -76,80 +85,49 @@ $cities = $jobrole->getCities();
 					  	<!-- Compulsory field setting unique id for every new jobRole -->
 					  	<input type="hidden" name="jobRoleId" id="jobRoleId" value="">
 					  	<!--  -->
-					  	<div class="row">
-							<div class="col-md-6">
 
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Company Name</label>
-								  <input type="text" class="form-control" value="<?php echo $result['companyName'];?>" disabled="">
-								</div>
-							</div>
-							<div class="col-md-6">
 
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">City</label>
-								  <input type="text" class="form-control" value="<?php echo $result['cityName'];?>" disabled="">
-								</div>
-							</div>
-						</div>							    						    
-					    <div class="row">
-							<div class="col-md-6">
-
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Role  Title</label>
-								  <input type="text" class="form-control" placeholder="Role title" id="" name="jobRoleTitle">
-								</div>
-							</div>
-							<div class="col-md-6">
-
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Variable Salary</label>
-								  <input type="text" class="form-control" placeholder="Variable salary element" id="variableSalary" name="variableSalary">
-								</div>
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Role  Title</label>
+							<div class="col-sm-6">
+							 <input type="text" class="form-control" placeholder="Role title" id="" name="jobRoleTitle">
 							</div>
 						</div>
 
-						 <div class="row">
-					    		<div class="col-md-6">
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Work Experience</label>
-								  <div class="row">
-								  <div class="col-md-5">
-								  	<input type="number" class="form-control" placeholder="Min" id="minWorkExperience" name="minWorkExperience">
-								  </div>
-									<div class="col-md-2">
-								  	<span class="to">To</span> 
-									</div>
-								  <div class="col-md-5">
-								  	 <input type="number" class="form-control" placeholder="Max" id="maxWorkExperience" name="maxWorkExperience">
-								  </div>
-									</div>
-								</div>
-								</div>
-								<div class="col-md-6">
-								<div class="form-group">
-								  <label class="col-form-label" for="inputDefault">Fixed Salary</label>
-								  <div class="row">
-								  <div class="col-md-5">
-								  	<input type="number" class="form-control" placeholder="Min" id="minFixedSalary" name="minFixedSalary">
-								  </div>
-								<div class="col-md-2">
-								  	<span>To</span> 
-									</div>
-								  <div class="col-md-5">
-								  	 <input type="number" class="form-control" placeholder="Max" id="maxFixedSalary" name="maxFixedSalary">
-								  </div>
-									</div>
-								</div>
-								</div>
-					    </div>
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Variable Salary</label>
+							<div class="col-sm-6">
+							 <input type="text" class="form-control" placeholder="Variable salary element" id="variableSalary" name="variableSalary">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Work Experience</label>
+							<div class="col-sm-2">
+							<input type="number" class="form-control" placeholder="Min" id="minWorkExperience" name="minWorkExperience">
+							</div>
+							<label for="jobRoleId" class="col-form-label">To</label>
+							<div class="col-sm-2">
+							<input type="number" class="form-control" placeholder="Max" id="maxWorkExperience" name="maxWorkExperience">
+							</div>
+						</div>  
 
 
-					    <div class="row">
-					    		<div class="col-md-6">
-								<div class="form-group">
-							<label for="spocId">Functional Area</label>
-							<select class="ui fluid search dropdown"  required="" id="functionalAreaId" name="functionalAreaId">
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Fixed Salary</label>
+							<div class="col-sm-2">
+							<input type="number" class="form-control" placeholder="Min" id="minFixedSalary" name="minFixedSalary">
+							</div>
+							<label for="jobRoleId" class="col-form-label">To</label>
+							<div class="col-sm-2">
+								 <input type="number" class="form-control" placeholder="Max" id="maxFixedSalary" name="maxFixedSalary">
+							</div>
+						</div>      
+
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Functional Area</label>
+							<div class="col-sm-6">
+							 <select class="ui fluid search dropdown"  required="" id="functionalAreaId" name="functionalAreaId">
 								<option value=""> Choose functional area</option>
 
 								<?php
@@ -167,12 +145,13 @@ $cities = $jobrole->getCities();
 								?>
 						
 							</select>
-					    </div>	
-								</div>
-									<div class="col-md-6">
-								<div class="form-group">
-							<label for="spocId">Location</label>
-							<select class="ui fluid search dropdown"  required="" id="locationId" name="locationId">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Location</label>
+							<div class="col-sm-6">
+							 <select class="ui fluid search dropdown"  required="" id="locationId" name="locationId">
 								<option value=""> Choose Location </option>
 								<?php
 
@@ -188,14 +167,14 @@ $cities = $jobrole->getCities();
 
 								?>
 							</select>
-					    </div>	
+							</div>
 						</div>
-					    </div>
-					 
-					   
-						 <div class="form-group">
-							<label for="recruiters">Key Skills (Multiple)</label>
-							<select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]">
+
+
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Key Skills (Multiple)</label>
+							<div class="col-sm-6">
+							 <select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]">
 								<option value=""> Choose Employee(multiple) </option>
 								<?php
 
@@ -210,18 +189,29 @@ $cities = $jobrole->getCities();
 								<?php }
 
 								?>
-							</select>			   
-					    </div>		
+							</select>
+							</div>
+						</div>
 
-					    <div class="form-group">
-					      <label for="clientBrief">Client brief note</label>
-					      <textarea class="form-control" rows="3" placeholder="Write here..." id="clientBriefNote" name="clientBriefNote"></textarea>
-					    </div>
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Client brief note</label>
+							<div class="col-sm-6">
+							<textarea class="form-control" rows="3" placeholder="Write here..." id="clientBriefNote" name="clientBriefNote"></textarea>
+							</div>
+						</div>
 
-					 	
-					  <input type="hidden" name="companyId" value="<?php echo escape(Input::get('companyId')); ?>"> 
-					  <input type="hidden" name="token" value="<?php echo Token::generate2('newJobRole'); ?>">  
-					  <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Save JobRole</button>
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-6">
+								<input type="hidden" name="companyId" value="<?php echo escape(Input::get('companyId')); ?>"> 
+								<input type="hidden" name="token" value="<?php echo Token::generate2('newJobRole'); ?>">  
+								<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Save JobRole</button>
+								<a class="btn btn-link" href="company-jobroles.php?companyId=<?php echo escape(Input::get('companyId')); ?>">Cancel</a>
+							</div>
+						</div>
+						 	
+						 	
+					  
 					  </fieldset>
 					</form>                 
                 </div>

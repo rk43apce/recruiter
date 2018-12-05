@@ -48,11 +48,11 @@ if (Input::exists('post')) {
                 <legend>Log In</legend>                
                 <div class="form-group">
                   <label for="exampleInputEmail1"> Username / Email address</label>
-                  <input type="email" name="username" class="form-control" value="<?php echo Input::get('username') ?>">                
+                  <input type="email" name="username" class="form-control" value="<?php echo Input::get('username') ?>" required="">                
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input type="password" name="password" class="form-control"  value="<?php echo Input::get('password') ?>">
+                  <input type="password" name="password" class="form-control"  value="<?php echo Input::get('password') ?>" required="">
                 </div>      
                  <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">  
                 <button type="submit" class="btn btn-primary" autofocus="">Log In</button>

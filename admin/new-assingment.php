@@ -45,15 +45,15 @@
 
                 <div class="card">    
 
-                    <h5>Create New Assignment</h5>    
-
-                    <span> 
-
-                    	<!-- <p class="text-success"> -->
-
-                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                      <!-- </p> -->
-                  	</span>                   
+                    <ol class="breadcrumb">   
+                	 	<li class="breadcrumb-item"><a href="./companies.php" class="btn-link">Companies</a></li> 
+                	 	<li class="breadcrumb-item"><a href="./dashboard.php" class="btn-link">Assignments</a></li>           
+                        <li class="breadcrumb-item">Create New Assignment</li>                       
+                       
+                        <li class="breadcrumb-item text-success">
+                            <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
+                        </li>                   
+                    </ol>        
 
                     <div class="line"></div>
 
@@ -200,7 +200,7 @@
 							<div class="col-sm-8">
 								  <input type="hidden" name="token" value="<?php echo Token::generate2('newAssingment'); ?>">  
 							  		<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Launch Assignment</button>
-							  		<a href="./dashboard.php" class="btn btn-link">Back to Dashboard</a>
+							  		
 							</div>	
 						</div>					
 					

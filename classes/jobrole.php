@@ -93,5 +93,27 @@ class Jobrole extends FunctionalArea
 	}
 
 
+	public function getJobRoleByJobRoleId($jobRoleId)
+	{
+			
+	// echo $sql = " SELECT *  FROM  jobrole jb inner join  functionalareas fn on jb.functionalAreaId = fn.functionalareaId inner join(company) on company.companyId = jb.companyId    where jb.jobRoleId = '$jobRoleId'";	
+
+		$sql = "SELECT * FROM jobrole jb inner join functionalareas fn on jb.functionalAreaId = fn.functionalareaId inner join(company) on company.companyId = jb.companyId inner join(cities) on cities.cityId = jb.locationId where jb.jobRoleId = '$jobRoleId'";
+
+		$result =  $this->db->querySelect($sql);
+
+		if ($this->db->isResultCountOne($result)) {
+		
+			return $this->db->processRowSet($result, true);
+
+		} else {
+
+			return false;
+		}
+
+	}
+
+
+
 
 }

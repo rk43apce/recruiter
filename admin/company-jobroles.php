@@ -46,83 +46,57 @@ if (Input:: get('companyId') ) {
 
             <div class="container">
 
-                <div class="card">    
+                <div class="card">  
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="./companies.php" class="btn-link">Companies</a></li>
+                        <li class="breadcrumb-item"><a href="company-jobroles.php?companyId=7"><?php echo $companyName; ?></a></li>
+                        <li class="breadcrumb-item active">Job Roles</li>
+                        <li class="breadcrumb-item active"><?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>".  Session::flash('errorMsg'). "</p>" : ""; ?> </li>
+                    </ol>
 
-                    <h5><?php echo $companyName; ?></h5>    
                     <span><a href="./new-job-role.php?companyId=<?php echo $companyId;?>" class="btn-link" >+ Add new Job Role</a></span>
-
-                    
-                   <span> 
-
-                       <!--  <p class="text-success"> -->
-
-                      <?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>".  Session::flash('errorMsg'). "</p>" : ""; ?>  
-                 <!--      </p> -->
-                    </span> 
-                    
-                        
+                                                              
                     <div class="line"></div>
 
-                     <?php  
-                     
-                        if ($jobrolesData) {
-                            # code...
+                     <?php if ($jobrolesData) { ?>
 
-                            ?>
-
-                     <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
+                    <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
                         <thead>
                             <tr>
                                 <th>Jobrole Title</th>
                                 <th>Functional Area</th>
                                 <th>CTC Range</th> 
                                 <th>Experience Range</th> 
-                                 <th>Minimum Qualification</th>    
-                                                      
-                            </tr>
-                         
+                                <th>Minimum Qualification</th>  
+                            </tr>                         
                         </thead>
                         <tbody>
 
-                             <?php  
+                            <?php  
                                  foreach ($jobrolesData as $key => $Jobrole) { ?>
                                         
                                     <tr>
-                                        <td><?php echo $Jobrole['jobRoleTitle']; ?></td>
+                                        <td><a href="./view-jobrole-description.php?jobRoleId=<?php echo $Jobrole['jobRoleId']; ?>"> <?php echo $Jobrole['jobRoleTitle']; ?></a> </td>
                                         <td><?php echo $Jobrole['functionalareaName']; ?></td>
                                         <td><?php echo $Jobrole['minFixedSalary']; ?> to <?php echo $Jobrole['maxFixedSalary']; ?> </td>
-                                         <td><?php echo $Jobrole['minWorkExperience']; ?> to <?php echo $Jobrole['maxWorkExperience']; ?></td>
-                                         <td>Minimum Qualification</td>                                    
+                                        <td><?php echo $Jobrole['minWorkExperience']; ?> to <?php echo $Jobrole['maxWorkExperience']; ?></td>
+                                        <td>Minimum Qualification</td>                                    
                                     </tr>
 
-                            <?php  }    ?>   
+                            <?php  } ?>   
                                                                              
                         </tbody>
                     </table>
 
+                    <?php } else { ?>
 
-                            <?php
-                        } else {
+                    <table>                                 
+                         <tr> 
+                            <td> <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?> </td>
+                        </tr>
+                    </table>   
 
-                            ?>
-
-                             <table>                                 
-                                 <tr> 
-                                    <td> 
-
-                                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>      
-
-                                    </td>
-                                </tr>
-                             </table>   
-
-
-                            <?php
-                        }
-
-                      ?>   
-
-                  
+                    <?php } ?> 
 
                 </div>
             </div>

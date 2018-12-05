@@ -44,6 +44,11 @@ $cityData = $city->getCities();
 <html>
 <head>
 	<?php require_once  '../include/css.php'; ?>   
+	<style type="text/css">
+		.card label {
+			text-align: right;
+		}
+	</style>
 </head>
 
 <body>
@@ -61,27 +66,31 @@ $cityData = $city->getCities();
 
                 <div class="card">    
 
-                    <h5>Add new company</h5>    
-                   
-                    <span> 
-
-                    	<!-- <p class="text-success"> -->
-
-                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                      <!-- </p> -->
-                  	</span>                   
+                	 <ol class="breadcrumb">   
+                	 	<li class="breadcrumb-item"><a href="./companies.php" class="btn-link">Companies</a></li>            
+                        <li class="breadcrumb-item">Add new company</li>                       
+                       
+                        <li class="breadcrumb-item text-success">
+                            <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
+                        </li>                   
+                    </ol>
 
                     <div class="line"></div>
 
                     <form method="post" action="">
 					  <fieldset>
-						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">Compnay Name</label>
-							<input type="text" class="form-control" placeholder="Default input" id="companyName" name="companyName" required="">
+
+					  	<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Compnay Name</label>
+							<div class="col-sm-6">
+							 <input type="text" class="form-control" placeholder="Name" id="companyName" name="companyName" required="">
+							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">City</label>
-							<select class="ui fluid search dropdown"  required="" id="companyCity" name="companyCity">
+
+							<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">City</label>
+							<div class="col-sm-6">
+							 <select class="ui fluid search dropdown"  required="" id="companyCity" name="companyCity">
 								<option value=""> Choose City </option>
 								<?php
 
@@ -97,11 +106,14 @@ $cityData = $city->getCities();
 
 								?>
 							</select>
+							</div>
 						</div>
-						
-						<div class="form-group">
-							<label for="spocId">Industry Type</label>
-							<select class="ui fluid search dropdown"  required="" id="companyIndustryTypeId" name="companyIndustryTypeId" required="">
+
+
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Industry Type</label>
+							<div class="col-sm-6">
+							 <select class="ui fluid search dropdown"  required="" id="companyIndustryTypeId" name="companyIndustryTypeId" required="">
 								<option value=""> Choose SPOC </option>
 								<?php
 
@@ -118,11 +130,20 @@ $cityData = $city->getCities();
 								?>
 						
 							</select>
-					    </div>				      
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label"></label>
+							<div class="col-sm-6">
+							 <input type="hidden" name="token" value="<?php echo Token::generate2('addNewCompany'); ?>">  
+							 <button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Add Company</button>
+							 <a class="btn btn-link" href="./companies.php" class="btn-link">Cancel</a>
+							</div>
+						</div>									      
 					   						 
-						<input type="hidden" name="token" value="<?php echo Token::generate2('addNewCompany'); ?>">  
-						<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Add Company</button>
-					<a href="./companies.php" class="btn-link">Back to Company Dashboard</a>
+						
+					
 					  </fieldset>
 					</form>                 
                 </div>

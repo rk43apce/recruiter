@@ -17,6 +17,13 @@
 <html>
 <head>
 <?php require_once  '../include/css.php'; ?>    
+<style type="text/css">
+   .card a, a:hover, a:focus {
+    color: #007bff;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+</style>
 </head>
 
 <body>
@@ -34,17 +41,14 @@
 
                 <div class="card">    
 
-                    <h5>All Companies</h5>    
-                    <span><a href="./new-compnay.php" class="btn-link" >+ Add new company</a></span>
-                   <span> 
-
-                       <!--  <p class="text-success"> -->
-
-                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                 <!--      </p> -->
-                    </span> 
-                    
-                        
+                    <ol class="breadcrumb">                  
+                        <li class="breadcrumb-item">Companies</li>
+                        <li class="breadcrumb-item"><a href="./new-compnay.php" class="btn-link" >+ Add new company</a></li>
+                        <li class="breadcrumb-item text-success">
+                            <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
+                        </li>                   
+                    </ol>
+                                
                     <div class="line"></div>
 
                      <?php  

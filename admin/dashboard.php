@@ -35,16 +35,16 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
 
                 <div class="card">    
 
-                    <h5>Ongoing Assignment</h5>    
-                    <span><a href="./new-assingment.php" class="btn-link" >+ Create new assignment</a></span>
+                    <h5></h5>    
 
-                    <span> 
-
-                        <!-- <p class="text-success"> -->
-
-                            <?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>". Session::flash('errorMsg') : ""; ?>  
-                            <!-- </p> -->
-                        </span>    
+                     <ol class="breadcrumb">                  
+                        <li class="breadcrumb-item">Ongoing Assignment</li>
+                        <li class="breadcrumb-item"><a href="./new-assingment.php" class="btn-link" >+ Create new assignment</a></li>
+                        <li class="breadcrumb-item text-success">
+                            <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
+                        </li>                   
+                    </ol>
+                                                   
 
                         <div class="line"></div>
 

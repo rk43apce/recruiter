@@ -49,7 +49,7 @@ class Login
 	public function checkUser($username, $password)
 	{
 
-	echo	$sql = "SELECT * FROM user where email = '$username' AND  password = '$password'";
+		$sql = "SELECT * FROM user where email = '$username' AND  password = '$password'";
 
 		$result =  $this->db->querySelect($sql);
 
