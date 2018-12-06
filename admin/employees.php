@@ -46,16 +46,15 @@
             <div class="container">
 
                 <div class="card">    
-                        
-                    <h5>All Employees</h5>    
-                    <span><a href="./new-employee.php" class="btn-link" >+ Add new employee</a></span>
-                   <span> 
 
-                       <!--  <p class="text-success"> -->
-
-                      <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  
-                       <!--     </p> -->
-                    </span> 
+                <ol class="breadcrumb">                  
+                  <li class="breadcrumb-item"><a href="./employees.php" class="btn-link">Employees</a> </li>
+                  <li class="breadcrumb-item"><a href="./new-employee.php" class="btn-link" >+ Add new employee</a></li>
+                  <li class="breadcrumb-item text-success">
+                  <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
+                  </li>                   
+                </ol>                        
+        
                     
                         
                     <div class="line"></div>

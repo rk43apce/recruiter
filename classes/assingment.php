@@ -35,7 +35,7 @@ class Assingment extends Company
 
 	public function getOnGoingAssingmentById($assingmentId)
 	{
-		$sql = " SELECT  assingment.assingmentId, company.companyName, jobrole.jobRoleTitle, assingment.spocId, cities.cityName,  assingment.createdOn, assingment.clientBrief, assingment.noOfPosition FROM assingment inner join(company) on company.companyId = assingment.companyId inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId inner join(cities) on cities.cityId = jobrole.locationId inner join(employee) on employee.employeeId = assingment.spocId where assingment.assingmentId = '$assingmentId'";
+		$sql = " SELECT  assingment.assingmentId, company.companyName, company.companyId, jobrole.jobRoleTitle, assingment.spocId, cities.cityName,  assingment.createdOn, assingment.clientBrief, assingment.noOfPosition FROM assingment inner join(company) on company.companyId = assingment.companyId inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId inner join(cities) on cities.cityId = jobrole.locationId inner join(employee) on employee.employeeId = assingment.spocId where assingment.assingmentId = '$assingmentId'";
 
 		$result =  $this->db->querySelect($sql);
 
@@ -66,7 +66,7 @@ class Assingment extends Company
 	{			
 			if (!count($arrayrRcruiter)) {
 				# code...
-				return " ";
+				return null;
 			}
 
 		 return (in_array($employeeId, $arrayrRcruiter))? "selected" : "";
@@ -144,7 +144,12 @@ class Assingment extends Company
 
 		}
 
-		$this->updateAssignmentRecruiter($assingmentId, $recruiters);
+		if (!$this->updateAssignmentRecruiter($assingmentId, $recruiters)) {
+			
+			return false;
+		}
+
+		return true;
 
 	}
 
@@ -178,12 +183,13 @@ class Assingment extends Company
 
 			foreach ($arrayNewRecruiters as $column => $newRecruiter) {
 
-				echo "<br>";
-				echo	$sql = "INSERT INTO recruiterassingment (assingmentId, recruiterId, recruiterAssignOn) values ('$assingmentId', '$newRecruiter', NOW())";
+			
+				$sql = "INSERT INTO recruiterassingment (assingmentId, recruiterId, recruiterAssignOn) values ('$assingmentId', '$newRecruiter', NOW())";
 
 				if (!$this->db->queryInset($sql)) {
 
-				return false;
+					return false;
+
 				}			
 
 			}
@@ -192,6 +198,7 @@ class Assingment extends Company
 
 		}		
 
+		return true;
 	}
 
 

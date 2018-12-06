@@ -86,29 +86,23 @@ $cities = $jobrole->getCities();
 					  	<input type="hidden" name="jobRoleId" id="jobRoleId" value="">
 					  	<!--  -->
 
-
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Role  Title</label>
 							<div class="col-sm-6">
-							 <input type="text" class="form-control" placeholder="Role title" id="" name="jobRoleTitle">
+							 <input type="text" class="form-control" placeholder="Role title" id="" name="jobRoleTitle" required="">
 							</div>
 						</div>
 
-						<div class="form-group row">
-							<label for="jobRoleId" class="col-sm-3 col-form-label">Variable Salary</label>
-							<div class="col-sm-6">
-							 <input type="text" class="form-control" placeholder="Variable salary element" id="variableSalary" name="variableSalary">
-							</div>
-						</div>
+						
 
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Work Experience</label>
 							<div class="col-sm-2">
-							<input type="number" class="form-control" placeholder="Min" id="minWorkExperience" name="minWorkExperience">
+							<input type="number" class="form-control" placeholder="Min" id="minWorkExperience" name="minWorkExperience" required="">
 							</div>
 							<label for="jobRoleId" class="col-form-label">To</label>
 							<div class="col-sm-2">
-							<input type="number" class="form-control" placeholder="Max" id="maxWorkExperience" name="maxWorkExperience">
+							<input type="number" class="form-control" placeholder="Max" id="maxWorkExperience" name="maxWorkExperience" required="">
 							</div>
 						</div>  
 
@@ -120,14 +114,20 @@ $cities = $jobrole->getCities();
 							</div>
 							<label for="jobRoleId" class="col-form-label">To</label>
 							<div class="col-sm-2">
-								 <input type="number" class="form-control" placeholder="Max" id="maxFixedSalary" name="maxFixedSalary">
+								 <input type="number" class="form-control" placeholder="Max" id="maxFixedSalary" name="maxFixedSalary" required="">
 							</div>
-						</div>      
+						</div> 
+						<div class="form-group row">
+							<label for="jobRoleId" class="col-sm-3 col-form-label">Variable Salary</label>
+							<div class="col-sm-2">
+							 <input type="text" class="form-control" placeholder="Variable" id="variableSalary" name="variableSalary" required="">
+							</div>
+						</div>     
 
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Functional Area</label>
 							<div class="col-sm-6">
-							 <select class="ui fluid search dropdown"  required="" id="functionalAreaId" name="functionalAreaId">
+							 <select class="ui fluid search dropdown"  required="" id="functionalAreaId" name="functionalAreaId" required="">
 								<option value=""> Choose functional area</option>
 
 								<?php
@@ -151,7 +151,7 @@ $cities = $jobrole->getCities();
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Location</label>
 							<div class="col-sm-6">
-							 <select class="ui fluid search dropdown"  required="" id="locationId" name="locationId">
+							 <select class="ui fluid search dropdown"  required="" id="locationId" name="locationId" required="">
 								<option value=""> Choose Location </option>
 								<?php
 
@@ -174,7 +174,7 @@ $cities = $jobrole->getCities();
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Key Skills (Multiple)</label>
 							<div class="col-sm-6">
-							 <select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]">
+							 <select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]" required="">
 								<option value=""> Choose Employee(multiple) </option>
 								<?php
 
@@ -196,7 +196,7 @@ $cities = $jobrole->getCities();
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Client brief note</label>
 							<div class="col-sm-6">
-							<textarea class="form-control" rows="3" placeholder="Write here..." id="clientBriefNote" name="clientBriefNote"></textarea>
+							<textarea class="form-control" rows="3" placeholder="Write here..." id="clientBriefNote" name="clientBriefNote" required=""></textarea>
 							</div>
 						</div>
 

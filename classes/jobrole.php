@@ -30,12 +30,15 @@ class Jobrole extends FunctionalArea
 			$values .= "'" . $value . "'";
 		}
 
-		$sql = "INSERT INTO jobrole ($columns) values ($values)";		
+		$sql = "INSERT INTO jobrole ($columns, createdOn) values ($values, NOW())";		
 
 		if (!$this->db->queryInset($sql)) { // query execute
 
-			Session::put('errorMsg', 'Sorry!,  fail to add job in database!');
-			return false;
+
+			var_dump($this->db->queryInset($sql));
+
+			// Session::put('errorMsg', 'Sorry!,  fail to add job in database!');
+			// return false;
 
 		}
 
@@ -59,7 +62,7 @@ class Jobrole extends FunctionalArea
 
 		foreach ( $this->jobRoleSkills as $jobRoleSkill) {
 
-		  $sql = "INSERT INTO jobroleskill (jobRoleId, skillId) values ('$this->jobRoleId', '$jobRoleSkill')";
+		  $sql = "INSERT INTO jobroleskill (jobRoleId, skillId, jobRollSkillCreatedOn) values ('$this->jobRoleId', '$jobRoleSkill', NOW())";
 
 		  	 if (!$this->db->queryInset($sql)) {
 		  	 	# code...
@@ -113,7 +116,96 @@ class Jobrole extends FunctionalArea
 
 	}
 
+	public  function updateJobRole($jobRoleId, $jobRoleDataToUpdate, $jobRoleSkills)
+	{	
 
+
+		$out = array();
+
+		foreach ($jobRoleDataToUpdate as $column => $value) {
+
+			array_push($out, "$column='$value'");
+		}
+
+		$set = implode(', ', $out);
+
+		$sql = "UPDATE jobrole SET $set where jobRoleId = '$jobRoleId'";	
+
+		if (!$this->db->queryUpdate($sql)) {
+
+			Session::put('errorMsg', 'Sorry! Fail to update, please try again.');
+
+		 	return false;
+		}
+
+		if (!$this->updateJobRoleSkills($jobRoleId, $jobRoleSkills)) {
+			return false;
+		}
+
+		return true;
+		
+	}
+
+
+
+	public function updateJobRoleSkills($jobRoleId, $jobRoleSkills)
+	{	
+		// getting all skill job with Jobrole
+		
+		$currentJobroleSkillsData = $this->getAssingmentSkillsByAssingmentId($jobRoleId);
+	
+		$arraySkillId = array();
+
+		// creating array of skills
+		foreach ($currentJobroleSkillsData as $key => $skill) {	 	
+
+			array_push($arraySkillId,$skill['skillId']);
+		}
+
+
+		// Drop skills 
+		if (!empty($jobRoleSkills)) {
+
+		
+
+			$sql  = "UPDATE `jobroleskill` SET `isJobRoleSkillDrop` = 'Yes', jobRoleSkillDropOn = NOW() WHERE skillId NOT IN ( '" . implode( "', '" , $jobRoleSkills ) . "' ) AND jobRoleId = '$jobRoleId' ";
+
+			if (!$this->db->queryUpdate($sql)) {
+
+			return false;	
+
+			}
+			
+		}
+
+
+		// getting diffrence of old and new jobrole skills 
+
+		$arrayNewJobRoleSkills = array_diff($jobRoleSkills, $arraySkillId);
+
+		if ( empty($arrayNewJobRoleSkills)) {			
+
+			return true;
+
+		}	
+
+		// Insert new skill for jobrole 
+
+		foreach ($arrayNewJobRoleSkills as $column => $newSkill) {
+
+		$sql = "INSERT INTO jobroleskill (jobRoleId, skillId, jobRollSkillCreatedOn) values ('$jobRoleId', '$newSkill', NOW())";
+
+			if (!$this->db->queryInset($sql)) {
+
+			return false;
+
+			}			
+
+		}
+
+		return true;	
+
+	}
 
 
 }

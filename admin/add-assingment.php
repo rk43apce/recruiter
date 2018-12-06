@@ -18,14 +18,16 @@ if (!Token::check2('newAssingment', Input::get('token'))) {
 $assingmentId =  Input::get('assingmentId');
 $companyId =  Input::get('companyId');
 $jobRoleId =  Input::get('jobRoleId');
+$frontingEntity =  Input::get('frontingEntity');
 $jobCity =  Input::get('jobCity');
 $noOfPosition =  Input::get('noOfPosition');
 $clientBrief =  Input::get('clientBrief');
 $spocId =  Input::get('spocId');
+$priority =  Input::get('priority');
 $recruiters =  Input::get('recruiters');
 $createdOn = date("Y/m/d"); 
 
-$assingmentData = array("assingmentId"=>$assingmentId, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "jobCity"=>$jobCity, "noOfPosition"=>$noOfPosition, "clientBrief"=>$clientBrief, "spocId"=>$spocId, "createdOn"=>$createdOn);
+$assingmentData = array("assingmentId"=>$assingmentId, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "frontingEntity"=>$frontingEntity, "jobCity"=>$jobCity, "noOfPosition"=>$noOfPosition, "clientBrief"=>$clientBrief, "noOfPosition"=>$noOfPosition, "spocId"=>$spocId, "priority"=>$priority, "createdOn"=>$createdOn);
 
 $assingment = new Assingment();
 
@@ -36,7 +38,7 @@ $assingment->assingmentId = $assingmentId;		// setting  class assingmentId
 if ($assingment->createNewAssingment()) {
 	# code...
 	Session::put('errorMsg', 'Assignment successfully created!');
-	Redirect::to('./dashboard.php');
+	Redirect::to('./ongoing-assignment.php');
 
 } else {
 

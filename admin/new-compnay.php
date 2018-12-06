@@ -89,7 +89,7 @@ $cityData = $city->getCities();
 
 							<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">City</label>
-							<div class="col-sm-6">
+							<div class="col-sm-3">
 							 <select class="ui fluid search dropdown"  required="" id="companyCity" name="companyCity">
 								<option value=""> Choose City </option>
 								<?php
@@ -114,7 +114,7 @@ $cityData = $city->getCities();
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Industry Type</label>
 							<div class="col-sm-6">
 							 <select class="ui fluid search dropdown"  required="" id="companyIndustryTypeId" name="companyIndustryTypeId" required="">
-								<option value=""> Choose SPOC </option>
+								<option value=""> Choose Industry </option>
 								<?php
 
 								foreach ($industriesData as $key => $industryData) { ?>

@@ -51,7 +51,9 @@ if (Input:: get('companyId') ) {
                         <li class="breadcrumb-item"><a href="./companies.php" class="btn-link">Companies</a></li>
                         <li class="breadcrumb-item"><a href="company-jobroles.php?companyId=7"><?php echo $companyName; ?></a></li>
                         <li class="breadcrumb-item active">Job Roles</li>
-                        <li class="breadcrumb-item active"><?php echo  (Session::exists('errorMsg')) ? "<p class='text-success'>".  Session::flash('errorMsg'). "</p>" : ""; ?> </li>
+                        <li class="breadcrumb-item  text-success">
+                            <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?> 
+                        </li>
                     </ol>
 
                     <span><a href="./new-job-role.php?companyId=<?php echo $companyId;?>" class="btn-link" >+ Add new Job Role</a></span>

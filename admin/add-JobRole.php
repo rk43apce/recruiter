@@ -27,7 +27,7 @@ $clientBriefNote =  Input::get('clientBriefNote');
 $jobRoleSkills =  Input::get('jobRoleSkills');	
 $createdOn = date("Y/m/d"); 
 
-$jobRoleData = array("jobRoleTitle"=>$jobRoleTitle, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "minWorkExperience"=>$minWorkExperience, "maxWorkExperience"=>$maxWorkExperience, "minFixedSalary"=>$minFixedSalary, "maxFixedSalary"=>$maxFixedSalary, "variableSalary"=>$variableSalary, "functionalAreaId"=>$functionalAreaId, "locationId"=>$locationId, "clientBriefNote"=>$clientBriefNote, "createdOn"=>$createdOn);
+$jobRoleData = array("jobRoleTitle"=>$jobRoleTitle, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "minWorkExperience"=>$minWorkExperience, "maxWorkExperience"=>$maxWorkExperience, "minFixedSalary"=>$minFixedSalary, "maxFixedSalary"=>$maxFixedSalary, "variableSalary"=>$variableSalary, "functionalAreaId"=>$functionalAreaId, "locationId"=>$locationId, "clientBriefNote"=>$clientBriefNote);
 
 
 $jobrole = new Jobrole();
@@ -43,4 +43,4 @@ if (!$jobrole->createNewJobRole()) {
 
 }
 
-Redirect::to('./company-jobroles.php?companyId='.$companyId);
+ Redirect::to('./company-jobroles.php?companyId='.$companyId);

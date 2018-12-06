@@ -1,15 +1,15 @@
-/*
-    DEMO STYLE
-*/
+
 @import "https://fonts.googleapis.com/css?family=Montserrat|Open+Sans:300,400,500,600,700";
 
-
 body {
-    font-family: 'Montserrat', sans-serif;
-    background: #fafafa;
+	font-family: 'Montserrat', sans-serif;
+	background: #fafafa;
 }
 .card {
 	padding: 25px;
+}
+.card label {
+	text-align: right;
 }
 .loginform  {
 	margin-top: 15%;

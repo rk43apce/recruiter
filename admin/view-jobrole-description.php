@@ -5,7 +5,6 @@ Login::isUservalid('admin');
 
 (!Input::exists('get')) ?  Redirect::to('./companies.php') : "";
 
-	# code...
 	$jobrole = new Jobrole();
 	
     if ($jobroleDaTa = $jobrole->getJobRoleByJobRoleId(escape(Input::get('jobRoleId')))) {
@@ -30,10 +29,7 @@ Login::isUservalid('admin');
     } else {
 
     	Session::put("errorMsg", 'Sorry, No record found!');
-    }
-
-
-    
+    }    
 ?>
 
 <!DOCTYPE html>
@@ -68,20 +64,18 @@ Login::isUservalid('admin');
                 <div class="card">    
 
                     <ol class="breadcrumb">
-
                         <li class="breadcrumb-item">
-
                             <a href="company-jobroles.php?companyId=<?php echo $companyId;?>" class="btn-link">
                             <?php echo $companyName; ?></a>
                         </li>
                         <li class="breadcrumb-item">
-                             <a href="update-jobrole.php?jobRoleId=<?php echo $jobRoleId;?>" class="btn-link">
+                            <a href="edit-jobrole.php?jobRoleId=<?php echo $jobRoleId;?>" class="btn-link">
                                 <?php echo $jobRoleTitle; ?> 
-                             <i class="fa fa-edit"></i>
-                        </a>
-                        </li>
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </li>                       
                         <li class="breadcrumb-item">
-                             Job role Description   
+                            <?php echo  (Session::exists('errorMsg')) ? "<span class='text-success'>".  Session::flash('errorMsg') ."</span>": ""; ?>  
                         </li>
                         
                     </ol>                                     
@@ -133,5 +127,4 @@ Login::isUservalid('admin');
     <?php require_once  '../include/footer.php'; ?>
 
 </body>
-
 </html>
