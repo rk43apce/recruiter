@@ -21,7 +21,11 @@
 	document.getElementById( "assingmentId" ).value = assingmentId;
 };
 </script> 
-
+<style type="text/css">
+	.card label {
+			text-align: right;
+		}
+</style>
 </head>
 
 <body>

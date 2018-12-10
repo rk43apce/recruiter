@@ -136,7 +136,7 @@ if (Input::exists('post')) {
 									<input type="hidden" name="employeeId" value="<?php echo $employeeId; ?>"> 
 									<input type="hidden" name="token" value="<?php echo Token::generate2('updateEmployee'); ?>">  
 									<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Update Details</button>
-									<a class="btn btn-link" href="./employee-profile.php?employeeId=17">Cancel</a> 
+									<a class="btn btn-link" href="./employee-profile.php?employeeId=<?php echo $employeeId; ?>">Cancel</a> 
 								</div>
 							</div>					  				   						 
 					 
