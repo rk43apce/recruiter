@@ -1,0 +1,6 @@
+/* CSS Document */
+
+div.dataTables_wrapper div.dataTables_length label {
+    
+	display: none !important;
+}

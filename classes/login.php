@@ -36,8 +36,7 @@ class Login
 
 	public function isUservalid($userType)
 	{
-		# code...
-
+	
 		  if (!Login::isUserLoggedIn($userType)) {
         # code...
         Redirect::to('./index.php');
@@ -60,6 +59,27 @@ class Login
 			Session::put("userId", $resultArray['userId']);
 			Session::put("userType",$resultArray['userType']);
 
+			return true;
+				
+		}else {
+			return false;
+		}
+
+
+	}
+	
+	public function loginEmployee($username, $password)
+	{
+
+		$sql = "SELECT employeeId FROM employee where employeeEmailId = '$username' AND  employeePassword = '$password'";
+
+		$result =  $this->db->querySelect($sql);
+
+		if($this->db->isResultCountOne($result)) {
+
+			$resultArray = $this->db->processRowSet($result, true);	
+			Session::put("userId", $resultArray['employeeId']);			
+			Session::put("userType",'employee');			
 			return true;
 				
 		}else {

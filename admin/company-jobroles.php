@@ -78,7 +78,7 @@ if (Input:: get('companyId') ) {
                                  foreach ($jobrolesData as $key => $Jobrole) { ?>
                                         
                                     <tr>
-                                        <td><a href="./view-jobrole-description.php?jobRoleId=<?php echo $Jobrole['jobRoleId']; ?>"> <?php echo $Jobrole['jobRoleTitle']; ?></a> </td>
+                                        <td><a class="btn-link" href="./view-jobrole-description.php?jobRoleId=<?php echo $Jobrole['jobRoleId']; ?>"> <?php echo $Jobrole['jobRoleTitle']; ?></a> </td>
                                         <td><?php echo $Jobrole['functionalareaName']; ?></td>
                                         <td><?php echo $Jobrole['minFixedSalary']; ?> to <?php echo $Jobrole['maxFixedSalary']; ?> </td>
                                         <td><?php echo $Jobrole['minWorkExperience']; ?> to <?php echo $Jobrole['maxWorkExperience']; ?></td>

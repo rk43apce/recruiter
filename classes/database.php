@@ -34,6 +34,14 @@ class Database
 	return	$result =$this->db->mysqli->query($sql);
 
 	}
+	
+	public function  getLastInsertId()
+	{
+		
+	return	$result =$this->db->mysqli->insert_id;
+
+	}
+
 
 	public function  queryUpdate($sql)
 	{
@@ -71,6 +79,8 @@ class Database
 		return ($singleRow)? $resultArray[0] : $resultArray;
 
 	}
+	
+	
 
 }
 

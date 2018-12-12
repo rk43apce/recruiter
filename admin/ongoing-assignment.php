@@ -38,7 +38,7 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
                     <h5></h5>    
 
                      <ol class="breadcrumb">                  
-                        <li class="breadcrumb-item">Ongoing Assignment</li>
+                        <li class="breadcrumb-item">Assignment</li>
                         <li class="breadcrumb-item"><a href="./new-assingment.php" class="btn-link" >+ Create new assignment</a></li>
                         <li class="breadcrumb-item text-success">
                             <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
@@ -50,10 +50,7 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
 
                         <?php  
 
-                        if ($assingmentData) {
-# code...
-
-                            ?>
+                        if ($assingmentData) { ?>
 
                             <table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
                                 <thead>
@@ -73,22 +70,20 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
                                 </thead>
                                 <tbody>
 
-                                    <?php                                              
-
-                                    foreach ($assingmentData as $key => $assingment) { ?>
+                                    <?php foreach ($assingmentData as $key => $assingment) { ?>
 
                                         <tr>
                                             <td><?php echo $assingment['companyName']; ?> </td>
                                             <td><?php echo $assingment['jobRoleTitle']; ?></td>
                                             <td><?php echo $assingment['employeeName']; ?></td> 
                                             <td><?php echo $assingment['cityName']; ?></td>
-                                            <td><?php echo $assingment['minFixedSalary']; ?> to <?php echo $assingment['maxFixedSalary']; ?> </td>
-                                            <td><?php echo $assingment['minWorkExperience']; ?> to <?php echo $assingment['maxWorkExperience']; ?> </td> 
-                                            <td><?php echo $assingment['createdOn']; ?></td> 
+                                            <td><?php echo $assingment['minFixedSalary']; ?> - <?php echo $assingment['maxFixedSalary']; ?> </td>
+                                            <td><?php echo $assingment['minWorkExperience']; ?> - <?php echo $assingment['maxWorkExperience']; ?> yrs </td> 
+                                            <td><?php echo date('d-m-Y', strtotime($assingment['createdOn'])); ?></td> 
                                             <td> <?php echo noOfDays($assingment['createdOn']);?> </td>
-                                            <td><?php echo $assingment['createdOn']; ?></td>                                                
+                                            <td> <?php echo date('d-m-Y', strtotime($assingment['createdOn'])); ?></td>                                                
                                             <td>
-                                                <a class="btn btn-link" href="./edit-assingment.php?assingmentId=<?php echo $assingment['assingmentId']; ?>">Edit</a>
+                                                <a class="btn-link" href="./edit-assingment.php?assingmentId=<?php echo $assingment['assingmentId']; ?>">Edit</a>
                                             </td>                             
                                         </tr>
 
@@ -97,16 +92,12 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
                                 </tbody>
                             </table>
 
-                            <?php
-
-                        } else { ?>
+                            <?php } else { ?>
 
                             <table>                                 
                                 <tr> 
                                     <td> 
-
-                                        <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>      
-
+                                        <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : "";?>   
                                     </td>
                                 </tr>
                             </table>  

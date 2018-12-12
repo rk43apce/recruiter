@@ -16,8 +16,8 @@ if (Input::exists('post')) {
 
         $userLogin = new Login();
 
-		if ($userLogin->checkUser($username, $password)) {
-
+		if ($userLogin->loginEmployee($username, $password)) {			
+		
 			Redirect::to('./dashboard.php');
 		}    
 

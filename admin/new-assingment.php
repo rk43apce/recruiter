@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<?php require_once  '../include/css.php'; ?>   
+<?php require_once  '../include/css.php'; ?>   
 <script>
 
 	window.onload = function () {
@@ -60,7 +60,7 @@
 							<div class="form-group row">
 								<label for="companyId" class="col-sm-3 col-form-label">Company</label>
 								<div class="col-sm-8">
-									<select class="ui fluid search dropdown"  id="companyName" name="companyId" required="" autofocus="">
+									<select class="ui fluid search dropdown"  id="companyName" name="companyId" required autofocus>
 
 										<option  value="">Choose</option>
 										<?php foreach ($companies as $key => $company) { ?>
@@ -79,7 +79,7 @@
 							<div class="form-group row">
 								<label for="jobRoleId" class="col-sm-3 col-form-label">Role</label>
 								<div class="col-sm-8">
-									<select class="ui fluid search dropdown"  id="jobRoleId" name="jobRoleId" required="">
+									<select class="ui fluid search dropdown"  id="jobRoleId" name="jobRoleId" required>
 										<option value="" selected="">Select Role</option>
 									</select>
 								</div>
@@ -93,7 +93,7 @@
 
 								<label for="companyId" class="col-form-label">City</label>
 								<div class="col-sm-3">
-									<select class="ui fluid search dropdown"  id="jobCity" name="jobCity" required="">
+									<select class="ui fluid search dropdown"  id="jobCity" name="jobCity" required>
 										<option  value="">Choose</option>
 										<?php foreach ($cities as $key => $city) { ?>
 
@@ -148,7 +148,7 @@
 							<div class="form-group row">						
 								<label for="frontingEntitys" class="col-sm-3 col-form-label">Assign priority</label>
 								<div class="col-sm-2">
-									<select class="ui fluid search dropdown"  id="priority" name="priority" required="">
+									<select class="ui fluid search dropdown"  id="priority" name="priority" required>
 										<option value=""> Choose H/M/L</option>	
 										<option value="Low">Low</option>
 										<option value="Medium">Medium</option>
@@ -168,7 +168,7 @@
 							<div class="form-group row">
 								<label for="frontingEntitys" class="col-sm-3 col-form-label">Client brief note</label>
 								<div class="col-sm-8">
-									<textarea class="form-control" rows="3" placeholder="Write here..." id="clientBrief" name="clientBrief" required=""></textarea>
+									<textarea class="form-control" rows="3" placeholder="Write here..." id="clientBrief" name="clientBrief" required></textarea>
 								</div>	
 							</div>	
 
