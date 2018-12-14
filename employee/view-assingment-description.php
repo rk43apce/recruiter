@@ -18,10 +18,7 @@ if (Input::exists('get')) {
 		$cityName =  $assingmentData['cityName'];
 		$minWorkExperience =  $assingmentData['minWorkExperience'];
 		$maxWorkExperience =  $assingmentData['maxWorkExperience'];
-		$createdOn =  $assingmentData['createdOn'];	
-
-		
-		
+		$createdOn =  $assingmentData['createdOn'];			
 
 	} else {
 
@@ -89,7 +86,8 @@ if (Input::exists('get')) {
 			<div class="card">    
 				 <ol class="breadcrumb">                  
                         <li class="breadcrumb-item active" >Shortlist Candidates</li>  
-                        <li class="breadcrumb-item " ><a href="./new-candidate.php?assingmentId=<?php echo $assingmentId;?>" class="btn-link">+Add new Candidate</a></li> 
+                        <li class="breadcrumb-item " >
+                        	<a href="./new-candidate.php" class="btn-link">+Add new Candidate</a></li> 
                         <li class="breadcrumb-item text-success">
                             <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
                         </li>                   

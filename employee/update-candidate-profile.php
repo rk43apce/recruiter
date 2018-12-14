@@ -25,16 +25,14 @@ if (Input::exists('post')) {
 		$candidate = new Candidate();		
 		$candidate->candidateId = $candidateId; 
 		$candidate->candiateDegrees = Input::get('candiateDegrees'); 
-		$candidate->addCandidateEducation(); 
-		
-
-		$candidate = new Candidate();
+		$candidate->addCandidateEducation(); 		
 
 		$candidateData = array("assingmentId"=>$assingmentId, "candidateFullName"=>$candidateFullName, "candidateDOB"=>$candidateDOB, "candidateEmail"=>$candidateEmail, "candidateMobileNo"=>$candidateMobileNo, "candidateCity"=>$candidateCity, "candidateOrganisation"=>$candidateOrganisation, "candidateDesignation"=>$candidateDesignation, "candidateFunctionalAreaId"=>$candidateFunctionalAreaId, "candidateNoticePeriod"=>$candidateNoticePeriod, "candidateWorkExp"=>$candidateWorkExp, "candidateSalary"=>$candidateSalary, "candidateCreatedOn"=>$candidateCreatedOn);
 		
-		if($candidate->updateCandidateProfile($newCandidateData)) {
+		
+		if($candidate->updateCandidateProfile($candidateData, $candidateId)) {
 			// on success redirec to 
-			Redirect::to('view-candidate-description.php?assingmentId='.Input::get('assingmentId'));
+			Redirect::to('view-candidate-description.php?candidateId='.$candidateId);
 			
 		} else {
 			// on failuer redirect back to form

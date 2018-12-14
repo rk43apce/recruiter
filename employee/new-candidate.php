@@ -2,50 +2,14 @@
 require_once '../core/init.php';
 require_once '../functions/helper.php';
 
+$candidate =  new Candidate();
 
+$functionalareasData = $candidate->getFunctionalAreas();
 
-if (!Input::exists('get')) {	
-	
-	Redirect::to('dashboard.php');
-	die();
-} 
-if (empty(Input::get('assingmentId')) ) {	
-	
-	Redirect::to('dashboard.php');
-	die();
-} 
+$graduationDegreeData = $candidate->getDegrees('Graduate');	
 
+$masterDegreeData = $candidate->getDegrees('Master');
 
-$assingmentId = Input::get('assingmentId');	
-$assingment =  new Assingment();
-
-if ($assingmentData = $assingment->getOnGoingAssingmentById($assingmentId)) {
-
-	$companyId =  $assingmentData['companyId'];
-	$assingmentId =  $assingmentData['assingmentId'];
-	$jobRoleTitle =  $assingmentData['jobRoleTitle'];
-	$companyName =  $assingmentData['companyName'];
-	$spocId =  $assingmentData['spocId'];
-	$spocName =  $assingmentData['employeeName'];
-	$cityName =  $assingmentData['cityName'];
-	$minWorkExperience =  $assingmentData['minWorkExperience'];
-	$maxWorkExperience =  $assingmentData['maxWorkExperience'];
-	$createdOn =  $assingmentData['createdOn'];		
-
-	$candidate =  new Candidate();
-
-	$functionalareasData = $candidate->getFunctionalAreas();
-	
-	$graduationDegreeData = $candidate->getDegrees('Graduate');	
-	
-	$masterDegreeData = $candidate->getDegrees('Master');
-
-} else {
-
-	Session::put('errorMsg', 'Invalid request or No record found! ');
-} 
-
-	
 ?>
 
 <!DOCTYPE html>
@@ -74,15 +38,10 @@ if ($assingmentData = $assingment->getOnGoingAssingmentById($assingmentId)) {
 			<!-- Sidebar Holder -->
 			<?php require_once  '../include/navbar-top-employee.php'; ?>
 			
-			<!-- kill page if no record found -->
-			<?php Data::checkData($assingmentData); ?>	 		
-			 	      
-			 
+					 
 			 <div class="container">
 				<div class="card">   
-					<ol class="breadcrumb">    
-						<li class="breadcrumb-item " ><?php echo $companyName ?></li> 
-						<li class="breadcrumb-item " ><?php echo $jobRoleTitle ?></li>   
+					<ol class="breadcrumb">  
 						<li class="breadcrumb-item active">Add Candidates</li>                                          
 					</ol>	
 					<div class="line"></div>
@@ -228,8 +187,7 @@ if ($assingmentData = $assingment->getOnGoingAssingmentById($assingmentId)) {
 							</div>
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label"></label>
-								<div class="col-sm-9">
-									<input type="hidden" name="assingmentId" value="<?php echo $assingmentId;?>">
+								<div class="col-sm-9">								
 									<input type="hidden" name="token" value="<?php echo Token::generate2('addNewCandidate'); ?>">  
 									<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">
 										Add Candidate 

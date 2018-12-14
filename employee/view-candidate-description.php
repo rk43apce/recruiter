@@ -2,10 +2,14 @@
 require_once '../core/init.php';
 require_once '../functions/helper.php';
 
-$candidate =  new Candidate();
+if (Input::exists('get')) {	
 
-if ($candidateData =  $candidate->getCandidatebyID('1544613682182')) {
-	
+	$candidateId = Input::get('candidateId');
+
+	$candidate =  new Candidate();
+
+	if ($candidateData =  $candidate->getCandidatebyID($candidateId)) {
+
 	$candidateId = $candidateData['candidateId'];
 	$assingmentId = $candidateData['assingmentId'];
 	$candidateFullName = $candidateData['candidateFullName'];
@@ -21,11 +25,17 @@ if ($candidateData =  $candidate->getCandidatebyID('1544613682182')) {
 	$candidateNoticePeriod = $candidateData['candidateNoticePeriod'];
 	$candidateCreatedOn = $candidateData['candidateCreatedOn'];
 	$candidateAddedOn = $candidateData['candidateAddedOn'];	
-	
-} else {
 
-	Session::put('errorMsg', 'Invalid request or No record found! ');
-} 
+	} else {
+
+		Session::put('errorMsg', 'Invalid request or No record found! ');
+	} 
+	
+}    
+	
+
+
+
 ?>
 <!DOCTYPE html>
 <html>

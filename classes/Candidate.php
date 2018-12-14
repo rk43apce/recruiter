@@ -12,12 +12,12 @@ class Candidate extends Degree {
 	}
 
 	/*============================= add candidate  ==========================================*/
-	public function addNewCandidate( $candidateData = '' ) {
+	public function addCandidate( $candidatePersonalData = '' ) {
 
 		$columns = "";
 		$values = "";
 
-		foreach ( $candidateData as $column => $value ) {
+		foreach ( $candidatePersonalData as $column => $value ) {
 			$columns .= ( $columns == "" ) ? "" : ", ";
 			$columns .= $column;
 			$values .= ( $values == "" ) ? "" : ", ";
@@ -30,26 +30,15 @@ class Candidate extends Degree {
 			return false;
 		}
 
-		if ( empty( $this->candiateDegrees ) ) {
-			Session::put( 'erroMsg', 'Candidate successfully added in Database!' );
-			Session::put( 'erroMsgEducation', 'Please add education history' );
-			return true;
-		}
-
-		/*Calling add education function here*/
-
-		if ( !$this->addCandidateEducation() ) {
-			return false;
-		}
 		return true;
 
 	}
-
+	
 	/*============================= add education  ==========================================*/
 
-	public function addCandidateEducation() {
-		foreach ( $this->candiateDegrees as $degreeId ) {
-			$sql = "INSERT INTO education (candidateId, degreeId) values ($this->candidateId, '$degreeId')";
+	public function addEducation($candidateId, $candiateDegrees) {
+		foreach ( $candiateDegrees as $degreeId ) {
+			$sql = "INSERT INTO education (candidateId, degreeId) values ($candidateId, '$degreeId')";
 			if ( !$this->db->queryInset( $sql ) ) {
 				return false;
 			}
@@ -57,6 +46,31 @@ class Candidate extends Degree {
 		return true;
 	}
 
+	/*============================= add work Experiecne  ==========================================*/
+
+	public function addWorkExperience($candidateId, $candidateWorkExperience) {
+		$columns = "";
+		$values = "";
+
+		foreach ( $candidateWorkExperience as $column => $value ) {
+			$columns .= ( $columns == "" ) ? "" : ", ";
+			$columns .= $column;
+			$values .= ( $values == "" ) ? "" : ", ";
+			$values .= "'" . $value . "'";
+		}
+
+		$sql = "INSERT INTO workExperience ($columns) values ($values)";
+
+		if ( !$this->db->queryInset( $sql ) ) {
+			return false;
+		}
+		
+		return true;
+
+	}
+	
+
+	
 
 	/*============================= add get candidate by candidate id  ==========================================*/
 
@@ -79,30 +93,23 @@ class Candidate extends Degree {
 
 	/*============================= Update candidate profile  ==========================================*/
 
-	public function updateCandidateProfile( $candidateData, $candidateId, $assingmentId ) {
-
+	public function updateCandidateProfile($candidateData, $candidateId ) {
+		
 		$out = array();
-
+		
 		foreach ( $candidateData as $column => $value ) {
-
 			array_push( $out, "$column='$value'" );
 		}
-
+		
 		$set = implode( ', ', $out );
+		
+		$sql = "UPDATE candidate SET $set where candidateId = '$candidateId'";
 
-		$sql = "UPDATE candidate SET $set where candidateId = '$candidateId' AND assingmentId = '$assingmentId' ";
-
-
-
-
-		var_dump( $this->db->queryUpdate( $sql ) );
-
-		//	if (!$this->db->queryUpdate($sql)) {
-		//
-		//			return false;
-		//		}	
-		//
-		//		return true;
+		if (!$this->db->queryUpdate($sql)) {
+			return false;
+		}
+		
+		return true;
 
 	}
 
