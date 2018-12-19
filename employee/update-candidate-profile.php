@@ -6,38 +6,111 @@ require_once '../functions/sanitize.php';
 if (Input::exists('post')) {
 
 	if (Token::check2('updateCandidateRecord', Input::get('token'))) {
+
 		
+		/*================================Candidate id ==============================================*/
 		$candidateId =  escape(Input::get('candidateId'));
-		$assingmentId =  escape(Input::get('assingmentId'));
+
+		if (empty($candidateId)) {
+			
+			Redirect::to('dashboard.php');
+		}
+
+		/*================================Candidate personal info ==============================================*/
 		$candidateFullName =  escape(Input::get('candidateFullName'));
 		$candidateDOB =  escape(Input::get('candidateDOB'));
 		$candidateEmail =  escape(Input::get('candidateEmail'));
 		$candidateMobileNo =  escape(Input::get('candidateMobileNo'));
 		$candidateCity =  escape(Input::get('candidateCity'));
+
+
+		/*================================Candidate education ==============================================*/
+		$candiateDegrees =  Input::get('candiateDegrees');
+
+
+		/*================================Candidate work history==============================================*/
 		$candidateOrganisation =  escape(Input::get('candidateOrganisation'));
 		$candidateDesignation =  escape(Input::get('candidateDesignation'));
 		$candidateFunctionalAreaId =  escape(Input::get('candidateFunctionalAreaId'));
 		$candidateNoticePeriod =  escape(Input::get('candidateNoticePeriod'));
 		$candidateWorkExp =  escape(Input::get('candidateWorkExp'));
-		$candidateSalary =  escape(Input::get('candidateSalary'));
-		$candidateCreatedOn =  $createdOn = date("Y/m/d");			
-		
-		$candidate = new Candidate();		
-		$candidate->candidateId = $candidateId; 
-		$candidate->candiateDegrees = Input::get('candiateDegrees'); 
-		$candidate->addCandidateEducation(); 		
+		$candidateSalary =  escape(Input::get('candidateSalary'));			
 
-		$candidateData = array("assingmentId"=>$assingmentId, "candidateFullName"=>$candidateFullName, "candidateDOB"=>$candidateDOB, "candidateEmail"=>$candidateEmail, "candidateMobileNo"=>$candidateMobileNo, "candidateCity"=>$candidateCity, "candidateOrganisation"=>$candidateOrganisation, "candidateDesignation"=>$candidateDesignation, "candidateFunctionalAreaId"=>$candidateFunctionalAreaId, "candidateNoticePeriod"=>$candidateNoticePeriod, "candidateWorkExp"=>$candidateWorkExp, "candidateSalary"=>$candidateSalary, "candidateCreatedOn"=>$candidateCreatedOn);
+
+
+		$candidatePersonalData = array("candidateFullName"=>$candidateFullName, "candidateDOB"=>$candidateDOB, "candidateEmail"=>$candidateEmail, "candidateMobileNo"=>$candidateMobileNo, "candidateCity"=>$candidateCity);
+
+
+		$candidate = new Candidate(); 
+
+		$updateStatus = true;
+		/*================================Update candidate  profile ==============================================*/	
+		if (!empty($candidatePersonalData)) {	
+
+			if (!$candidate->updateCandidateProfile($candidatePersonalData, $candidateId )) {				
+
+				Session::put('updateWorkExperience', 'Fail to update Work experience, try again!');
+				$updateStatus = false;
+			}
+		}
+
+
+		/*================================Array candidate work experience ==============================================*/
+		$workExperienceData = array("candidateOrganisation"=>$candidateOrganisation, "candidateDesignation"=>$candidateDesignation, "candidateFunctionalAreaId"=>$candidateFunctionalAreaId, "candidateNoticePeriod"=>$candidateNoticePeriod, "candidateWorkExp"=>$candidateWorkExp, "candidateSalary"=>$candidateSalary);
+
+		/*================================Update candidate  work experience ==============================================*/
+		if (!empty($workExperienceData)) {
+
 		
+			if (!$candidate->updateWorkExperience($workExperienceData, $candidateId )) {			
+
+				Session::put('updateWorkExperience', 'Fail to update Work experience, try again!');
+				$updateStatus = false;
+
+			}			
 		
-		if($candidate->updateCandidateProfile($candidateData, $candidateId)) {
-			// on success redirec to 
-			Redirect::to('view-candidate-description.php?candidateId='.$candidateId);
+		}			
+
+
+		/*================================Update candidate  work experience ==============================================*/
+		if (!empty($candiateDegrees)) {
+				
+			$arrayCandiddateSavedDegrees =  ArrayPush::makeArray($candidate->getEducation($candidateId));
+
+			$dropDegrees = array_diff($arrayCandiddateSavedDegrees, $candiateDegrees);	
+
+			if (!empty($dropDegrees)) {
+
+				if (!$candidate->updateEducationHistory($dropDegrees, $candidateId )) {
+					# code...
+					Session::put('updateEducationHistory', 'Fail to update Work experience, try again!');
+					$updateStatus = false;
+				}
+
+			}
+
+			$arrayNewDegrees = array_diff($candiateDegrees, $arrayCandiddateSavedDegrees);
+
+			if (!empty($arrayNewDegrees)) {	
+
+				if ($candidate->addEducation( $candidateId, $arrayNewDegrees )) {
+					
+					Session::put('updateEducationHistory', 'Fail to update Work experience, try again!');
+					$updateStatus = false;
+				}
+		
+			}				 		 
+
+		}
+
+		if ($updateStatus) {
+
 			
-		} else {
-			// on failuer redirect back to form
-			Redirect::to('view-assingment-description.php?assingmentId='.Input::get('assingmentId'));			
-		}		
+		
+			Session::put('errorMsg', 'Candidate profile successfully updated!');
+		}
+
+		// Redirect::to('view-candidate-description.php?candidateId='.$candidateId);
 		
 	} else {
 		Redirect::to('view-assingment-description.php?assingmentId='.Input::get('assingmentId'));

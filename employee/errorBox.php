@@ -1,8 +1,7 @@
 <div class="container">
 	<div class="card">
-		<p>
+		<div class="card-body">
 			<?php echo Session::flash("errorMsg"); ?>
-		</p>
-		
+		</div>
 	</div>
-</div>
+</div>	

@@ -90,7 +90,10 @@ class Assingment extends Company
 
 	public function getAssingmentRecruiterByAssingmentId($assingmentId)
 	{
-	 $sql = " SELECT ra.recruiterId FROM `recruiterassingment` ra INNER JOIN employee on employee.employeeId = ra.recruiterId WHERE ra.assingmentId = '$assingmentId' and isAssingmentWithdraw = 'No'";
+		$sql = " SELECT ra.recruiterId 
+		FROM `recruiterassingment` ra 
+		INNER JOIN employee on employee.employeeId = ra.recruiterId 
+		WHERE ra.assingmentId = '$assingmentId' and isAssingmentWithdraw = 'No'";
 
 		$result =  $this->db->querySelect($sql);
 
@@ -104,12 +107,12 @@ class Assingment extends Company
 
 	public static function selected($employeeId, $arrayrRcruiter)
 	{			
-			if (!count($arrayrRcruiter)) {
-				# code...
-				return null;
-			}
+		if (!count($arrayrRcruiter)) {
+			# code...
+			return null;
+		}
 
-		 return (in_array($employeeId, $arrayrRcruiter))? "selected" : "";
+		return (in_array($employeeId, $arrayrRcruiter))? "selected" : "";
 	}
 
 

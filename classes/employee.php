@@ -3,7 +3,7 @@
 /**
  * 
  */
-class Employee {
+class Employee extends Assingment {
 			
 	public $db;
 	

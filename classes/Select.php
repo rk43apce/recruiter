@@ -2,14 +2,14 @@
 
 class Select 
 {	
-	public static function selected($employeeId, $arrayrRcruiter)
+	public static function selected($value, $arrayData)
 	{			
-			if (!count($arrayrRcruiter)) {
+			if (!count($arrayData)) {
 				# code...
 				return null;
 			}
 
-		 return (in_array($employeeId, $arrayrRcruiter))? "selected" : "";
+		 return (in_array($value, $arrayData))? "selected" : "";
 	}
 
 }

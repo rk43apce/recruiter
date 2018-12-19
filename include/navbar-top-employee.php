@@ -18,6 +18,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Past Assignment</a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="./candidates.php">Candidates</a>
+                </li>
                
                 <li class="nav-item">
                     <a class="nav-link" href="../logout.php">Logout</a>

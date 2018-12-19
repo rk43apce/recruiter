@@ -34,31 +34,41 @@ if (Input::exists('post')) {
 		$candidate = new Candidate();
 		
 		
-//		var_dump($candidate->addCandidate($candidatePersonalData));
-//		
-//		var_dump($candidate->addEducation($candidateId, $candiateDegrees));
-//		
-//		var_dump($candidate->addWorkExperience($candidateId, $candidateWorkExperience));
+		if (empty($candidateEmail)) {
+			
+			Redirect::to('new-candidate.php');
+		}
 		
+		// Checking candidate emailavailability
 		
-		
-		
-		
+		if($candidate->checkEmailAvailability($candidateEmail)) { // found redirect to add new candidate page with error
+			
+			Session::put('errorMsg', "&nbsp; Sorry, that email's taken. Try another?");
+			Redirect::to('new-candidate.php');
+			exit();
+		}
 		
 
-		
-		
-		
-		
-		
-//		if($result  = $candidate->addNewCandidate($newCandidateData)) {
-//			// on success redirec to 
-//			Redirect::to('view-candidate-description.php?candidateId='.$candidateId);			
-//			
-//		} else {
-//			// on failuer redirect back to form
-//			Redirect::to('new-candidate.php');			
-//		}		
+		if (!$candidate->addCandidate($candidatePersonalData)) {
+			# code...
+			Session::put('errorMsg', 'Fail to add candidate, please try again!');
+			Redirect::to('new-candidate.php');	
+			exit();
+		}
+
+		if (!$candidate->addEducation($candidateId, $candiateDegrees)) {
+			
+			Session::put('errorMsg', 'Fail to education, please try again!');
+		}
+
+		if (!$candidate->addWorkExperience($candidateId, $candidateWorkExperience)) {
+			
+			Session::put('errorMsg', 'Fail to add Work Experice, please try again!');
+		}
+
+		// finally redirect to candidate profile page 
+//		Redirect::to('view-candidate-description.php?candidateId='.$candidateId);	
+		Redirect::to('candidates.php');	
 		
 	} else {
 		Redirect::to('new-candidate.php');	

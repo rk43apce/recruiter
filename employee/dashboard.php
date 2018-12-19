@@ -4,25 +4,7 @@ require_once '../functions/helper.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$login  = new Login();
-
-$login->isUservalid('employee');
-
-$employee = new Employee();
-
-$employeeData =  $employee->getEmployeeById(Session::get('userId'));
-
-$employeeId =  $employeeData['employeeId'];
-
-$employeeName =  $employeeData['employeeName'];
-
-$assingment = new Assingment();  
-
-if (!$assingmentData = $assingment->getEmployeeLeaderAssingment($employeeId)) {
-
-    Session::put("errorMsg", 'Sorry! No ongoing assignment assign to you!');
-}
-
+$assingmentData = Load::employeeAssingment();
 
 ?>
 
@@ -30,6 +12,7 @@ if (!$assingmentData = $assingment->getEmployeeLeaderAssingment($employeeId)) {
 <html>
 <head>
     <?php require_once  '../include/css.php'; ?>    
+    
 </head>
 
 <body>
@@ -45,14 +28,15 @@ if (!$assingmentData = $assingment->getEmployeeLeaderAssingment($employeeId)) {
 		<div class="container">
 			<div class="card">    
 				<ol class="breadcrumb">                  
-					<li class="breadcrumb-item">Assignment</li>   
+					<li class="breadcrumb-item">Assignment </li>  
+					<li class="breadcrumb-item"><a class="btn-link" href="./new-candidate.php">+Add new candidate</a> </li>  
 					<li class="breadcrumb-item text-success">
 					<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
 					</li>                   
 				</ol>
 
 				<div class="line"></div>
-				<table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
+				<table id="assingmentTable" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
 					<thead>
 						<tr>
 							<th>Company Name</th>
@@ -96,7 +80,7 @@ if (!$assingmentData = $assingment->getEmployeeLeaderAssingment($employeeId)) {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#example').DataTable( {
+		$('#assingmentTable').DataTable( {
 			responsive: {
 				details: {
 					display: $.fn.dataTable.Responsive.display.modal( {

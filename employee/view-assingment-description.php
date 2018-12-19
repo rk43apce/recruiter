@@ -42,52 +42,22 @@ if (Input::exists('get')) {
 		<div id="content">
 			<!-- Sidebar Holder -->
 			<?php require_once  '../include/navbar-top-employee.php'; ?>     
-			 
-			 <div class="container">
-				<div class="card">   
-				
-					<table id="" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
-						
-						<tbody>
-								<tr>
-									<td>Compnay Name</td>
-									
-									<td><?php echo $companyName ?> </td>								                            
-								</tr>
-								<tr>
-									<td>Role  Title</td>
-									<td><?php echo $jobRoleTitle ?> </td>								                            
-								</tr>
-								<tr>
-									<td>City Name</td>
-									<td><?php echo $cityName ?> </td>								                            
-								</tr>
-								<tr>
-									<td>SPOC</td>
-									<td><?php echo $spocName ?> </td>								                            
-								</tr>
-								
-								<tr>
-									<td>Experience</td>
-									<td><?php echo $minWorkExperience ?> to <?php echo $maxWorkExperience ?> </td>								                            
-								</tr>
-								<tr>
-									<td>Open On</td>
-									<td><?php echo $createdOn ?> </td>								                            
-								</tr>
-								
-							
-						</tbody>
-					</table> 
-				</div>
-            </div>
-            <br><br>
+			
 			 <div class="container">
 			<div class="card">    
-				 <ol class="breadcrumb">                  
-                        <li class="breadcrumb-item active" >Shortlist Candidates</li>  
+				 <ol class="breadcrumb">          
+                        <li class="breadcrumb-item"><a class="btn-link" href="./dashboard.php">Assignment</a> </li> 
+                        <li class="breadcrumb-item">
+                        	<?php echo $companyName ?>
+                        </li> 
+                         <li class="breadcrumb-item">
+                        	<?php echo $jobRoleTitle ?>
+                        </li>       
+                        <li class="breadcrumb-item"><?php echo $cityName ?> </li> 
+                        <li class="breadcrumb-item active">Shortlisted Candidates </li> 
                         <li class="breadcrumb-item " >
-                        	<a href="./new-candidate.php" class="btn-link">+Add new Candidate</a></li> 
+                        <a href="./shortlist.php?assingmentId=<?php echo $assingmentId; ?>" class="btn-link">+Add candidate to funnel</a>
+                        </li> 
                         <li class="breadcrumb-item text-success">
                             <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
                         </li>                   
@@ -98,7 +68,7 @@ if (Input::exists('get')) {
 						<tr>
 							<th>Added by</th>
 							<th>Candidate Name</th>
-							 <th>Organisation</th>  
+							<th>Organisation</th>  
 							<th>Designation</th>
 							<th>Years</th>
 							<th>CTC</th>
@@ -108,8 +78,17 @@ if (Input::exists('get')) {
 
 					</thead>
 					<tbody>
+						<tr>
+							<td>Added</td>
+							<td>Candidate</td>
+							<td>Organisation</td>
+							<td>Designation</td>
+							<td>Years</td>
+							<td>CTC</td>
+							<td>Candidate Status</td>
+							<td>Update</td>
+						</tr>
 						
-
 					</tbody>
 				</table> 
 

@@ -34,7 +34,7 @@ class Login
 
 	}
 
-	public function isUservalid($userType)
+	public static function isUservalid($userType)
 	{
 	
 		  if (!Login::isUserLoggedIn($userType)) {

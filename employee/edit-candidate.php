@@ -1,42 +1,54 @@
 <?php 
 require_once '../core/init.php';
 require_once '../functions/helper.php';
+require_once '../functions/sanitize.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+if (!Input::exists('get')) {
+
+	Redirect::to('dashboard.php');
+	exit();
+}
+
+if (empty(Input::get('candidateId')) ) {
+
+	Redirect::to('dashboard.php');
+	exit();
+}
+
+
 $candidate = new Candidate();
 
-
-if ($candidateData =  $candidate->getCandidatebyId('1544613682182')) {
-
 	
+if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId')))) {
+
+	// candidate profile data
 	$candidateId = $candidateData['candidateId'];
-	$assingmentId = $candidateData['assingmentId'];
 	$candidateFullName = $candidateData['candidateFullName'];
 	$candidateDOB = $candidateData['candidateDOB'];
 	$candidateEmail = $candidateData['candidateEmail'];
 	$candidateMobileNo = $candidateData['candidateMobileNo'];
 	$candidateCity = $candidateData['candidateCity'];
-	$candidateOrganisation = $candidateData['candidateOrganisation'];
-	$candidateDesignation = $candidateData['candidateDesignation'];
-	$candidateFunctionalAreaId = $candidateData['candidateFunctionalAreaId'];
-	$functionalareaName = $candidateData['functionalareaName'];
-	$candidateWorkExp = $candidateData['candidateWorkExp'];
-	$candidateSalary = $candidateData['candidateSalary'];
-	$candidateNoticePeriod = $candidateData['candidateNoticePeriod'];
-	$candidateCreatedOn = $candidateData['candidateCreatedOn'];
-	$candidateAddedOn = $candidateData['candidateAddedOn'];
 	
-	$functionalareasData = $candidate->getFunctionalAreas();
-	$graduationDegreeData = $candidate->getDegrees('Graduate');		
-	$masterDegreeData = $candidate->getDegrees('Master');
-	
-	
+	// getting candidate workExperiece data
+	$candidateWorkExpData = $candidate->getWorkExperience($candidateId);
+	$candidateOrganisation = $candidateWorkExpData['candidateOrganisation'];
+	$candidateDesignation = $candidateWorkExpData['candidateDesignation'];
+	$functionalareaName = $candidateWorkExpData['functionalareaName'];
+	$candidateSalary = $candidateWorkExpData['candidateSalary'];
+	$candidateNoticePeriod = $candidateWorkExpData['candidateNoticePeriod'];
+	$candidateWorkExp = $candidateWorkExpData['candidateWorkExp'];
+	$candidateFunctionalAreaId = $candidateWorkExpData['candidateFunctionalAreaId'];
+
+	// getting student education data and creating array of education qualification	
+
+	$candidateEducationData =  ArrayPush::makeArray($candidate->getEducation($candidateId));	
 	
 } else {
 
-	Session::put('errorMsg', 'Invalid request or No record found! ');
+	Session::put('errorMsg', ' No record found Or Invalid request');
 } 
 ?>
 
@@ -58,7 +70,8 @@ if ($candidateData =  $candidate->getCandidatebyId('1544613682182')) {
 		<!-- Page Content Holder -->
 		<div id="content">
 			<!-- Sidebar Holder -->
-			<?php require_once  '../include/navbar-top-employee.php'; ?>						 
+			<?php require_once  '../include/navbar-top-employee.php'; ?>
+					<?php Data::checkData($candidateData); ?>						 
 			 <div class="container">
 				<div class="card">   
 					<ol class="breadcrumb">
@@ -129,7 +142,7 @@ if ($candidateData =  $candidate->getCandidatebyId('1544613682182')) {
 								<div class="col-sm-3">
 								  
 									<select class="ui fluid search dropdown"  name="candidateFunctionalAreaId" required >	
-									<?php foreach ($functionalareasData as $key => $functionalarea) { ?>
+									<?php foreach ($candidate->getFunctionalAreas() as $key => $functionalarea) { ?>
 										<option value="">Choose functional area</option>
 										<option value="<?php echo $functionalarea['functionalareaId']; ?>"
 
@@ -166,7 +179,7 @@ if ($candidateData =  $candidate->getCandidatebyId('1544613682182')) {
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label"></label>
 								<div class="col-sm-6">
-								<p>Education Details</p>
+									<p>Education Details</p>
 								</div>
 							</div>	
 							<div class="form-group row">
@@ -174,12 +187,14 @@ if ($candidateData =  $candidate->getCandidatebyId('1544613682182')) {
 								<div class="col-sm-6">
 								  <select class="ui fluid search dropdown" name="candiateDegrees[]">
 									<option  value="">Choose Graduation</option>
-										<?php foreach ($graduationDegreeData as $key => $degree) { ?>
-											<option value="">Choose functional area</option>
-											<option value="<?php echo $degree['degreeId']; ?>">
-												<?php echo	$degree['degreeName']; ?>
-											</option>
-										<?php } ?>	
+									<?php foreach ($candidate->getDegrees('Graduate') as $key => $degree) { ?>
+									<option value="">Choose functional area</option>
+									<option value="<?php echo $degree['degreeId']; ?>"
+									<?php echo Select::selected($degree['degreeId'], $candidateEducationData); ?>
+									>
+									<?php echo	$degree['degreeName']; ?>
+									</option>
+									<?php } ?>	
 									</select>
 								</div>
 							</div>
@@ -187,32 +202,38 @@ if ($candidateData =  $candidate->getCandidatebyId('1544613682182')) {
 								<label for="" class="col-sm-3 col-form-label">Master</label>
 								<div class="col-sm-6">
 								  <select class="ui fluid search dropdown" name="candiateDegrees[]">
-										<option  value="">Choose Graduation</option>
-										<?php foreach ($masterDegreeData as $key => $degree) { ?>
-											<option value="">Choose functional area</option>
-											<option value="<?php echo $degree['degreeId']; ?>" 
-												 >
-												<?php echo	$degree['degreeName']; ?>
-											</option>
-										<?php } ?>	
+									<option  value="">Choose Graduation</option>
+									<?php foreach ($candidate->getDegrees('Master') as $key => $degree) { ?>
+									<option value="">Choose functional area</option>
+									<option value="<?php echo $degree['degreeId']; ?>"
+									<?php echo Select::selected($degree['degreeId'], $candidateEducationData); ?>
+									>
+									<?php echo	$degree['degreeName']; ?>
+									</option>
+									<?php } ?>	
 									</select>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label">Other</label>
 								<div class="col-sm-6">
-									<select class="ui fluid search dropdown" name="candiateDegrees[]">
-										<option value="1">Qualification 1</option>
-										<option value="2">Qualification 2</option>
-										<option value="3">Qualification 3</option>
+									<select class="ui fluid search dropdown" name="">
+									<option  value="">Choose Graduation</option>
+									<?php foreach ($candidate->getDegrees('Master') as $key => $degree) { ?>
+									<option value="">Choose functional area</option>
+									<option value="<?php echo $degree['degreeId']; ?>"
+									<?php echo Select::selected($degree['degreeId'], $candidateEducationData); ?>
+									>
+									<?php echo	$degree['degreeName']; ?>
+									</option>
+									<?php } ?>	
 									</select>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label"></label>
 								<div class="col-sm-9">
-									<input type="hidden" name="candidateId" value="<?php echo $candidateId;?>">
-									<input type="hidden" name="assingmentId" value="<?php echo $assingmentId;?>">
+									<input type="hidden" name="candidateId" value="<?php echo $candidateId;?>">			
 									<input type="hidden" name="token" value="<?php echo Token::generate2('updateCandidateRecord'); ?>"> 
 									<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">
 										Update Candidate Profile 
