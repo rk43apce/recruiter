@@ -1,8 +1,8 @@
 <?php 
 require_once '../core/init.php'; 
 require_once '../functions/helper.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
+
 
 $assingmentData = Load::employeeAssingment();
 
@@ -63,7 +63,8 @@ $assingmentData = Load::employeeAssingment();
 							<td><?php echo $assingment['employeeName']; ?></td> 
 							<td><?php echo $assingment['cityName']; ?></td>
 							<td><?php echo $assingment['minFixedSalary']; ?> - <?php echo $assingment['maxFixedSalary']; ?></td>
-							<td><?php echo $assingment['minWorkExperience']; ?> - <?php echo $assingment['maxWorkExperience'];?></td> 
+							<td>
+							<?php echo $assingment['minWorkExperience']; ?> - <?php echo $assingment['maxWorkExperience'];?> yrs</td> 
 							<td><?php echo date('d-m-Y', strtotime($assingment['createdOn']));?></td> 
 							<td> <?php echo noOfDays($assingment['createdOn']);?> </td>
 							<td><?php echo date('d-m-Y', strtotime($assingment['createdOn']));?></td> 

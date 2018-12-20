@@ -172,7 +172,7 @@ class Candidate extends Degree {
 
 		/*============================= Get  all candidates  from database  ==========================================*/
 
-	public function getAllCandidates() {
+	public function getAllCandidates($assingmentId = '') {
 
 		$sql = "SELECT candidate.candidateId, candidateFullName,candidateEmail, candidateMobileNo, candidateOrganisation, candidateDesignation, functionalareaName, candidateFunctionalAreaId, candidateWorkExp, candidateSalary,candidateNoticePeriod
 		FROM candidate 
@@ -197,6 +197,108 @@ class Candidate extends Degree {
 
 	}
 
+	
+	
+	
+	/*
+		get assignment shortlisted candidates
+	*/
+	
+	public function getShortlistCandidates($assingmentId) {
+		
+		$sql = "SELECT employeeId, employeeName, candidate.candidateId, candidateFullName,candidateEmail, candidateMobileNo, candidateOrganisation, candidateDesignation, functionalareaName, candidateFunctionalAreaId, candidateWorkExp, candidateSalary,candidateNoticePeriod, shortlistOn
+		FROM candidate 
+		INNER JOIN workExperience on workExperience.candidateId = candidate.candidateId 
+		INNER JOIN functionalareas on functionalareas.functionalareaId = workExperience.candidateFunctionalAreaId		
+		INNER JOIN shortlist on shortlist.candidateId = candidate.candidateId
+		INNER JOIN employee on employee.employeeId = shortlist.shortlistBy
+		where shortlist.assingmentId = '$assingmentId' ";	
+			
+		$result =  $this->db->querySelect($sql);
+
+		if (!$result) {
+			
+			return false;
+		}
+
+		if ($this->db->checkResultCountZero($result)) {
+		
+			return false;
+
+		}
+
+		return $this->db->processRowSet($result);
+
+	}
+	
+	
+		public function getShortlistCandidatesId($assingmentId) {
+		
+		$sql = "SELECT candidate.candidateId
+		FROM candidate 	
+		INNER JOIN shortlist on shortlist.candidateId = candidate.candidateId
+		where shortlist.assingmentId = '$assingmentId' ";	
+			
+		$result =  $this->db->querySelect($sql);
+
+		if (!$result) {
+			
+			return false;
+		}
+
+		if ($this->db->checkResultCountZero($result)) {
+		
+			return false;
+
+		}
+
+		return $this->db->processRowSet($result);
+
+	}
+
+	
+		
+	
+		/*
+		get assignment shortlisted candidates
+	*/
+	
+	public function getunShortlistCandidate($assingmentId) {	
+
+		$shortlistCandidatesData =  $this->getShortlistCandidatesId($assingmentId);		
+
+		$arrayShortlistCandidatesId =  array();
+
+		foreach ($shortlistCandidatesData as $key => $candidates) {	 	
+
+		array_push($arrayShortlistCandidatesId, $candidates['candidateId']);
+
+		}		
+
+		$sql = "SELECT candidate.candidateId, candidateFullName,candidateEmail, candidateMobileNo, candidateOrganisation, candidateDesignation, functionalareaName, candidateFunctionalAreaId, candidateWorkExp, candidateSalary,candidateNoticePeriod
+		FROM candidate 
+		INNER JOIN workExperience on workExperience.candidateId = candidate.candidateId 
+		INNER JOIN functionalareas on functionalareas.functionalareaId = workExperience.candidateFunctionalAreaId			
+		WHERE candidate.candidateId NOT IN ( '" . implode( "', '" , $arrayShortlistCandidatesId ) . "' )";
+		
+		$result =  $this->db->querySelect($sql);
+
+		if (!$result) {
+			
+			return false;
+		}
+
+		if ($this->db->checkResultCountZero($result)) {
+		
+			return false;
+
+		}
+
+		return $this->db->processRowSet($result);
+	}
+
+	
+	
 
 
 	/*============================= add get candidate by candidate id  ==========================================*/

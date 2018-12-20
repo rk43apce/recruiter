@@ -75,7 +75,10 @@ if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId
 			 <div class="container">
 				<div class="card">   
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item active">Add Candidates</li>                                          
+						<li class="breadcrumb-item"><a class="btn-link" href="candidates.php">Candidates</a></li>  
+						<li class="breadcrumb-item "><?php echo $candidateFullName; ?></li>                               
+						<li class="breadcrumb-item active">Update Profile</li>  
+					   
 					</ol>	
 					<div class="line"></div>
 					<div class="card-body">					

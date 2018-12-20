@@ -18,8 +18,12 @@ if (Input::exists('get')) {
 		$cityName =  $assingmentData['cityName'];
 		$minWorkExperience =  $assingmentData['minWorkExperience'];
 		$maxWorkExperience =  $assingmentData['maxWorkExperience'];
-		$createdOn =  $assingmentData['createdOn'];			
-
+		$createdOn =  $assingmentData['createdOn'];	
+		
+		$candidate = new Candidate();
+		
+		$candidateData =  $candidate->getShortlistCandidates($assingmentId);
+		
 	} else {
 
 		Session::put('errorMsg', 'Invalid request or No record found! ');
@@ -27,6 +31,8 @@ if (Input::exists('get')) {
 }    
 	
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -64,34 +70,45 @@ if (Input::exists('get')) {
                     </ol>
 				<div class="line"></div>
 				<table id="example" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
+				
 					<thead>
 						<tr>
 							<th>Added by</th>
 							<th>Candidate Name</th>
-							<th>Organisation</th>  
-							<th>Designation</th>
-							<th>Years</th>
-							<th>CTC</th>
-							<th>Candidate Status</th> 
-							<th>Update Status</th>   							                        
+							<th>Organisation</th> 
+							<th>Designation</th> 
+							<th>Shortlist On</th>
+							<th>Update</th> 												                        
 						</tr>
-
 					</thead>
 					<tbody>
-						<tr>
-							<td>Added</td>
-							<td>Candidate</td>
-							<td>Organisation</td>
-							<td>Designation</td>
-							<td>Years</td>
-							<td>CTC</td>
-							<td>Candidate Status</td>
-							<td>Update</td>
-						</tr>
-						
+						<?php
+						if($candidateData) {							
+							foreach ($candidateData as $key => $candidate) { ?>
+							<tr>
+								<td><?php echo $candidate['employeeName']; ?></td>
+								<td>
+								<a class="btn-link" href="./view-candidate-description.php?candidateId=<?php echo $candidate['candidateId']; ?>">
+									<?php echo $candidate['candidateFullName']; ?>
+								</a>	
+								
+								</td> 							
+								<td><?php echo $candidate['candidateOrganisation']; ?></td>
+								<td><?php echo $candidate['candidateDesignation']; ?></td>	
+								<td><?php echo date('d-m-Y', strtotime($candidate['shortlistOn']));?></td> 						
+								<td>Update</td> 
+							</tr>
+						<?php } } else {
+							?>
+							
+							<tr>
+								<td colspan="6" align="center">No record found</td>
+							</tr>
+									
+						<?php
+						}?> 
 					</tbody>
 				</table> 
-
 				</div>
 			</div>
 		</div>

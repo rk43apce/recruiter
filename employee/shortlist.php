@@ -23,7 +23,11 @@ if (Input::exists('get')) {
 		$maxWorkExperience =  $assingmentData['maxWorkExperience'];
 		$createdOn =  $assingmentData['createdOn'];
 		
-		$allCandidatesData = Load::allCandidates();
+		$candidate = new Candidate();		
+		
+		if(!$unShortlistCandidates = $candidate->getunShortlistCandidate($assingmentId)) {
+			Session::put('errorMsg', 'No record found ! ');
+		}
 
 	} else {
 
@@ -51,7 +55,7 @@ if (Input::exists('get')) {
 		<!-- Sidebar Holder -->
 		<?php require_once  '../include/navbar-top-employee.php'; ?> 
 		<!-- check data empty or not if empty then load error box and stop further execution -->
-		<?php  Data::checkData($allCandidatesData); ?> 
+		<?php  Data::checkData($unShortlistCandidates); ?> 
 		<div class="container">
 			<div class="card">    
 				<ol class="breadcrumb">          
@@ -60,7 +64,9 @@ if (Input::exists('get')) {
                         	<?php echo $companyName ?>
                         </li> 
                          <li class="breadcrumb-item">
-                        	<?php echo $jobRoleTitle ?>
+                         	<a class="btn-link" href="view-assingment-description.php?assingmentId=<?php echo $assingmentId; ?>">
+                         		<?php echo $jobRoleTitle ?>
+                         	</a>                        	
                         </li>       
                         <li class="breadcrumb-item "><?php echo $cityName ?> </li> 
                          <li class="breadcrumb-item active">Shortlist Candidate </li>                         
@@ -87,7 +93,7 @@ if (Input::exists('get')) {
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($allCandidatesData as $key => $canidate) { ?>
+						<?php foreach ($unShortlistCandidates as $key => $canidate) { ?>
 						<tr>
 							<td><?php echo $canidate['candidateFullName']; ?></td>
 							<td><?php echo $canidate['candidateEmail']; ?> </td>

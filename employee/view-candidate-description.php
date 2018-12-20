@@ -76,6 +76,7 @@ if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId
 						<li class="breadcrumb-item">
 							<a href="edit-candidate.php?candidateId=<?php echo $candidateId; ?>" class="btn-link">Edit Profile</a>
 						</li>  
+							<li class="breadcrumb-item"><a href="upload-resume.php?candidateId=<?php echo $candidateId;?>" class="btn-link"> Update Resume</a></li>    
 						<li class="breadcrumb-item text-success">
 						<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
 						</li>                 

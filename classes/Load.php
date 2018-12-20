@@ -24,18 +24,52 @@ class Load  {
 
 	}	
 
-	public static function  allCandidates($value='')
+	public static function  allCandidates($assingmentId='')
 	{	
 		
 		$candidate = new Candidate();
 
-		if (!$allCandidatesData = $candidate->getAllCandidates()) {
+		if (!$allCandidatesData = $candidate->getAllCandidates($assingmentId = '')) {
 
 			Session::put("errorMsg", 'Sorry, no record found!');
 			return false;				
 		}
 
 		return $allCandidatesData;
-	}	
+	}
+	
+	
+	public static function  unShortlistCandidate($assingmentId='')
+	{	
+		
+		$candidate = new Candidate();
+
+		if (!$allCandidatesData = $candidate->getunShortlistCandidate($assingmentId = '')) {
+
+			Session::put("errorMsg", 'Sorry, no record found!');
+			return false;				
+		}
+
+		return $unShortlistCandidateData;
+	}
+	
+	
+	
+	public static function  shortlistCandidates($assingmentId)
+	{	
+		
+	$candidate = new Candidate();
+
+	if (!$shotlsietCandidatesData = $candidate->getShortlistCandidates($assingmentId)) {
+
+	Session::put("errorMsg", 'Sorry, no record found!');
+	return false;	
+
+	}
+
+	return $shotlsietCandidatesData;
+		
+	}
+	
 
 }
