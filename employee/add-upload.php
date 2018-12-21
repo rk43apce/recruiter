@@ -1,22 +1,34 @@
 <?php
 
-//adding the resume upload code start 
-if(isset($_FILES[ 'fileToUpload' ]))
-{	
+require_once '../core/init.php';
+
+if ( isset( $_FILES[ 'fileToUpload' ] ) ) {
 
 	if ( is_uploaded_file( $_FILES[ 'fileToUpload' ][ 'tmp_name' ] ) ) {
 
-		$pathpart = pathinfo( $_FILES[ 'fileToUpload' ][ 'name' ] );
-	
+		$fileExtention = pathinfo( $_FILES[ 'fileToUpload' ][ 'name' ] );
 		
-		$prefixer = 'dddddddddddd';
-		
-		
-		var_dump(move_uploaded_file( $_FILES[ "fileToUpload" ][ "tmp_name" ], $_SERVER[ 'DOCUMENT_ROOT' ] . "/rms/upload/" . $prefixer . "resume" . "." . $pathpart[ 'extension' ] ));
-		
+		$candidateId = $_POST['candidateId'];
 
+		$fileId = time(); 
+		
+		$uploadPath = $_SERVER[ 'DOCUMENT_ROOT' ] . "/rms/upload/" . $fileId . "." . $fileExtention[ 'extension' ] ;
+		
+		if(!move_uploaded_file( $_FILES[ "fileToUpload" ][ "tmp_name" ], $uploadPath)) {
+			
+		}
+		
+		$uploadData = array("candidateId"=>$candidateId, "resumeId"=>$fileId, "fileType"=>$fileExtention[ 'extension' ]);
+
+		$upload = new Upload();
+		
+		if($upload->resume($uploadData)) {
+			
+			Redirect::to('candidates.php');
+			
+		}
 
 	}
+}else {
+	Redirect::to('dashboard.php');
 }
-
-?>

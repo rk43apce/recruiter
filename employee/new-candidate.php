@@ -7,12 +7,6 @@ $candidate =  new Candidate();
 <html>
 <head>
 <?php require_once  '../include/css.php'; ?>  
-<script>
-	window.onload = function () {
-		var candidateId = new Date().getTime(); // generating student registation by using tim in milliseconds
-		document.getElementById( "candidateId" ).value = candidateId;
-	};
-</script> 
 </head>
 <body>
 	<div class="loader"></div>
@@ -45,7 +39,7 @@ $candidate =  new Candidate();
 							</div>			
 							<div class="form-group row">
 								<!-- Compusory field -->
-								<input type="hidden" name="candidateId" id="candidateId" value="">	
+								<input type="hidden" name="candidateId" id="candidateId" value="<?php echo time(); ?>">	
 								<!--  -->
 
 								<label for="" class="col-sm-3 col-form-label">Full Name</label>
@@ -173,33 +167,32 @@ $candidate =  new Candidate();
 									</select>
 								</div>
 							</div>
+						
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label"></label>
-								<div class="col-sm-9">								
+								<div class="col-sm-9" style="padding-top: 15px;">								
 									<input type="hidden" name="token" value="<?php echo Token::generate2('addNewCandidate'); ?>">  
 									<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">
 										Add Candidate 
 									</button>									
 								</div>
-							</div>						 	
+							</div>	
+											 						 	
 						  </fieldset>
 						</form>				 
 					</div>			
 				</div>
-            </div>
-  
+            </div>  
 		</div>
 	</div>
 	
 	<?php require_once  '../include/footer.php'; ?>
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
+	
 	<script>
 	$('.ui.dropdown')
 	.dropdown();
 	</script>
-	
-
 
 	<script type="text/javascript">
 	
@@ -277,8 +270,7 @@ $candidate =  new Candidate();
 		
 
 	}	
-
-		
+	
 	</script>
 
 </body>

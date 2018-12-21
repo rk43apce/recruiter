@@ -18,7 +18,7 @@
 <file name="Token.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131873531432738012" remote="131888936710000000" Dst="0" />
 <file name="Validation.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131879475922821838" remote="131888936710000000" Dst="0" />
 <file name="Data.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131891674540000000" remote="131891674540000000" Dst="0" />
-<file name="Candidate.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131896937392226624" remote="131896937400000000" Dst="0" />
+<file name="Candidate.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131898439687373813" remote="131898439740000000" Dst="0" />
 <file name="Degree.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131890756185892405" remote="131890756200000000" Dst="0" />
 <file name="Select.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131892507150000000" remote="131892507150000000" Dst="0" />
 <file name="Array.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131892494830000000" remote="131892494830000000" Dst="0" />
@@ -27,4 +27,5 @@
 <file name="Load.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131896815399991440" remote="131896815400000000" Dst="0" />
 <file name="Selecte.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131892505390000000" remote="131892505390000000" Dst="0" />
 <file name="Shortlist.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131896746570908431" remote="131896746610000000" Dst="0" />
+<file name="Upload.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131897682227633234" remote="131897682250000000" Dst="0" />
 </dwsync>

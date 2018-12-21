@@ -265,17 +265,21 @@ class Candidate extends Degree {
 	
 	public function getunShortlistCandidate($assingmentId) {	
 
-		$shortlistCandidatesData =  $this->getShortlistCandidatesId($assingmentId);		
-
 		$arrayShortlistCandidatesId =  array();
 
-		foreach ($shortlistCandidatesData as $key => $candidates) {	 	
+		if($shortlistCandidatesData =  $this->getShortlistCandidatesId($assingmentId)) {
+			
+			foreach ($shortlistCandidatesData as $key => $candidates) {	 	
 
-		array_push($arrayShortlistCandidatesId, $candidates['candidateId']);
+				array_push($arrayShortlistCandidatesId, $candidates['candidateId']);
 
-		}		
+			}
 
-		$sql = "SELECT candidate.candidateId, candidateFullName,candidateEmail, candidateMobileNo, candidateOrganisation, candidateDesignation, functionalareaName, candidateFunctionalAreaId, candidateWorkExp, candidateSalary,candidateNoticePeriod
+		}
+		
+			
+
+	echo	$sql = "SELECT candidate.candidateId, candidateFullName,candidateEmail, candidateMobileNo, candidateOrganisation, candidateDesignation, functionalareaName, candidateFunctionalAreaId, candidateWorkExp, candidateSalary,candidateNoticePeriod
 		FROM candidate 
 		INNER JOIN workExperience on workExperience.candidateId = candidate.candidateId 
 		INNER JOIN functionalareas on functionalareas.functionalareaId = workExperience.candidateFunctionalAreaId			

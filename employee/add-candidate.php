@@ -68,7 +68,7 @@ if (Input::exists('post')) {
 
 		// finally redirect to candidate profile page 
 //		Redirect::to('view-candidate-description.php?candidateId='.$candidateId);	
-		Redirect::to('candidates.php');	
+		Redirect::to('upload-resume.php?candidateId='.$candidateId);	
 		
 	} else {
 		Redirect::to('new-candidate.php');	

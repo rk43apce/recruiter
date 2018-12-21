@@ -24,7 +24,6 @@ $allCandidatesData = Load::allCandidates();
 		<!-- Sidebar Holder -->
 		<?php require_once  '../include/navbar-top-employee.php'; ?> 
 		<!-- check data empty or not if empty then load error box and stop further execution -->
-		<?php  Data::checkData($allCandidatesData); ?> 
 		<div class="container">
 			<div class="card">    
 				<ol class="breadcrumb">                  
@@ -52,6 +51,9 @@ $allCandidatesData = Load::allCandidates();
 						</tr>
 					</thead>
 					<tbody>
+						
+						<?php if($allCandidatesData) { ?>
+						
 						<?php foreach ($allCandidatesData as $key => $canidate) { ?>
 						<tr>
 							<td><?php echo $canidate['candidateFullName']; ?></td>
@@ -65,7 +67,7 @@ $allCandidatesData = Load::allCandidates();
 							<td><?php echo $canidate['candidateNoticePeriod']; ?> </td>	
 							<td><a class="btn-link" href="./view-candidate-description.php?candidateId=<?php echo $canidate['candidateId']; ?>">View full Profile</a></td>	
 						</tr>
-						<?php } ?> 
+						<?php } } ?> 
 					</tbody>
 				</table> 
 			</div>
