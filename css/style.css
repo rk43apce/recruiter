@@ -6,15 +6,14 @@ body {
 	background: #fafafa;
 }
 
-.card {
-	padding: 25px;
-}
+
 .card label {
 	text-align: right;
 }
 .loginform  {
-	margin-top: 15%;
+	margin-top: 10%;
 	max-width: 786px;
 	margin-left: auto;
 	margin-right: auto;
+	position: relative;
 }

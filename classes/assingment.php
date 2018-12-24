@@ -13,15 +13,30 @@ class Assingment extends Company
 		$this->db = new Database();
 
 	}
+	
+	
+		/*=============================  check Email availability ==========================================*/
+
+	public function checkAssingment( $companyId,$jobRoleId,$jobCity ) {
+
+	$sql = " SELECT *  FROM assingment where companyId = '$companyId' AND  jobRoleId = '$jobRoleId' AND jobCity = '$jobCity' ";
+		
+		$result = $this->db->querySelect( $sql );
+		
+		return $this->db->checkResultCountZero( $result );	
+
+	}	
+
+	
 
 	public function getOnGoingAssingment($value='')
 	{
 		
-		$sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn 		
+	$sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn 		
 		FROM assingment 
 		inner join(company) on company.companyId = assingment.companyId 
 		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 
-		inner join(cities) on cities.cityId = jobrole.locationId 
+		inner join(cities) on cities.cityId = assingment.jobCity 
 		inner join(employee) on employee.employeeId = assingment.spocId";	
 		
 		

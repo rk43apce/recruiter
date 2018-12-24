@@ -116,6 +116,49 @@ class Jobrole extends FunctionalArea
 
 	}
 
+
+			/*============================= add get job description  ==========================================*/
+
+	public function getJD( $jobRoleId ) {
+
+		$sql = " SELECT *  FROM jdTracker
+			
+		where jdTracker.jobRoleId = '$jobRoleId' ";
+
+		$result = $this->db->querySelect( $sql );
+
+		if ( !$this->db->isResultCountOne( $result ) ) {
+			return false;
+		}
+
+		return $this->db->processRowSet( $result, true );
+
+	}	
+
+
+
+	/*============================= add get candidate by candidate id  ==========================================*/
+
+	public function getJobRoleSkills($jobRoleId)
+	{
+
+		$sql = " SELECT *  FROM jobroleskill  inner join(skillbank) on skillbank.skillId =  jobroleskill.skillId  where jobRoleId = '$jobRoleId' AND isJobRoleSkillDrop = 'No' ";
+
+		$result =  $this->db->querySelect($sql);
+
+		if ($this->db->checkResultCountZero($result)) {
+
+			return false;
+		} 
+
+		return $this->db->processRowSet($result);
+	}
+
+
+
+
+
+
 	public  function updateJobRole($jobRoleId, $jobRoleDataToUpdate, $jobRoleSkills)
 	{	
 
@@ -205,6 +248,25 @@ class Jobrole extends FunctionalArea
 
 		return true;	
 
+	}
+
+
+
+	/*============================= add get candidate by candidate id  ==========================================*/
+
+	public function getCurrency()
+	{
+
+		$sql = " SELECT *  FROM currency";
+
+		$result =  $this->db->querySelect($sql);
+
+		if ($this->db->checkResultCountZero($result)) {
+
+			return false;
+		} 
+
+		return $this->db->processRowSet($result);
 	}
 
 

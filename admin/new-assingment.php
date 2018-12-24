@@ -39,6 +39,7 @@
 			<?php require_once  '../include/navbar-top.php'; ?>           
 
 			<div class="container">
+			
 				<div class="card"> 
 					<ol class="breadcrumb">   
 						<li class="breadcrumb-item"><a href="./companies.php" class="btn-link">Companies</a></li> 
@@ -51,7 +52,7 @@
 
 					<div class="line"></div>
 
-					<form method="post" action="./add-assingment.php">
+					<form method="post" id="form1" action="./add-assingment.php">
 						<fieldset>
 							<!-- Compusory field -->
 							<input type="hidden" name="assingmentId" id="assingmentId" value="">	
@@ -60,7 +61,7 @@
 							<div class="form-group row">
 								<label for="companyId" class="col-sm-3 col-form-label">Company</label>
 								<div class="col-sm-8">
-									<select class="ui fluid search dropdown"  id="companyName" name="companyId" required autofocus>
+									<select class="ui fluid search dropdown"  id="companyId" name="companyId" required autofocus>
 
 										<option  value="">Choose</option>
 										<?php foreach ($companies as $key => $company) { ?>
@@ -84,16 +85,12 @@
 									</select>
 								</div>
 							</div> 
-
+							
+							
 							<div class="form-group row">
-								<label for="jobRoleId" class="col-sm-3 col-form-label">Number of position</label>
-								<div class="col-sm-2">
-									<input type="number" class="form-control" name="noOfPosition" placeholder="Positions" required="">
-								</div>
-
-								<label for="companyId" class="col-form-label">City</label>
+								<label for="companyId" class="col-sm-3 col-form-label">City</label>							
 								<div class="col-sm-3">
-									<select class="ui fluid search dropdown"  id="jobCity" name="jobCity" required>
+									<select class="ui fluid search dropdown is-invalid"  id="jobCity" name="jobCity" required>
 										<option  value="">Choose</option>
 										<?php foreach ($cities as $key => $city) { ?>
 
@@ -105,6 +102,14 @@
 
 										<?php } ?>
 									</select>
+								</div>
+								<div id="status"></div>
+							</div> 
+							
+							<div class="form-group row">
+								<label for="jobRoleId" class="col-sm-3 col-form-label">Number of position</label>
+								<div class="col-sm-2">
+									<input type="number" class="form-control" name="noOfPosition" placeholder="Positions" required="">
 								</div>
 							</div>   						
 
@@ -196,14 +201,10 @@
 		.dropdown();
 	</script>
 
-	<script type="text/javascript">   
-		function confirmFormSubmit() {
-			return confirm('Are you sure you want to save this thing into the database?');
-		}
-	</script>
+
 
 	<script>
-		$("#companyName").on("change", function() {
+		$("#companyId").on("change", function() {
 			var id = $(this).find(':selected').attr("data-id");
 			$("#jobRoleId").find('option:not(:first)').remove();
 			if(id != '') {
@@ -212,6 +213,103 @@
 				});      
 			} 
 		});
+	</script>
+	
+		<script type="text/javascript">   
+		function confirmFormSubmit() {		
+			
+			var companyId = $( "#companyId" ) . val();
+			var jobRoleId = $( "#jobRoleId" ) . val();
+			var jobCity = $( "#jobCity" ) . val();	
+
+			if(companyId == '') {
+
+			alert('Please select company!');
+				 return false;
+			}
+
+			if(jobRoleId == '') {
+
+			alert('Please select jobRoleId!');
+				 return false;
+			}
+			if(jobCity == '') {
+
+			alert('Please select jobCity!');
+				 return false;
+			}
+
+			if(companyId && jobRoleId && jobCity) {
+
+			checkingAssignment( companyId, jobRoleId, jobCity );	
+			}	
+			
+			return confirm('Are you sure?');
+		}
+	</script>
+	<script type="text/javascript">
+	
+		$( document ) . ready( function () {
+					
+			$( "#jobCity" ) . change( function () {
+				var companyId = $( "#companyId" ) . val();
+				var jobRoleId = $( "#jobRoleId" ) . val();
+				var jobCity = $( "#jobCity" ) . val();
+				
+				if(companyId == '') {
+					
+					alert('Please select company!');
+				}
+				
+				if(jobRoleId == '') {
+					
+					alert('Please select jobRoleId!');
+				}
+				if(jobCity == '') {
+					
+					alert('Please select jobCity!');
+				}
+				
+				if(companyId && jobRoleId && jobCity) {
+					
+					checkingAssignment( companyId, jobRoleId, jobCity );	
+				}					
+				
+			} );
+		} );
+		
+		
+		function checkingAssignment( companyId, jobRoleId, jobCity ) {
+		$( "#status" ) . html( 'Checking availability...' );
+			$ . ajax( {
+				type: "POST",
+				url: "verify-assingment.php",
+				data:{companyId:companyId, jobRoleId:jobRoleId, jobCity: jobCity},
+				dataType: 'text',
+				success: function ( msg ) {
+					
+					console.log(msg);
+					
+					if( msg == 'exists') {
+						
+						errorMsgClass();
+						
+					} else {
+						
+						$( "#status" ) . html( "&nbsp;" );	
+					}
+					
+					
+			}
+				
+		} );
+	}	
+		
+		function errorMsgClass() {
+			alert("Sorry, One assignments's already open. Try another?");
+			$( "#status" ) . html( "&nbsp; Sorry, One assignments's already open. Try another?" );	
+			 event.preventDefault();
+		}
 	</script>
  </body>
 </html>

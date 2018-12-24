@@ -1,6 +1,7 @@
 <?php 
 require_once '../core/init.php';
 require_once '../functions/helper.php';
+Login::auth('employeeId');
 $candidate =  new Candidate();
 ?>
 <!DOCTYPE html>
@@ -56,7 +57,7 @@ $candidate =  new Candidate();
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label">Email</label>
 								<div class="col-sm-6">
-									<input type="email" id="email" class="form-control" placeholder="Email"  name="candidateEmail" required="">
+									<input type="email" id="email" class="form-control" placeholder="Email"  name="candidateEmail" required="" autocomplete="off">
 									<div id="status" class=""></div>
 								</div>
 							</div>

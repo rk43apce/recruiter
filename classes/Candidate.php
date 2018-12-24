@@ -279,7 +279,7 @@ class Candidate extends Degree {
 		
 			
 
-	echo	$sql = "SELECT candidate.candidateId, candidateFullName,candidateEmail, candidateMobileNo, candidateOrganisation, candidateDesignation, functionalareaName, candidateFunctionalAreaId, candidateWorkExp, candidateSalary,candidateNoticePeriod
+		$sql = "SELECT candidate.candidateId, candidateFullName,candidateEmail, candidateMobileNo, candidateOrganisation, candidateDesignation, functionalareaName, candidateFunctionalAreaId, candidateWorkExp, candidateSalary,candidateNoticePeriod
 		FROM candidate 
 		INNER JOIN workExperience on workExperience.candidateId = candidate.candidateId 
 		INNER JOIN functionalareas on functionalareas.functionalareaId = workExperience.candidateFunctionalAreaId			
@@ -309,9 +309,29 @@ class Candidate extends Degree {
 
 	public function getCandidatebyId( $candidateId ) {
 
-		$sql = " SELECT *  FROM candidate	
+		$sql = " SELECT *  FROM candidate
 			
-		where candidateId = '$candidateId' ";
+		where candidate.candidateId = '$candidateId' ";
+
+		$result = $this->db->querySelect( $sql );
+
+		if ( !$this->db->isResultCountOne( $result ) ) {
+			return false;
+		}
+
+		return $this->db->processRowSet( $result, true );
+
+	}	
+
+	
+	
+		/*============================= add get candidate by candidate id  ==========================================*/
+
+	public function getResume( $candidateId ) {
+
+		$sql = " SELECT *  FROM upload
+			
+		where upload.candidateId = '$candidateId' ";
 
 		$result = $this->db->querySelect( $sql );
 

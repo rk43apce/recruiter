@@ -63,8 +63,8 @@
                             <tr>
                                 <th>Name</th>                                            
                                 <th>City</th> 
-                                <th>Jobs</th>
-                                <th>Assignment</th>
+                                <th>Job Roles</th>
+                                <th>Active Assignments</th>
                                 <th>Action</th>   
                                                       
                             </tr>

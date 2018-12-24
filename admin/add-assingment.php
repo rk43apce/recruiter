@@ -27,9 +27,22 @@ $priority =  Input::get('priority');
 $recruiters =  Input::get('recruiters');
 $createdOn = date("Y/m/d"); 
 
+
+
+
 $assingmentData = array("assingmentId"=>$assingmentId, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "frontingEntity"=>$frontingEntity, "jobCity"=>$jobCity, "noOfPosition"=>$noOfPosition, "clientBrief"=>$clientBrief, "noOfPosition"=>$noOfPosition, "spocId"=>$spocId, "priority"=>$priority, "createdOn"=>$createdOn);
 
 $assingment = new Assingment();
+
+
+
+if(!$assingment->checkAssingment($companyId,$jobRoleId,$jobCity)) {
+	
+	Session::put("Sorry, One assignments's already open. Try another?");
+	Redirect::to('new-assingment.php');
+	exit();
+}
+
 
 $assingment->assingmentData = $assingmentData; // setting  class assingmentData
 $assingment->recruiters = $recruiters;			// setting  class recruiters

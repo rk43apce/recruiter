@@ -9,27 +9,14 @@ if (!Input::exists('get')) {
 	exit();
 }
 
-if (empty(Input::get('candidateId')) ) {
+if (empty(Input::get('jobRoleId'))) {
 
 	Redirect::to('dashboard.php');
 	exit();
 }
 
-$candidate = new Candidate;
+$jobRoleId = Input::get('jobRoleId');
 
-if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId')))) {
-	
-	$candidateId = $candidateData['candidateId'];		
-	$candidateFullName = $candidateData['candidateFullName'];
-	$candidateDOB = $candidateData['candidateDOB'];
-	$candidateEmail = $candidateData['candidateEmail'];
-	$candidateMobileNo = $candidateData['candidateMobileNo'];
-	$candidateCity = $candidateData['candidateCity'];
-
-} else {
-	// setting error
-	Session::put('errorMsg', 'Sorry no record found!');
-}
 
 ?>
 <!DOCTYPE html>
@@ -37,6 +24,11 @@ if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId
 <head>
 <?php require_once  '../include/css.php'; ?>  
 <style>
+	.card{
+		max-width: 686px;
+		margin-right:auto;
+		margin-left: auto; 
+	}
 	.card .custom-file-label{
 		text-align: left;
 	}
@@ -55,12 +47,8 @@ if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId
 			<div class="container">
 				<div class="card">   
 					<ol class="breadcrumb">                  
-						<li class="breadcrumb-item"><a href="./candidates.php" class="btn-link">Candidates</a> </li>   
-						
-						<li class="breadcrumb-item">
-						<a href="view-candidate-description.php?candidateId=<?php echo $candidateId;?>" class="btn-link">
-						<?php echo $candidateFullName; ?></a></li>  						 
-						<li class="breadcrumb-item active">Update Resume</li>    
+											 
+						<li class="breadcrumb-item active">Update JD</li>    
 						<li class="breadcrumb-item text-success">						
 						<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
 						</li>                 
@@ -72,7 +60,7 @@ if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId
 								<div class="row col-md-12">
 								<div class="input-group mb-3">
 									<div class="custom-file">
-										<input type="text" name="candidateId" id="candidateId"  value="<?php echo $candidateId;?>">	
+										<input type="text" name="jobRoleId" id="jobRoleId"  value="<?php echo $jobRoleId;?>">	
 										<input type="file" name="fileToUpload" id="fileToUpload" class="custom-file-input" required/>
 										<label class="custom-file-label " for="inputGroupFile02">Choose file</label>
 									</div>

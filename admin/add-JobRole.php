@@ -18,16 +18,18 @@ $companyId =  Input::get('companyId');
 $jobRoleId =  Input::get('jobRoleId');		
 $minWorkExperience =  Input::get('minWorkExperience');
 $maxWorkExperience =  Input::get('maxWorkExperience');
+$expInYearOrMonth =  Input::get('expInYearOrMonth');
 $minFixedSalary =  Input::get('minFixedSalary');
 $maxFixedSalary =  Input::get('maxFixedSalary');
 $variableSalary =  Input::get('variableSalary');
+$currencyId =  Input::get('currencyId');
 $functionalAreaId =  Input::get('functionalAreaId');
 $locationId =  Input::get('locationId');
 $clientBriefNote =  Input::get('clientBriefNote');	
 $jobRoleSkills =  Input::get('jobRoleSkills');	
 $createdOn = date("Y/m/d"); 
 
-$jobRoleData = array("jobRoleTitle"=>$jobRoleTitle, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "minWorkExperience"=>$minWorkExperience, "maxWorkExperience"=>$maxWorkExperience, "minFixedSalary"=>$minFixedSalary, "maxFixedSalary"=>$maxFixedSalary, "variableSalary"=>$variableSalary, "functionalAreaId"=>$functionalAreaId, "locationId"=>$locationId, "clientBriefNote"=>$clientBriefNote);
+$jobRoleData = array("jobRoleTitle"=>$jobRoleTitle, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "minWorkExperience"=>$minWorkExperience, "maxWorkExperience"=>$maxWorkExperience, "minFixedSalary"=>$minFixedSalary, "maxFixedSalary"=>$maxFixedSalary, "variableSalary"=>$variableSalary, "currencyId"=>$currencyId, "functionalAreaId"=>$functionalAreaId, "locationId"=>$locationId, "clientBriefNote"=>$clientBriefNote);
 
 
 $jobrole = new Jobrole();
@@ -43,4 +45,5 @@ if (!$jobrole->createNewJobRole()) {
 
 }
 
- Redirect::to('./company-jobroles.php?companyId='.$companyId);
+
+ Redirect::to('./upload-jd.php?jobRoleId='.$jobRoleId);

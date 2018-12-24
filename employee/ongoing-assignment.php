@@ -1,10 +1,16 @@
 <?php 
 require_once '../core/init.php'; 
 require_once '../functions/helper.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
-$assingmentData = Load::employeeAssingment();
+Login::auth('employeeId');
+
+$employee = new Employee();
+
+if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('employeeId'))) {
+
+	Session::put("errorMsg", 'Sorry! No ongoing assignment assign to you!');
+	return false;				
+}
 
 ?>
 
@@ -24,7 +30,7 @@ $assingmentData = Load::employeeAssingment();
 	<div id="content">
 		<!-- Sidebar Holder -->
 		<?php require_once  '../include/navbar-top-employee.php'; ?> 
-		<?php Data::checkData($assingmentData); ?>
+		
 		<div class="container">
 			<div class="card">    
 				<ol class="breadcrumb">                  
@@ -51,6 +57,8 @@ $assingmentData = Load::employeeAssingment();
 						</tr>
 					</thead>
 					<tbody>
+
+						<?php if($assingmentData) { ?>
 						<?php foreach ($assingmentData as $key => $assingment) { ?>
 						<tr>
 							<td><?php echo $assingment['companyName']; ?> </td>
@@ -69,7 +77,8 @@ $assingmentData = Load::employeeAssingment();
 							<td> <?php echo noOfDays($assingment['createdOn']);?> </td>
 							<td><?php echo date('d-m-Y', strtotime($assingment['createdOn']));?></td> 
 						</tr>
-						<?php } ?> 
+						<?php }  ?> 
+						<?php } ?>
 					</tbody>
 				</table> 
 			</div>

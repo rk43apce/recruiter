@@ -1,8 +1,6 @@
 <?php require_once '../core/init.php';
 require_once '../functions/helper.php';
 
-Login::auth('employeeId');
-
 $assingment =  new Assingment();
 
 if (Input::exists('get')) {	

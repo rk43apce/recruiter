@@ -26,9 +26,7 @@ $jobrole = new Jobrole();
 $jobfunctionalAreas = $jobrole->getFunctionalAreas();
 $skills = $jobrole->getSkills();
 $cities = $jobrole->getCities();
-
-
-
+$currencyCodes = $jobrole->getCurrency();
 
 
 ?>
@@ -98,11 +96,18 @@ $cities = $jobrole->getCities();
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Work Experience</label>
 							<div class="col-sm-2">
-							<input type="number" class="form-control" placeholder="Min" id="minWorkExperience" name="minWorkExperience" required="">
+								<select class="ui fluid search dropdown" name="expInYearOrMonth" >									
+									<option value="Year" selected="">Year</option>
+									<option value="Month">Month</option>									
+								</select>
+							</div>
+
+							<div class="col-sm-2">
+							<input type="number" class="form-control" placeholder="Min" id="minWorkExperience" name="minWorkExperience" >
 							</div>
 							<label for="jobRoleId" class="col-form-label">To</label>
 							<div class="col-sm-2">
-							<input type="number" class="form-control" placeholder="Max" id="maxWorkExperience" name="maxWorkExperience" required="">
+							<input type="number" class="form-control" placeholder="Max" id="maxWorkExperience" name="maxWorkExperience">
 							</div>
 						</div>  
 
@@ -110,17 +115,32 @@ $cities = $jobrole->getCities();
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Fixed Salary</label>
 							<div class="col-sm-2">
+							<select class="ui fluid search dropdown" name="currencyId" >
+							
+							<?php foreach ($currencyCodes as $key => $code) { ?>
+
+								<option value="<?php echo $code['currencyId']; ?>">
+
+								<?php echo	$code['currencyCode']; ?>
+
+								</option>
+
+							<?php } ?>
+						
+							</select>
+							</div>
+							<div class="col-sm-2">
 							<input type="number" class="form-control" placeholder="Min" id="minFixedSalary" name="minFixedSalary">
 							</div>
 							<label for="jobRoleId" class="col-form-label">To</label>
 							<div class="col-sm-2">
-								 <input type="number" class="form-control" placeholder="Max" id="maxFixedSalary" name="maxFixedSalary" required="">
+								 <input type="number" class="form-control" placeholder="Max" id="maxFixedSalary" name="maxFixedSalary" >
 							</div>
 						</div> 
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Variable Salary</label>
 							<div class="col-sm-2">
-							 <input type="text" class="form-control" placeholder="Variable" id="variableSalary" name="variableSalary" required="">
+							 <input type="text" class="form-control" placeholder="Variable" id="variableSalary" name="variableSalary" >
 							</div>
 						</div>     
 
@@ -196,7 +216,7 @@ $cities = $jobrole->getCities();
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Client brief note</label>
 							<div class="col-sm-6">
-							<textarea class="form-control" rows="3" placeholder="Write here..." id="clientBriefNote" name="clientBriefNote" required=""></textarea>
+							<textarea class="form-control" rows="3" placeholder="Write here..." id="clientBriefNote" name="clientBriefNote"></textarea>
 							</div>
 						</div>
 
@@ -205,7 +225,7 @@ $cities = $jobrole->getCities();
 							<div class="col-sm-6">
 								<input type="hidden" name="companyId" value="<?php echo escape(Input::get('companyId')); ?>"> 
 								<input type="hidden" name="token" value="<?php echo Token::generate2('newJobRole'); ?>">  
-								<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Save JobRole</button>
+								<button type="submit" onclick=" return confirmFormSubmit()" class="btn btn-primary">Save Job Role</button>
 								<a class="btn btn-link" href="company-jobroles.php?companyId=<?php echo escape(Input::get('companyId')); ?>">Cancel</a>
 							</div>
 						</div>

@@ -4,6 +4,8 @@ require_once '../core/init.php';
 require_once '../functions/helper.php';
 require_once '../functions/sanitize.php';
 
+Login::auth('employeeId');
+
 if (!Input::exists('post')) {
 	
 	Redirect::to('dashboard.php');
@@ -12,7 +14,7 @@ if (!Input::exists('post')) {
 
 $assingmentId =  escape(Input::get('assingmentId'));
 $candidateId =  escape(Input::get('candidateId'));
-$shortlistBy = Session::get('userId');
+$shortlistBy = Session::get('employeeId');
 $shortlistOn = date("Y/m/d"); 
 
 if ( empty($assingmentId)) {
