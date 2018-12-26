@@ -78,8 +78,8 @@ class Login
 		if($this->db->isResultCountOne($result)) {
 
 			$resultArray = $this->db->processRowSet($result, true);	
-			Session::put("userId", $resultArray['employeeId']);			
-			Session::put("userType",'employee');			
+			Session::put("employeeId", $resultArray['employeeId']);			
+					
 			return true;
 				
 		}else {

@@ -18,7 +18,7 @@ if (Input::exists('get')) {
 		$companyName =  $assingmentData['companyName'];
 		$spocId =  $assingmentData['spocId'];
 		$spocName =  $assingmentData['employeeName'];
-		$cityName =  $assingmentData['cityName'];
+
 		$minWorkExperience =  $assingmentData['minWorkExperience'];
 		$maxWorkExperience =  $assingmentData['maxWorkExperience'];
 		$createdOn =  $assingmentData['createdOn'];
@@ -68,7 +68,7 @@ if (Input::exists('get')) {
                          		<?php echo $jobRoleTitle ?>
                          	</a>                        	
                         </li>       
-                        <li class="breadcrumb-item "><?php echo $cityName ?> </li> 
+                     
                          <li class="breadcrumb-item active">Shortlist Candidate </li>                         
                         <li class="breadcrumb-item text-success">
                             <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>

@@ -101,7 +101,7 @@ class Jobrole extends FunctionalArea
 			
 	// echo $sql = " SELECT *  FROM  jobrole jb inner join  functionalareas fn on jb.functionalAreaId = fn.functionalareaId inner join(company) on company.companyId = jb.companyId    where jb.jobRoleId = '$jobRoleId'";	
 
-		$sql = "SELECT * FROM jobrole jb inner join functionalareas fn on jb.functionalAreaId = fn.functionalareaId inner join(company) on company.companyId = jb.companyId inner join(cities) on cities.cityId = jb.locationId where jb.jobRoleId = '$jobRoleId'";
+		$sql = "SELECT * FROM jobrole jb inner join functionalareas fn on jb.functionalAreaId = fn.functionalareaId inner join(company) on company.companyId = jb.companyId  where jb.jobRoleId = '$jobRoleId'";
 
 		$result =  $this->db->querySelect($sql);
 
@@ -269,5 +269,21 @@ class Jobrole extends FunctionalArea
 		return $this->db->processRowSet($result);
 	}
 
+		/*============================= add get getRecruiter  ==========================================*/
+
+	public function getRecruiter($employeeId)
+	{
+
+		$sql = " SELECT employeeId,  employeeName  FROM employee where employeeId != '$employeeId' AND isActive = 'Active' ";
+
+		$result =  $this->db->querySelect($sql);
+
+		if ($this->db->checkResultCountZero($result)) {
+
+			return false;
+		} 
+
+		return $this->db->processRowSet($result);
+	}
 
 }

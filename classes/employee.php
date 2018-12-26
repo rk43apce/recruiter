@@ -164,10 +164,10 @@ class Employee extends Assingment {
 	}
 
 
-	public function getRecruiterFromEmployee()
+	public function getRecruiterFromEmployee($spocId)
 	{
 
-		$sql = " SELECT employeeId, employeeName  FROM employee where employeeTypeId = '2' AND isActive = 'Active'";	
+		$sql = " SELECT employeeId, employeeName  FROM employee where employeeId != '$spocId' AND isActive = 'Active'";	
 
 		$result =  $this->db->querySelect($sql);
 
@@ -187,7 +187,7 @@ class Employee extends Assingment {
 	public function getLeaderFromEmployee()
 	{
 
-		$sql = " SELECT employeeId, employeeName  FROM employee where employeeTypeId = '1'";	
+		$sql = " SELECT employeeId, employeeName  FROM employee where isActive = 'Active' ";	
 
 		$result =  $this->db->querySelect($sql);
 

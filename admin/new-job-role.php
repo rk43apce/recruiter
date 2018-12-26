@@ -168,34 +168,13 @@ $currencyCodes = $jobrole->getCurrency();
 							</div>
 						</div>
 
-						<div class="form-group row">
-							<label for="jobRoleId" class="col-sm-3 col-form-label">Location</label>
-							<div class="col-sm-6">
-							 <select class="ui fluid search dropdown"  required="" id="locationId" name="locationId" required="">
-								<option value=""> Choose Location </option>
-								<?php
-
-								foreach ($cities as $key => $city) { ?>
-
-									<option value="<?php echo	$city['cityId']; ?>">
-
-									<?php echo	$city['cityName']; ?>
-
-									</option>
-
-								<?php }
-
-								?>
-							</select>
-							</div>
-						</div>
-
+					
 
 						<div class="form-group row">
 							<label for="jobRoleId" class="col-sm-3 col-form-label">Key Skills (Multiple)</label>
 							<div class="col-sm-6">
-							 <select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]" required="">
-								<option value=""> Choose Employee(multiple) </option>
+							 <select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]" required>
+								<option value=""> Choose Skills(multiple) </option>
 								<?php
 
 								foreach ($skills as $key => $skill) { ?>

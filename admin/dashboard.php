@@ -12,7 +12,6 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
 }
 
 
-
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +38,8 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
                     <h5></h5>    
 
                      <ol class="breadcrumb">                  
-                        <li class="breadcrumb-item">Assignment</li>
-                        <li class="breadcrumb-item"><a href="./new-assingment.php" class="btn-link" >+ Create new assignment</a></li>
+                        <li class="breadcrumb-item">Assignments</li>
+                        <li class="breadcrumb-item"><a href="./new-assingment.php" class="btn-link" >+ Start New Assignment</a></li>
                         <li class="breadcrumb-item text-success">
                             <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
                         </li>                   

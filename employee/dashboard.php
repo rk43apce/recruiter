@@ -47,8 +47,7 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 						<tr>
 							<th>Company Name</th>
 							<th>Role</th>
-							 <th>SPOC</th>  
-							<th>City</th>
+							 <th>SPOC</th> 
 							<th>CTC</th>
 							<th>Experience</th>
 							<th>Open On</th> 
@@ -68,8 +67,7 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 								<?php echo $assingment['jobRoleTitle'];?>
 								</a>
 							</td>	
-							<td><?php echo $assingment['employeeName']; ?></td> 
-							<td><?php echo $assingment['cityName']; ?></td>
+							<td><?php echo $assingment['employeeName']; ?></td> 							
 							<td><?php echo $assingment['minFixedSalary']; ?> - <?php echo $assingment['maxFixedSalary']; ?></td>
 							<td>
 							<?php echo $assingment['minWorkExperience']; ?> - <?php echo $assingment['maxWorkExperience'];?> yrs</td> 

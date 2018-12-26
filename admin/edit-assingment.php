@@ -3,9 +3,7 @@
 Login::isUservalid('admin');  
 
 $assingment =  new Assingment();
-$employee = new Employee();
-$recruiters = $employee->getRecruiterFromEmployee();
-$teamLeaders = $employee->getLeaderFromEmployee();
+
 
 if (Input::exists('get')) {	
 
@@ -18,9 +16,14 @@ if (Input::exists('get')) {
 		$jobRoleTitle =  $assingmentData['jobRoleTitle'];
 		$companyName =  $assingmentData['companyName'];
 		$spocId =  $assingmentData['spocId'];
-		$cityName =  $assingmentData['cityName'];
 		$noOfPosition =  $assingmentData['noOfPosition'];
 		$clientBrief =  $assingmentData['clientBrief'];
+		
+		$employee = new Employee();
+		
+		$recruiters = $employee->getRecruiterFromEmployee($spocId);
+		
+		$teamLeaders = $employee->getLeaderFromEmployee();
 
 		$recruiterData = $assingment->getAssingmentRecruiterByAssingmentId($assingmentId);	
 
@@ -83,7 +86,7 @@ if (Input::exists('get')) {
 							</a>
 						</li>
 						<li class="breadcrumb-item"><?php echo $jobRoleTitle; ?></li>
-						<li class="breadcrumb-item active"><?php echo $cityName; ?></li>
+					
 						<li class="breadcrumb-item"> <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>  </li>
 					</ol>					
 					<div class="line"></div>
@@ -94,7 +97,7 @@ if (Input::exists('get')) {
 								<div class="form-group row">
 									<label for="" class="col-sm-3 col-form-label">Client brief note</label>
 									<div class="col-sm-8">
-										<textarea class="form-control" rows="3" id="clientBrief" name="clientBrief" required="">
+										<textarea class="form-control" rows="3" id="clientBrief" name="clientBrief" required>
 											<?php echo $clientBrief; ?>
 										</textarea>
 									</div>
@@ -130,7 +133,7 @@ if (Input::exists('get')) {
 									<label for="companyId" class="col-sm-3 col-form-label">Recruiters</label>
 
 									<div class="col-sm-8">
-										<select class="ui fluid search dropdown" multiple=""  id="recruiters" name="recruiters[]">
+										<select class="ui fluid search dropdown" multiple=""  id="recruiter" name="recruiters[]">
 
 											<option value=""> Choose Employee(multiple) </option>
 
@@ -178,9 +181,13 @@ if (Input::exists('get')) {
 
 	<script type="text/javascript">
 		function confirmFormSubmit() {
+			
 			return confirm('Are you sure you want to save this thing into the database?');
+			
 		}
 	</script> 
+	
+
 </body>
 
 </html>

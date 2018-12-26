@@ -94,7 +94,7 @@
 										<option  value="">Choose</option>
 										<?php foreach ($cities as $key => $city) { ?>
 
-											<option value="<?php echo	$city['cityId']; ?>">
+											<option  value="<?php echo	$city['cityId']; ?>">
 
 												<?php echo	$city['cityName']; ?>
 
@@ -114,13 +114,13 @@
 							</div>   						
 
 							<div class="form-group row">
-								<label for="companyId" class="col-sm-3 col-form-label">Assign SPOC</label>
+								<label for="spocId" class="col-sm-3 col-form-label">Assign SPOC</label>
 								<div class="col-sm-5">
 									<select class="ui fluid search dropdown"  required="" id="spocId" name="spocId">
 										<option value="" > Choose SPOC </option>
 										<?php foreach ($teamLeaders as $key => $leader) { ?>
 
-											<option value="<?php echo	$leader['employeeId']; ?>">
+											<option data-id="<?php echo $leader['employeeId']; ?>" value="<?php echo	$leader['employeeId']; ?>">
 
 												<?php echo	$leader['employeeName'];?>
 
@@ -128,27 +128,21 @@
 
 										<?php } ?>
 									</select>
+									
 								</div>
 							</div>
 
+					  
 							<div class="form-group row">
-								<label for="companyId" class="col-sm-3 col-form-label">Recruiters (Optional)</label>
+								<label for="recruiter" class="col-sm-3 col-form-label">Recruiters (Optional)</label>
 								<div class="col-sm-8">
-									<select class="ui fluid search dropdown" multiple=""  id="recruiters" name="recruiters[]">
-										<option value=""> Choose Employee(multiple) </option>
-
-										<?php foreach ($recruiters as $key => $recruiter) { ?>
-
-											<option value="<?php echo	$recruiter['employeeId']; ?>">
-
-												<?php echo	$recruiter['employeeName']; ?>
-
-											</option>
-
-										<?php } ?>
+									<select class="ui fluid search dropdown" multiple="" id="recruiter" name="recruiters[]" required>
+										<option value="" selected="">Choose Employee(multiple)</option>
 									</select>
 								</div>
-							</div>     
+							</div> 
+							
+
 
 							<div class="form-group row">						
 								<label for="frontingEntitys" class="col-sm-3 col-form-label">Assign priority</label>
@@ -203,6 +197,19 @@
 
 
 
+	<script>
+		$("#spocId").on("change", function() {
+			var employeeId = $(this).find(':selected').attr("data-id");
+			
+			$("#recruiter").find('option:not(:first)').remove();
+			if(employeeId != '') {
+				$.post("getRecruiter.php", {employeeId: employeeId}).done(function(data) {
+					$("#recruiter").append(data);
+				});      
+			} 
+		});
+	</script>
+	
 	<script>
 		$("#companyId").on("change", function() {
 			var id = $(this).find(':selected').attr("data-id");

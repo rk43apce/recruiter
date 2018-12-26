@@ -23,7 +23,6 @@ Login::isUservalid('admin');
        $functionalareaName =  $jobroleDaTa['functionalareaName'];
        $companyCity =  $jobroleDaTa['companyCity'];
        $companyIndustryTypeId =  $jobroleDaTa['companyIndustryTypeId'];
-       $cityName =  $jobroleDaTa['cityName'];
        $companyName =  $jobroleDaTa['companyName'];   
 
 
@@ -81,6 +80,21 @@ color: inherit;
 
 		<div class="container">
 			<div class="card">
+			
+					 <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="./companies.php" class="btn-link">Companies</a></li>
+                        <li class="breadcrumb-item"><a class="btn-link" href="company-jobroles.php?companyId=<?php echo $companyId;?>"><?php echo $companyName; ?></a></li>
+                        <li class="breadcrumb-item">
+                        	<a class="btn-link" href="company-jobroles.php?companyId=<?php echo $companyId; ?>">Job Role</a>
+                        </li>
+                        <li class="breadcrumb-item active"><?php echo $jobRoleTitle;?></li>
+                        <li class="breadcrumb-item  text-success">
+                            <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?> 
+                        </li>
+                    </ol>
+				
+			</div>
+			<div class="card">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="profile-head">
@@ -91,7 +105,8 @@ color: inherit;
 								<div class="col-md-3">
 
 									<a class="btn-link" href="edit-jobrole.php?jobRoleId=<?php echo $jobRoleId;?>" class="btn-link">
-									<i class="fa fa-edit"></i>
+										Edit Job Role
+										<i class="fa fa-edit"></i>
 									</a>
 									
 								</div>
@@ -106,7 +121,7 @@ color: inherit;
 							
 							<ul class="nav nav-tabs" id="myTab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Job Role Summay</a>
+									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Job Role Summary</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
@@ -135,20 +150,13 @@ color: inherit;
 										<p><?php echo $functionalareaName; ?></p>
 									</div>									
 								</div>
-								<div class="row">
-									<div class="col-md-3">
-										<label>Location</label>
-									</div>
-									<div class="col-md-9">
-										<p><?php echo $cityName; ?></p>
-									</div>									
-								</div>
+								
 								<div class="row">
 									<div class="col-md-3">
 										<label>Work Experience</label>
 									</div>
 									<div class="col-md-9">
-										<p><?php echo $minWorkExperience;?> To <?php echo $maxWorkExperience;?></p>
+										<p><?php echo $minWorkExperience;?> - <?php echo $maxWorkExperience;?></p>
 									</div>									
 								</div>
 								<div class="row">
@@ -156,7 +164,7 @@ color: inherit;
 										<label>Fixed Salary</label>
 									</div>
 									<div class="col-md-9">
-										<p><?php echo $minFixedSalary;?> To <?php echo $maxFixedSalary;?> </p>
+										<p><?php echo $minFixedSalary;?> - <?php echo $maxFixedSalary;?> </p>
 									</div>									
 								</div>
 								

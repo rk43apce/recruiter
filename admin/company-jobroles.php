@@ -49,7 +49,7 @@ if (Input:: get('companyId') ) {
                 <div class="card">  
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="./companies.php" class="btn-link">Companies</a></li>
-                        <li class="breadcrumb-item"><a href="company-jobroles.php?companyId=7"><?php echo $companyName; ?></a></li>
+                        <li class="breadcrumb-item"><a class="btn-link" href="company-jobroles.php?companyId=<?php echo $companyId;?>"><?php echo $companyName; ?></a></li>
                         <li class="breadcrumb-item active">Job Roles</li>
                         <li class="breadcrumb-item  text-success">
                             <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?> 

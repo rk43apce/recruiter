@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
 <file name="add-assingment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131898757555782351" remote="131898757560000000" Dst="0" />
-<file name="add-JobRole.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900658080000000" remote="131900658080000000" Dst="0" />
+<file name="add-JobRole.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901136049556497" remote="131901136110000000" Dst="0" />
 <file name="ajax-requets.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131882982471642389" remote="131888936590000000" Dst="0" />
 <file name="companies.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900491190000000" remote="131900491190000000" Dst="0" />
-<file name="company-jobroles.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131888963539228492" remote="131888963610000000" Dst="0" />
-<file name="dashboard.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131889854272138125" remote="131889854300000000" Dst="0" />
-<file name="edit-assingment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131885485090101433" remote="131888936600000000" Dst="0" />
+<file name="company-jobroles.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901217514373412" remote="131901217510000000" Dst="0" />
+<file name="dashboard.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900613020000000" remote="131900613020000000" Dst="0" />
+<file name="edit-assingment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901307858764340" remote="131901307860000000" Dst="0" />
 <file name="edit-jobrole.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131884845167521310" remote="131888936610000000" Dst="0" />
-<file name="employee-profile.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131882954891659274" remote="131888936610000000" Dst="0" />
+<file name="employee-profile.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901235385978351" remote="131901235390000000" Dst="0" />
 <file name="employees.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131884920579320084" remote="131888936610000000" Dst="0" />
 <file name="formValidation.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131879450145021739" remote="131888936620000000" Dst="0" />
 <file name="getJobRoles.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131878682283259414" remote="131888936620000000" Dst="0" />
 <file name="index.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900477000000000" remote="131900477000000000" Dst="0" />
-<file name="new-assingment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900618500000000" remote="131900618500000000" Dst="0" />
+<file name="new-assingment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901259146372738" remote="131901259140000000" Dst="0" />
 <file name="new-assingment2.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131878708591248898" remote="131888936630000000" Dst="0" />
 <file name="new-assingment3.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131878777612992944" remote="131888936630000000" Dst="0" />
 <file name="new-compnay.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131884922848447213" remote="131888936640000000" Dst="0" />
 <file name="new-employee.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131884921071024298" remote="131888936640000000" Dst="0" />
-<file name="new-job-role.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900657590000000" remote="131900657590000000" Dst="0" />
-<file name="ongoing-assignment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131889854755554096" remote="131889854780000000" Dst="0" />
+<file name="new-job-role.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901135332739677" remote="131901135390000000" Dst="0" />
+<file name="ongoing-assignment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901311784565593" remote="131901311780000000" Dst="0" />
 <file name="table.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131871956943703377" remote="131888936660000000" Dst="0" />
 <file name="test.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131879477383607898" remote="131888936660000000" Dst="0" />
 <file name="update-assingment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131884932248631120" remote="131888936660000000" Dst="0" />
 <file name="update-employee-profile.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131888920883484727" remote="131888936660000000" Dst="0" />
 <file name="update-jobrole.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131884750151478723" remote="131888936670000000" Dst="0" />
 <file name="view-assingment-description.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131885487681419392" remote="131888936670000000" Dst="0" />
-<file name="view-jobrole-description.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900659430000000" remote="131900659430000000" Dst="0" />
+<file name="view-jobrole-description.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901227387860726" remote="131901227390000000" Dst="0" />
 <file name="verify-assingment.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131898758810367937" remote="131898758870000000" Dst="0" />
 <file name="add-upload.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900557260000000" remote="131900557260000000" Dst="0" />
 <file name="upload-jd.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900555140000000" remote="131900555140000000" Dst="0" />
-<file name="view-jobrole-description-old.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131900560280000000" remote="131900560280000000" Dst="0" />
+<file name="view-jobrole-description-old.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901138378929968" remote="131901138440000000" Dst="0" />
+<file name="getRecruiter.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131901255472162006" remote="131901255470000000" Dst="0" />
+<file name="export.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131902063310000000" remote="131902063310000000" Dst="0" />
+<file name="word.php" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131902115890000000" remote="131902115890000000" Dst="0" />
 </dwsync>

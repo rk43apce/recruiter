@@ -57,11 +57,10 @@ class Assingment extends Company
 		public function getEmployeeLeaderAssingment($employeeId='')
 	{
 		
-		$sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn 		
+		 $sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName,jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn 		
 		FROM assingment 
 		inner join(company) on company.companyId = assingment.companyId 
-		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 
-		inner join(cities) on cities.cityId = jobrole.locationId 
+		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 	
 		inner join(employee) on employee.employeeId = assingment.spocId
 		where assingment.spocId	= '$employeeId'
 		";	
@@ -84,11 +83,10 @@ class Assingment extends Company
 
 	public function getOnGoingAssingmentById($assingmentId)
 	{
-		$sql = " SELECT  assingment.assingmentId, company.companyName, company.companyId, jobrole.jobRoleTitle,  jobrole.minWorkExperience, jobrole.maxWorkExperience,  assingment.spocId, cities.cityName,  assingment.createdOn, assingment.clientBrief, assingment.noOfPosition, employee.employeeName 
+		$sql = " SELECT  assingment.assingmentId, company.companyName, company.companyId, jobrole.jobRoleTitle,  jobrole.minWorkExperience, jobrole.maxWorkExperience,  assingment.spocId, assingment.createdOn, assingment.clientBrief, assingment.noOfPosition, employee.employeeName 
 		FROM assingment 
 		inner join(company) on company.companyId = assingment.companyId 
-		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 
-		inner join(cities) on cities.cityId = jobrole.locationId 
+		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 	
 		inner join(employee) on employee.employeeId = assingment.spocId 
 		where assingment.assingmentId = '$assingmentId'";
 

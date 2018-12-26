@@ -53,10 +53,7 @@
                   <li class="breadcrumb-item text-success">
                   <?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
                   </li>                   
-                </ol>                        
-        
-                    
-                        
+                </ol>                               
                     <div class="line"></div>
 
                      <?php  
