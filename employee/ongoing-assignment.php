@@ -4,13 +4,16 @@ require_once '../functions/helper.php';
 
 Login::auth('employeeId');
 
+
 $employee = new Employee();
 
-if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('employeeId'))) {
 
-	Session::put("errorMsg", 'Sorry! No ongoing assignment assign to you!');
-	return false;				
+
+if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('employeeId'), Session::get('employeeTypeId'))) {
+
+	Session::put("noAssignment", 'Sorry! No ongoing assignment assign to you!');			
 }
+
 
 ?>
 
@@ -35,20 +38,19 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 			<div class="card">    
 				<ol class="breadcrumb">                  
 					<li class="breadcrumb-item">Assignment </li>  
-					<li class="breadcrumb-item"><a class="btn-link" href="./new-candidate.php">+Add new candidate</a> </li>  
 					<li class="breadcrumb-item text-success">
 					<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
 					</li>                   
 				</ol>
-
+				<a class="btn-link" href="./new-candidate.php">+Add new candidate</a>
 				<div class="line"></div>
 				<table id="assingmentTable" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">
 					<thead>
 						<tr>
 							<th>Company Name</th>
 							<th>Role</th>
-							 <th>SPOC</th>  
-							
+							 <th>SPOC</th> 
+							 <th>City</th>
 							<th>CTC</th>
 							<th>Experience</th>
 							<th>Open On</th> 
@@ -67,9 +69,10 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 								href="./view-assingment-description.php?assingmentId=<?php echo $assingment['assingmentId']; ?>">
 								<?php echo $assingment['jobRoleTitle'];?>
 								</a>
-							</td>	
+							</td>
+								
 							<td><?php echo $assingment['employeeName']; ?></td> 
-							
+							<td><?php echo $assingment['cityName']; ?></td>							
 							<td><?php echo $assingment['minFixedSalary']; ?> - <?php echo $assingment['maxFixedSalary']; ?></td>
 							<td>
 							<?php echo $assingment['minWorkExperience']; ?> - <?php echo $assingment['maxWorkExperience'];?> yrs</td> 
@@ -78,6 +81,9 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 							<td><?php echo date('d-m-Y', strtotime($assingment['createdOn']));?></td> 
 						</tr>
 						<?php }  ?> 
+						<?php } else {?>
+						
+							<tr><td align="center" colspan="8"><?php echo Session::get('noAssignment');?></td></tr>
 						<?php } ?>
 					</tbody>
 				</table> 

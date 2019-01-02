@@ -377,7 +377,72 @@ class Candidate extends Degree {
 
 		return $this->db->processRowSet($result, true);
 	}
+	
+	
+	public function statusCategory()
+	{
+	
+		
+	    $sql = " SELECT *  FROM  statusCategory";	
 
+		$result =  $this->db->querySelect($sql);
+		
+		if(empty($result)) {			
+			return false;			
+		}
+
+		if ($this->db->checkResultCountZero($result)) {			
+		 return false;
+		} 
+		
+		return $this->db->processRowSet($result);
+
+	}
+	
+		/*============================= add work Experiecne  ==========================================*/
+
+	public function addStage($candidateStageData) {
+		
+		$columns = "";
+		$values = "";
+		
+		if(empty($candidateStageData)) {
+			
+			return false;
+		}
+
+		foreach ( $candidateStageData as $column => $value ) {
+			$columns .= ( $columns == "" ) ? "" : ", ";
+			$columns .= $column;
+			$values .= ( $values == "" ) ? "" : ", ";
+			$values .= "'" . $value . "'";
+		}
+
+		 $sql = "INSERT INTO statusTracker ($columns) values ($values)";
+			
+	  	return $this->db->queryInset( $sql );
+
+	}
+	
+	
+	/*============================= candidate stage  ==========================================*/
+		
+	public function getCanidateStatus($assingmentId, $candidateId)
+	{	
+				
+		$sql = " SELECT * FROM `statusTracker` INNER JOIN statusCategory on statusCategory.categoryId = statusTracker.stageId WHERE statusTracker.assingmentId = '$assingmentId' and statusTracker.candidateId = '$candidateId' ORDER by statusTrackerId DESC LIMIT 1  ";
+
+		$result =  $this->db->querySelect($sql);
+
+		if ( !$this->db->isResultCountOne( $result ) ) {
+			return 'Shotlist';
+		}
+
+	   	$result = $this->db->processRowSet($result, true);			
+		
+		return $result['name'] ;
+
+	}
 
 
 

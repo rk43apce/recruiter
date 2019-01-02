@@ -74,7 +74,11 @@ if (!$assingmentData = $assingment->getOnGoingAssingment()) {
 
                                         <tr>
                                             <td><?php echo $assingment['companyName']; ?> </td>
-                                            <td><?php echo $assingment['jobRoleTitle']; ?></td>
+                                            <td>
+                                                <a class="btn-link" href="view-assingment-description.php?jobRoleId=<?php echo $assingment['jobRoleId']; ?>&assingmentId=<?php echo $assingment['assingmentId']; ?>">         
+                                                    <?php echo $assingment['jobRoleTitle']; ?>
+                                                </a>
+                                            </td>
                                             <td><?php echo $assingment['employeeName']; ?></td> 
                                             <td><?php echo $assingment['cityName']; ?></td>
                                             <td><?php echo $assingment['minFixedSalary']; ?> - <?php echo $assingment['maxFixedSalary']; ?> </td>

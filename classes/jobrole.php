@@ -274,7 +274,7 @@ class Jobrole extends FunctionalArea
 	public function getRecruiter($employeeId)
 	{
 
-		$sql = " SELECT employeeId,  employeeName  FROM employee where employeeId != '$employeeId' AND isActive = 'Active' ";
+		$sql = " SELECT employeeId,  employeeName  FROM employee where isActive = 'Active' ";
 
 		$result =  $this->db->querySelect($sql);
 

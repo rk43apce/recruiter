@@ -16,8 +16,8 @@ if (Input:: get('companyId') ) {
 
     	$jobrole = new Jobrole();
 
-    	$jobrolesData =  $jobrole->getJobRoleByCompanyId($companyId);
-
+    	$jobrolesData =  $jobrole->getJobRoleByCompanyId($companyId);			
+		
     } else {
 
     	Session::put("errorMsg", 'Sorry, No record found!');

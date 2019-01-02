@@ -1,13 +1,6 @@
 <?php 
 require_once '../core/init.php';
-require_once '../functions/helper.php';    
-
-if (Session::exists('employeeId')) {
-   
-    Redirect::to('dashboard.php');
-}
-
-
+require_once '../functions/helper.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,7 +19,7 @@ if (Session::exists('employeeId')) {
 
 </head>
 
-<body onload="checkBrowser()">
+<body>
 
     <div class="container">
         <div class="box-login">
@@ -55,9 +48,9 @@ if (Session::exists('employeeId')) {
                             </div>
 
                             <div class="form-group" id="resendBox" style="display: none;">                          
-                              <p style="text-align: center;" >
-                                Don't Recieved Code? <a href="javascript:void(0);" onclick="resendOTP();" class="btn-link" >Resend Now</a>
-                              </p>    
+	                            <p style="text-align: center;" >
+	                            	Don't Recieved Code? <a href="javascript:void(0);" onclick="resendOTP();" class="btn-link" >Resend Now</a>
+	                            </p>    
                             </div>
 
                             <button id="verifyotp" onclick="verifyOTP();"  class="btn btn-primary btn-lg btn-block" disabled="">Verify OTP</button>
@@ -69,21 +62,6 @@ if (Session::exists('employeeId')) {
     </div>
 
     <?php require_once  '../include/footer.php'; ?>
-      
-    <script>
-		function checkBrowser() {
-			
-			if (navigator.userAgent.indexOf("Chrome") !== -1){
-			// YES, the user is suspected to support look-behind regexps 
-			} else { 
-				
-				alert('please user ');
-			
-			}
-			
-		}
-		
-	</script>
 
     <script type="text/javascript">
 
@@ -111,22 +89,22 @@ if (Session::exists('employeeId')) {
     });
 
 
-  $( document ) . ready( function () {
-     $( "#email" ) . change( function () {
-         var email = $( "#email" ) . val();                
-          if (isEmailValid(email)) {
-              sendOtp( email );                   
-          } else {
-              alert('Please enter a valid email addeess!');
-              errorMsg('Please enter a valid email addeess!');  
-               $("#otp").hide();                  
-          }
-     } );
-  } );
+	$( document ) . ready( function () {
+	   $( "#email" ) . change( function () {
+	       var email = $( "#email" ) . val();                
+	        if (isEmailValid(email)) {
+	            sendOtp( email );                   
+	        } else {
+	            alert('Please enter a valid email addeess!');
+	            errorMsg('Please enter a valid email addeess!');  
+	             $("#otp").hide();                  
+	        }
+	   } );
+	} );
 
     function sendOtp( email ) {
 
-        $( "#status" ) . html( 'Checking availabil  ity...' );
+        $( "#status" ) . html( 'Checking availabil	ity...' );
         $ . ajax( {
             type: "POST",
             url: "send-otp.php",
@@ -183,8 +161,8 @@ if (Session::exists('employeeId')) {
 
         if (confirm('Are you sure?')) {
 
-        let otp =  $('#otp').val();
-        let email =  $('#email').val();
+        var otp =  $('#otp').val();
+        var email =  $('#email').val();
 
         $( "#verifyotp" ) . html( 'Please wait...' );
             $ . ajax( {
@@ -194,6 +172,7 @@ if (Session::exists('employeeId')) {
             dataType: 'text',
             success: function ( msg ) {   
 
+                alert(msg);
                 if (msg == 'loginSuccess') {
                     // Sets the new href (URL) for the current window.
                     window.location.href = "./dashboard.php";
@@ -226,8 +205,9 @@ if (Session::exists('employeeId')) {
     }
 
     function resendOTP() {
-      let  email = $('#email').val();
-      sendOtp(email);
+
+		let  email = $('#email').val();
+		sendOtp(email);
     }
 
     </script>

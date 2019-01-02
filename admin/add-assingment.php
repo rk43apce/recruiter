@@ -24,9 +24,8 @@ $noOfPosition =  Input::get('noOfPosition');
 $clientBrief =  Input::get('clientBrief');
 $spocId =  Input::get('spocId');
 $priority =  Input::get('priority');
-$recruiters =  Input::get('recruiters');
+$recruiters =  array_filter(Input::get('recruiters'));
 $createdOn = date("Y/m/d"); 
-
 
 
 

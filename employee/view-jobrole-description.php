@@ -65,23 +65,7 @@ font-weight: 600;
 font-weight: 300;
 color: inherit;
 }
-
-    .mb-0 > a {
-  display: block;
-  position: relative;
-}
-.mb-0 > a:after {
-  content: "\f078"; /* fa-chevron-down */
-  font-family: 'FontAwesome';
-  position: absolute;
-  right: 0;
-}
-.mb-0 > a[aria-expanded="true"]:after {
-  content: "\f077"; /* fa-chevron-up */
-}
-
 </style>    
-
 </head>
 <body>
 <div class="wrapper">
@@ -100,8 +84,9 @@ color: inherit;
 						<div class="profile-head">
 							<div class="row">
 								<div class="col-md-9">
-									<h5><?php echo $jobRoleTitle; ?></h5>
-								</div>								
+								<h5><?php echo $jobRoleTitle; ?></h5>
+								</div>
+								
 							</div>
 							<div class="row">
 								<div class="col-md-12">
@@ -113,16 +98,10 @@ color: inherit;
 							
 							<ul class="nav nav-tabs" id="myTab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Assignment Summary</a>
+									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Job Role Summary</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Job Role Summary</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="recruiter-tab" data-toggle="tab" href="#recruiter" role="tab" aria-controls="recruiter" aria-selected="false">Recruiter Team</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="candidates-tab" data-toggle="tab" href="#candidates" role="tab" aria-controls="candidates" aria-selected="false">Candidates</a>
+									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
 								</li>
 							</ul>
 						</div>
@@ -132,16 +111,6 @@ color: inherit;
 					<div class="col-md-8">
 						<div class="tab-content profile-tab" id="myTabContent">
 							<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-								<div class="row">
-
-									<h1>Assignment description here</h1>
-									
-								</div>															
-								
-							</div>
-
-							<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 								<div class="row">
 									<div class="col-md-3">
 										<label>Role Title</label>
@@ -188,46 +157,47 @@ color: inherit;
 
 										 } ?>
 									</div>
+								</div>	
+
+								
+								
+							</div>
+
+							<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+								<div class="row">
+									<div class="col-md-3">
+										<label>Client brief note</label>
+									</div>
+									<div class="col-md-6">
+										<p><?php echo $clientBriefNote; ?></p>
+									</div>
 								</div>						
 								
 							</div>
-							
-							<div class="tab-pane fade" id="recruiter" role="tabpanel" aria-labelledby="recruiter-tab">
-								<h1>Assignment team member list here</h1>
-							</div>
-
-							<div class="tab-pane fade" id="candidates" role="tabpanel" aria-labelledby="candidates-tab">
-								<h1>Shortlisted  Candidates goes here</h1>
-							</div>
-
 							
 						</div>
 					</div>
 				</div>                   
 			</div>
-
-		<div class="card">
-			<div class="card-header" id="heading-3">
-				<h5 class="mb-0">
-				<a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
-					Job Description
-				</a>
-				</h5>
+			<div class="card">
+					<div class="card-body">
+						<?php						
+						if($jdTrackerId) {
+							?>							
+							<object style="width: 100%; min-height: 886px;" data="../upload/jd/<?php echo $jdTrackerId;?>.pdf"></object>
+							<?php
+						} else {
+							?>
+							
+							<a href="upload-jd.php?jobRoleId=<?php echo $jobRoleId; ?>" class="btn btn-link">Upload resume</a>
+							
+							<?php
+						}						
+						?>
+						
+					</div>
 			</div>
-			<div id="collapse-3" class="collapse" data-parent="#accordion" aria-labelledby="heading-3">
-				<div class="card-body">
-					<?php if($jdTrackerId) { ?>							
-						<object style="width: 100%; min-height: 886px;" data="../upload/jd/<?php echo $jdTrackerId;?>.pdf">	
-						</object>
-						<?php } else { ?>						
-						<h3>Job Role description not found!</h3>
-						>						
-					<?php }	?>
-				</div>
 			</div>
-		</div>
-
-		</div>
 	</div>
 </div>
 <?php require_once  '../include/footer.php'; ?>

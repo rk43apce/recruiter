@@ -28,11 +28,12 @@ $allCandidatesData = Load::allCandidates();
 			<div class="card">    
 				<ol class="breadcrumb">                  
 					<li class="breadcrumb-item">Canidates </li>  
-					<li class="breadcrumb-item "><a href="./new-candidate.php" class="btn-link">+Add new Candidate</a></li> 
+					
 					<li class="breadcrumb-item text-success">
 						<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
 					</li>                   
 				</ol>
+				<a href="./new-candidate.php" class="btn-link">+Add new Candidate</a>
 
 				<div class="line"></div>
 				<table id="Table" class="table table-bordered dt-responsive nowrap"  style="max-width:100%">

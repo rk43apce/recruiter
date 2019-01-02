@@ -14,7 +14,7 @@ if (Input:: get('employeeId') ) {
 
 	foreach ($employeeData as $key => $employee) { ?>
 
-		<option value="<?php echo $employee['employeeId']; ?>" ><?php echo $employee['employeeName']; ?></option>
+		<option value="<?php echo $employee['employeeId']; ?>" <?php echo ($employee['employeeId'] == $employeeId) ? "selected" : ""; ?> ><?php echo $employee['employeeName']; ?></option>
 
 	<?php }  
 

@@ -12,9 +12,17 @@ if (!Token::check2('newJobRole', Input::get('token'))) {
 
 	Redirect::to('./new-job-role.php?companyId='.'$companyId');	 	
 } 
+$jobRoleId =  Input::get('jobRoleId');
 
 $jobRoleTitle =  Input::get('jobRoleTitle');
-$companyId =  Input::get('companyId');		
+$companyId =  Input::get('companyId');	
+
+if(empty($jobRoleId) && empty($jobRoleId) &&empty($jobRoleId)) {
+	
+	Redirect::to('./new-job-role.php?companyId='.'$companyId');	 	
+	
+}
+
 $minWorkExperience =  Input::get('minWorkExperience');
 $maxWorkExperience =  Input::get('maxWorkExperience');
 $expInYearOrMonth =  Input::get('expInYearOrMonth');
@@ -23,10 +31,12 @@ $maxFixedSalary =  Input::get('maxFixedSalary');
 $variableSalary =  Input::get('variableSalary');
 $currencyId =  Input::get('currencyId');
 $functionalAreaId =  Input::get('functionalAreaId');
-$locationId =  Input::get('locationId');
 $clientBriefNote =  Input::get('clientBriefNote');	
 $jobRoleSkills =  Input::get('jobRoleSkills');	
 $createdOn = date("Y/m/d"); 
+
+
+
 
 $jobRoleData = array("jobRoleTitle"=>$jobRoleTitle, "companyId"=>$companyId, "jobRoleId"=>$jobRoleId, "minWorkExperience"=>$minWorkExperience, "maxWorkExperience"=>$maxWorkExperience, "minFixedSalary"=>$minFixedSalary, "maxFixedSalary"=>$maxFixedSalary, "variableSalary"=>$variableSalary, "currencyId"=>$currencyId, "functionalAreaId"=>$functionalAreaId, "clientBriefNote"=>$clientBriefNote);
 

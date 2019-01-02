@@ -28,9 +28,6 @@ if (Input::exists('get')) {
 		
 		$candidate = new Candidate();		
 		$candidateData =  $candidate->getShortlistCandidates($assingmentId);
-
-		$totalShotlistCandidate = count($candidateData );
-
 		$statusCategory =  $candidate->statusCategory();
 
 
@@ -133,37 +130,21 @@ color: inherit;
 					<div class="profile-head">
 						<div class="row">
 							<div class="col-md-9">
-							<h3><?php echo $jobRoleTitle; ?></h3>
-							<span><?php echo $companyName ?></span>
+							<h5><?php echo $jobRoleTitle; ?></h5>
 							</div>
 							<div class="col=md-3">
-									<a class="btn btn-primary" href="./shortlist.php?assingmentId=<?php echo $assingmentId; ?>" class="btn-link"> <i class="fa fa-search" aria-hidden="true"></i> Find Candidates</a>
+									<a href="./shortlist.php?assingmentId=<?php echo $assingmentId; ?>" class="btn-link">+Add candidate to funnel</a>
 							</div>
 							
 						</div>
 						<div class="line"></div>							
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"> Shortlist <span class="badge badge-secondary"><?php echo $totalShotlistCandidate; ?></a>
+								<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Shortlisted Candidates</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="share-tab" data-toggle="tab" href="#share" role="tab" aria-controls="share" aria-selected="false">Share</a>
+								<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Job Role Description</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="phoneScreen-tab" data-toggle="tab" href="#phoneScreen" role="tab" aria-controls="phoneScreen" aria-selected="false">Phone Screen</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="interview-tab" data-toggle="tab" href="#interview" role="tab" aria-controls="interview" aria-selected="false">Interview</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="offer-tab" data-toggle="tab" href="#offer" role="tab" aria-controls="offer" aria-selected="false">Offer</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="hired-tab" data-toggle="tab" href="#hired" role="tab" aria-controls="hired" aria-selected="false">Hired</a>
-							</li>
-
-														
-							
 						</ul>
 					</div>
 				</div>
@@ -224,19 +205,46 @@ color: inherit;
 							</div>
 						
 						</div>
-						<div class="tab-pane fade" id="share" role="tabpanel" aria-labelledby="profile-tab">
+						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-3">
+											<label>Role Title</label>
+										</div>
+										<div class="col-md-9">
+											<p><?php echo $jobRoleTitle; ?></p>
+										</div>									
+									</div>
+									<div class="row">
+										<div class="col-md-3">
+											<label>Functional Area</label>
+										</div>
+										<div class="col-md-9">
+											<p><?php echo $functionalareaName; ?></p>
+										</div>									
+									</div>
+									<div class="row">
+										<div class="col-md-3">
+											<label>Work Experience</label>
+										</div>
+										<div class="col-md-9">
+											<p><?php echo $minWorkExperience;?> - <?php echo $maxWorkExperience;?></p>
+										</div>									
+									</div>
+									<div class="row">
+										<div class="col-md-3">
+											<label>Fixed Salary</label>
+										</div>
+										<div class="col-md-9">
+											<p><?php echo $minFixedSalary;?> - <?php echo $maxFixedSalary;?> </p>
+										</div>									
+									</div>
+								</div>
+							</div>
+						
 
-						<h3>share</h3>	
-						</div>
-						<div class="tab-pane fade" id="phoneScreen" role="tabpanel" aria-labelledby="profile-tab">
-
-						<h3>phoneScreen</h3>	
-						</div>
-						<div class="tab-pane fade" id="interview" role="tabpanel" aria-labelledby="profile-tab">
-
-						<h3>interview</h3>	
-						</div>
-
+					</div>
 				</div>
 			</div>                   
 		</div>
@@ -250,9 +258,6 @@ color: inherit;
 		</h5>
 		<div id="collapse-3" class="collapse" data-parent="#accordion" aria-labelledby="heading-3">
 		<div class="card-body">
-
-
-
 		<?php
 
 		$jobrole = new Jobrole();

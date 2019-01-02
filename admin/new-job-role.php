@@ -35,13 +35,7 @@ $currencyCodes = $jobrole->getCurrency();
 <head>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"/>
 	<?php require_once  '../include/css.php'; ?>   
-	 <script>
-        window.onload = function () {
-            var jobRoleId = new Date().getTime(); // generating student registation by using tim in milliseconds
-
-            document.getElementById( "jobRoleId" ).value = jobRoleId;
-        };
-    </script> 
+	
     	<style>
 		
 		.card label {
@@ -81,7 +75,7 @@ $currencyCodes = $jobrole->getCurrency();
                     <form method="post" action="./add-JobRole.php">
 					  <fieldset>
 					  	<!-- Compulsory field setting unique id for every new jobRole -->
-					  	<input type="hidden" name="jobRoleId" id="jobRoleId" value="">
+					  	<input type="hidden" name="jobRoleId" id="jobRoleId" value="<?php echo time();?>">
 					  	<!--  -->
 
 						<div class="form-group row">

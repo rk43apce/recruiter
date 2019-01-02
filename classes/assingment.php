@@ -32,7 +32,7 @@ class Assingment extends Company
 	public function getOnGoingAssingment($value='')
 	{
 		
-	$sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn 		
+	$sql = " SELECT company.companyName, assingment.jobRoleId , jobrole.jobRoleTitle, employee.employeeName, cities.cityName, jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn 		
 		FROM assingment 
 		inner join(company) on company.companyId = assingment.companyId 
 		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 
@@ -54,19 +54,17 @@ class Assingment extends Company
 
 	}
 	
-		public function getEmployeeLeaderAssingment($employeeId='')
-	{
+		public function getEmployeeLeaderAssingment($employeeId, $employeeTypeId)
+	{	
+		$sql = "SELECT ra.assingmentId, c.companyName, c.companyId, jr.jobRoleId, jr.jobRoleTitle, jr.minWorkExperience, jr.maxWorkExperience, jr.minFixedSalary, jr.maxFixedSalary, asn.spocId, asn.jobCity, cities.cityName, ra.recruiterId, employee.employeeName, asn.createdOn 
+		FROM `recruiterassingment` ra 
+		INNER JOIN assingment asn on asn.assingmentId = ra.assingmentId 
+		INNER JOIN jobrole jr on jr.jobRoleId = asn.jobRoleId 
+		INNER JOIN company c on c.companyId = asn.companyId 
+		INNER JOIN cities on cities.cityId = asn.jobCity 
+		INNER JOIN employee on employee.employeeId = asn.spocId
+		WHERE ra.recruiterId = '$employeeId' AND ra.isAssingmentWithdraw = 'No' ";	
 		
-		 $sql = " SELECT company.companyName, jobrole.jobRoleTitle, employee.employeeName,jobrole.minWorkExperience, jobrole.maxWorkExperience, jobrole.minFixedSalary, jobrole.maxFixedSalary, assingment.assingmentId, assingment.createdOn 		
-		FROM assingment 
-		inner join(company) on company.companyId = assingment.companyId 
-		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 	
-		inner join(employee) on employee.employeeId = assingment.spocId
-		where assingment.spocId	= '$employeeId'
-		";	
-		
-		
-
 		$result =  $this->db->querySelect($sql);
 
 		if (!$this->db->checkResultCountZero($result)) {
@@ -83,11 +81,20 @@ class Assingment extends Company
 
 	public function getOnGoingAssingmentById($assingmentId)
 	{
-		$sql = " SELECT  assingment.assingmentId, company.companyName, company.companyId, jobrole.jobRoleTitle,  jobrole.minWorkExperience, jobrole.maxWorkExperience,  assingment.spocId, assingment.createdOn, assingment.clientBrief, assingment.noOfPosition, employee.employeeName 
+	// echo  $sql = " SELECT  assingment.assingmentId, company.companyName, company.companyId, jobrole.jobRoleId, jobrole.jobRoleTitle,  jobrole.minWorkExperience, jobrole.maxWorkExperience,  assingment.spocId, assingment.createdOn, assingment.clientBrief, assingment.noOfPosition, employee.employeeId, employee.employeeName
+	// 	FROM assingment 
+	// 	inner join(company) on company.companyId = assingment.companyId 
+	// 	inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 	
+	// 	inner join(employee) on employee.employeeId = assingment.spocId 
+	// 	where assingment.assingmentId = '$assingmentId'";
+
+
+		$sql = "SELECT assingment.assingmentId, company.companyName, company.companyId, functionalareas.functionalareaName, jobrole.jobRoleId,  jobrole.minFixedSalary,   jobrole.maxFixedSalary, jobrole.jobRoleTitle, jobrole.minWorkExperience, jobrole.maxWorkExperience, assingment.spocId, assingment.createdOn, assingment.clientBrief, assingment.noOfPosition, employee.employeeId, employee.employeeName 
 		FROM assingment 
 		inner join(company) on company.companyId = assingment.companyId 
-		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 	
+		inner join(jobrole) on jobrole.jobRoleId = assingment.jobRoleId 
 		inner join(employee) on employee.employeeId = assingment.spocId 
+		INNER JOIN functionalareas on functionalareas.functionalareaId = jobrole.functionalAreaId
 		where assingment.assingmentId = '$assingmentId'";
 
 		$result =  $this->db->querySelect($sql);

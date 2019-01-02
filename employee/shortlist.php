@@ -104,7 +104,7 @@ if (Input::exists('get')) {
 							<td><?php echo $canidate['candidateWorkExp']; ?> yrs </td>
 							<td><?php echo $canidate['candidateSalary']; ?> LPA </td>	
 							<td><?php echo $canidate['candidateNoticePeriod']; ?> </td>	
-							<td><a class="btn-link" href="./view-candidate-description.php?candidateId=<?php echo $canidate['candidateId']; ?>">View full Profile</a></td>	
+							<td><a class="btn-link" href="./view-candidate-description.php?candidateId=<?php echo $canidate['candidateId']; ?>&assingmentId=<?php echo $assingmentId; ?>">View full Profile</a></td>	
 							<td>
 							  <form method="post" action="./add-shortlisted-candidate.php">
 							  	<input type="hidden" name="candidateId" value="<?php echo $canidate['candidateId']; ?>">

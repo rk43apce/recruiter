@@ -27,9 +27,9 @@ if ($jobroleDaTa = $jobrole->getJobRoleByJobRoleId(escape(Input::get('jobRoleId'
     $functionalareaName =  $jobroleDaTa['functionalareaName'];
     $companyCity =  $jobroleDaTa['companyCity'];
     $companyIndustryTypeId =  $jobroleDaTa['companyIndustryTypeId'];
-    $cityName =  $jobroleDaTa['cityName'];
+
     $companyName =  $jobroleDaTa['companyName']; 
-    $cityId =  $jobroleDaTa['cityId'];
+  
 
 
     $jobfunctionalAreas = $jobrole->getFunctionalAreas();
@@ -167,34 +167,12 @@ if ($jobroleDaTa = $jobrole->getJobRoleByJobRoleId(escape(Input::get('jobRoleId'
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="jobRoleId" class="col-sm-3 col-form-label">Location</label>
-                            <div class="col-sm-6">
-                             <select class="ui fluid search dropdown"  required="" id="locationId" name="locationId">
-                                <option value=""> Choose Location </option>
-                                <?php foreach ($cities as $key => $city) { ?>
-
-                                    <option value="<?php echo   $city['cityId']; ?>" 
-
-                                            <?php  echo ($cityId == $city['cityId'] ) ? "selected" : "";  ?>
-
-                                        >
-
-                                    <?php echo  $city['cityName']; ?>
-
-                                    </option>
-
-                                <?php }
-
-                                ?>
-                            </select>
-                            </div>
-                        </div>
+                      
 
                         <div class="form-group row">
                             <label for="jobRoleId" class="col-sm-3 col-form-label">Key Skills (Multiple)</label>
                             <div class="col-sm-9">
-                             <select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]" required="">
+                             <select class="ui fluid search dropdown" multiple=""  id="jobRoleSkills" name="jobRoleSkills[]" required>
                                 <option value=""> Choose Employee(multiple) </option>
                                 <?php
 

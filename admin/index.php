@@ -38,7 +38,13 @@ if (Input::exists('post')) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
+
     <style type="text/css">
+    body {
+    background-color: #eff1f2;
+    color: #464e53;
+    font-size: 14px;    line-height: 1.5;
+}
         .box-login {
             max-width: 686px;
             margin-left: auto;

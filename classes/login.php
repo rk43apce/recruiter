@@ -58,7 +58,7 @@ class Login
 
 			Session::put("userId", $resultArray['userId']);
 			Session::put("userType",$resultArray['userType']);
-
+			Session::put("employeeName",$resultArray['name']);
 			return true;
 				
 		}else {
@@ -71,14 +71,16 @@ class Login
 	public function loginEmployee($username, $password)
 	{
 
-		$sql = "SELECT employeeId FROM employee where employeeEmailId = '$username' AND  employeePassword = '$password'";
+		$sql = "SELECT employeeId, employeeName, employeeTypeId FROM employee where employeeEmailId = '$username' AND  employeePassword = '$password'";
 
 		$result =  $this->db->querySelect($sql);
 
 		if($this->db->isResultCountOne($result)) {
 
 			$resultArray = $this->db->processRowSet($result, true);	
-			Session::put("employeeId", $resultArray['employeeId']);			
+			Session::put("employeeId", $resultArray['employeeId']);	
+			Session::put("employeeTypeId", $resultArray['employeeTypeId']);	
+			Session::put("employeeName", $resultArray['employeeName']);	
 					
 			return true;
 				
@@ -89,10 +91,13 @@ class Login
 
 	}
 
-	public function checkEmployeeExits($employeeEmailId)
+	public function checkEmployeeExits($employeeEmailId = null, $employeeId = null )
 	{	
 		
-		$sql = " SELECT employeeId, isActive FROM employee  where employeeEmailId = '$employeeEmailId' ";
+		$sql = " SELECT employeeId, isActive 
+		FROM employee  
+		where 
+		employeeEmailId = '$employeeEmailId' or employeeId = '$employeeId' ";
 
 		
 		if(!$result =  $this->db->querySelect($sql)) {
@@ -117,6 +122,7 @@ class Login
 			exit();
 		   
 		   }
+		return true;
 	}
 
 	public function saveOTP($employeeId, $otp)	
@@ -129,10 +135,10 @@ class Login
 	}
 
 
-	public function sendOTP($otp)	
+	public function sendOTP($username, $otp)	
 	{	
 
-		$to = 'rk43apce@gmail.com'; 
+		$to = $username; 
 		$subject = 'OTP to Login'; 
 		$messageBody = "One Time Password for login authentication is:<br/><br/>" . $otp;
 
@@ -146,27 +152,86 @@ class Login
 
 		//  mail($to,$subject,$messageBody,$headers);
 		 
-		 var_dump(mail($to,$subject,$messageBody,$headers));
+		 return mail($to,$subject,$messageBody,$headers);
 
 	}
+
+	// public function verifyOTP($employeeId, $otp)
+	// {
+	// 	 $sql = "SELECT * FROM otpTracker  
+	// 	WHERE otp='$otp' 
+	// 	AND isExpired!=1 
+	// 	AND NOW() <= DATE_ADD(createAt, INTERVAL 15 MINUTE)";
+		
+	// 	$result = $this->db->querySelect($sql);
+		
+	// 	if(empty($result)) {
+			
+	// 		Session::put('errorMsg', 'Sorry!. Fail to validate your otp. Try again');
+			
+	// 	}
+		
+	// 	return $this->db->isResultCountOne($result);
+		
+	// }
+
 
 	public function verifyOTP($employeeId, $otp)
 	{
-		echo $sql = "SELECT * FROM otpTracker  
-		WHERE otp='$otp' 
+		$sql = "SELECT * FROM otpTracker  
+		WHERE 
+		employeeId = '$employeeId'
+		AND otp='$otp' 
 		AND isExpired!=1 
 		AND NOW() <= DATE_ADD(createAt, INTERVAL 15 MINUTE)";
+		
+		$result = $this->db->querySelect($sql);
+		
+		if(empty($result)) {
+			
+			return false;
+			
+		}
+		
+		return $this->db->isResultCountOne($result);
+		
 	}
 
-	public function destroyOTP($employeeId, $otp)
+
+		public function getEmployee($employeeId)
 	{
-		echo $sql = " UPDATE otpTracker set isExpired = '1' where employeeId = '$employeeId' AND  otp = '$otp' ";
 
-		// $this->db->queryUpdate($sql);
+		$sql = "SELECT employeeId, employeeName, employeeTypeId 
+		FROM employee
+		where 
+		employeeId = '$employeeId' ";
 
-		var_dump($this->db->queryUpdate($sql));
+		$result =  $this->db->querySelect($sql);
+
+		if($this->db->isResultCountOne($result)) {
+
+			$resultArray = $this->db->processRowSet($result, true);	
+			Session::put("employeeId", $resultArray['employeeId']);	
+			Session::put("employeeTypeId", $resultArray['employeeTypeId']);	
+			Session::put("employeeName", $resultArray['employeeName']);	
+					
+			return true;
+				
+		}else {
+			return false;
+		}
+
+
 	}
 
 
+	public function destroyOTP($employeeId)
+	{
+		 $sql = " UPDATE otpTracker set isExpired = '1' where employeeId = '$employeeId'";
+
+		 return $this->db->queryUpdate($sql);
+		
+		
+	}
 
 }

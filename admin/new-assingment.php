@@ -5,8 +5,8 @@
 	$assingment = new Assingment();
 	$companies = $assingment->getAllCompany();
 	$cities = $assingment->getCities();
+
 	$employee = new Employee();
-	$recruiters = $employee->getRecruiterFromEmployee();
 	$teamLeaders = $employee->getLeaderFromEmployee();
     	
 ?>
@@ -14,13 +14,7 @@
 <html>
 <head>
 <?php require_once  '../include/css.php'; ?>   
-<script>
 
-	window.onload = function () {
-	var assingmentId = new Date().getTime(); // generating student registation by using tim in milliseconds
-	document.getElementById( "assingmentId" ).value = assingmentId;
-};
-</script> 
 <style type="text/css">
 	.card label {
 			text-align: right;
@@ -55,7 +49,7 @@
 					<form method="post" id="form1" action="./add-assingment.php">
 						<fieldset>
 							<!-- Compusory field -->
-							<input type="hidden" name="assingmentId" id="assingmentId" value="">	
+							<input type="hidden" name="assingmentId" id="assingmentId" value="<?php echo time(); ?>">	
 							 <!--  -->
 
 							<div class="form-group row">

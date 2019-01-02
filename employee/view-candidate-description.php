@@ -17,6 +17,8 @@ if (empty(Input::get('candidateId')) ) {
 
 $candidate = new Candidate;
 
+$assingmentData = null;
+
 if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId')))) {
 		
 	$candidateId = $candidateData['candidateId'];		
@@ -41,6 +43,29 @@ if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId
 	$resumeData = $candidate->getResume($candidateId);
 	
 	$resumeId = $resumeData['resumeId'];
+	
+	
+	/*
+	  Get assignment details
+	*/
+
+	if (!empty(Input::get('assingmentId'))) {	
+
+		$assingment =  new Assingment();
+		
+		$assingmentId = Input::get('assingmentId');
+		
+		if ($assingmentData = $assingment->getOnGoingAssingmentById($assingmentId)) {
+
+			$companyId =  $assingmentData['companyId'];
+			$assingmentId =  $assingmentData['assingmentId'];
+			$jobRoleTitle =  $assingmentData['jobRoleTitle'];
+			$companyName =  $assingmentData['companyName'];
+			
+
+		} 
+	}    
+	
 	
 
 } else {
@@ -91,12 +116,54 @@ color: inherit;
 		<?php Data::checkData($candidateData); ?>
 		<div class="container">
 			<div class="card">
+				
+				<?php if($assingmentData) { ?>
+
+
+				<ol class="breadcrumb">          
+					<li class="breadcrumb-item"><a class="btn-link" href="./dashboard.php">Assignment</a> </li> 
+					<li class="breadcrumb-item">
+					<?php echo $companyName ?>
+					</li> 
+					<li class="breadcrumb-item">
+					<a class="btn-link" href="./view-assingment-description.php?assingmentId=<?php echo $assingmentId; ?>"><?php echo $jobRoleTitle ?></a>
+					
+					</li>      
+				</ol>	
+
+
+				<?php	} else {
+
+				?>
+
+				<ol class="breadcrumb">                  
+				
+				<li class="breadcrumb-item "><a href="./candidates.php" class="btn-link">Canidates</a></li> 
+				<li class="breadcrumb-item text-success">
+				<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
+				</li>                   
+				</ol>
+
+				<?php
+				}
+
+
+
+				?>
+				
+			</div>
+			<div class="card">
+				
 				<div class="row">
 					<div class="col-md-12">
 						<div class="profile-head">
 							<div class="row">
 								<div class="col-md-9">
-								<h5><?php echo $candidateFullName; ?></h5>
+								<h5><a class="btn-link" href="edit-candidate.php?candidateId=<?php echo $candidateId;?>">
+										<?php echo $candidateFullName; ?>
+									</a></h5>
+								
+								
 								</div>
 								<div class="col-md-3">
 									<a class="btn-link" href="edit-candidate.php?candidateId=<?php echo $candidateId;?>">
@@ -119,12 +186,23 @@ color: inherit;
 								<li class="nav-item">
 									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
 								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" id="interview-tab" data-toggle="tab" href="#interview" role="tab" aria-controls="interview" aria-selected="false"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp; Shedule an Interview </a>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">
+										<i class="fa fa-comments" aria-hidden="true"></i> &nbsp; Comments 
+									</a>
+								</li>
+								
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-md-12">
 						<div class="tab-content profile-tab" id="myTabContent">
 							<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 								<div class="row">
@@ -159,7 +237,24 @@ color: inherit;
 										<p><?php echo $candidateDesignation; ?></p> 
 									</div>
 								</div>
-							</div>
+								<br>
+								<br>
+								<?php						
+						if($resumeId) {
+							?>							
+							<object style="width: 100%; min-height: 886px;" data="../upload/<?php echo $resumeId;?>.pdf"></object>
+							<?php
+						} else {
+							?>
+							
+							<a href="upload-resume.php?candidateId=<?php echo $candidateId; ?>" class="btn btn-link">Upload resume</a>
+							
+							<?php
+						}						
+						?>
+
+								</div>
+
 							<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 								<div class="row">
 									<div class="col-md-12">
@@ -233,31 +328,145 @@ color: inherit;
 								</div>	
 								<?php } ?>
 							</div>
+							<div class="tab-pane fade" id="interview" role="tabpanel" aria-labelledby="interview-tab">
+								<div class="row">
+									<!-- Button trigger modal -->
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sheduleInterviewModal">
+									Schedule an Interview
+									</button>
+	
+								</div>		
+							</div>
+
+							<div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+								<div class="form-group">
+								<label><i class="fa fa-comments" aria-hidden="true"></i> &nbsp; Comments  Add a comment</label>
+								<textarea rows="3" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary">Submit Comment</button>
+								</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>                   
 			</div>
-			<div class="card">
-					<div class="card-body">
-						<?php						
-						if($resumeId) {
-							?>							
-							<object style="width: 100%; min-height: 886px;" data="../upload/<?php echo $resumeId;?>.pdf"></object>
-							<?php
-						} else {
-							?>
-							
-							<a href="upload-resume.php?candidateId=<?php echo $candidateId; ?>" class="btn btn-link">Upload resume</a>
-							
-							<?php
-						}						
-						?>
-						
-					</div>
-				</div>
+			
 			</div>
 	</div>
 </div>
 <?php require_once  '../include/footer.php'; ?>
+
+
+<!-- Modal -->
+<div class="modal fade" id="sheduleInterviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Schedule an Interview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-group row">
+			<label for="" class="col-sm-3 col-form-label">Type</label>	
+			<div class="col-sm-9">
+				<select class="form-control">
+					<option>Call</option>
+					<option>On site interview</option>
+					<option>Meeting</option>
+					<option>Internal meeting</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="" class="col-sm-3 col-form-label">Date</label>
+			<div class="col-sm-9">	
+				<input type="date" class="form-control" placeholder="Date" name="Date" required="">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="" class="col-sm-3 col-form-label">Schedule</label>
+			<div class="col-sm-4">
+				<select class="form-control">
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>												
+				</select>
+			</div>
+			to
+			<div class="col-sm-4">
+				<select class="form-control">
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>
+					<option>
+						12:00 AM
+					</option>												
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="" class="col-sm-3 col-form-label">Location</label>
+			<div class="col-sm-9">	
+				<input type="text" class="form-control" placeholder="Location" name="Date" required="">
+			</div>											
+		</div>
+		<div class="form-group row">
+			<label for="" class="col-sm-3 col-form-label">Event title</label>
+			<div class="col-sm-9">	
+				<input type="text" class="form-control" placeholder="Event title" name="Date" required="">
+			</div>											
+		</div>
+		<div class="form-group row">
+			<label for="" class="col-sm-3 col-form-label">Description</label>
+			<div class="col-sm-9">	
+				<textarea rows="3" class="form-control"></textarea>
+			</div>											
+		</div>
+		<div class="form-group row">
+			<label for="" class="col-sm-3 col-form-label"></label>
+			<div class="col-sm-9">										
+				<button class="btn btn-primary"> Shedule Interview </button>
+			</div>											
+		</div>
+			</div>
+		</div>	
+      </div>
+      
+    </div>
+  </div>
+</div>
 </body>
 </html>

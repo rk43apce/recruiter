@@ -167,7 +167,7 @@ class Employee extends Assingment {
 	public function getRecruiterFromEmployee($spocId)
 	{
 
-		$sql = " SELECT employeeId, employeeName  FROM employee where employeeId != '$spocId' AND isActive = 'Active'";	
+		$sql = " SELECT employeeId, employeeName  FROM employee where isActive = 'Active'";	
 
 		$result =  $this->db->querySelect($sql);
 

@@ -23,11 +23,11 @@ $minFixedSalary =  escape(Input::get('minFixedSalary'));
 $maxFixedSalary =  escape(Input::get('maxFixedSalary'));
 $variableSalary =  escape(Input::get('variableSalary'));
 $functionalAreaId =  escape(Input::get('functionalAreaId'));
-$locationId =  escape(Input::get('locationId'));
+
 $clientBriefNote =  escape(Input::get('clientBriefNote'));  
 $jobRoleSkills =  Input::get('jobRoleSkills');  // array of jobrole skills
 
-$jobRoleDataToUpdate = array("jobRoleTitle"=>$jobRoleTitle, "minWorkExperience"=>$minWorkExperience, "maxWorkExperience"=>$maxWorkExperience, "minFixedSalary"=>$minFixedSalary, "maxFixedSalary"=>$maxFixedSalary, "variableSalary"=>$variableSalary, "functionalAreaId"=>$functionalAreaId, "locationId"=>$locationId, "clientBriefNote"=>$clientBriefNote);
+$jobRoleDataToUpdate = array("jobRoleTitle"=>$jobRoleTitle, "minWorkExperience"=>$minWorkExperience, "maxWorkExperience"=>$maxWorkExperience, "minFixedSalary"=>$minFixedSalary, "maxFixedSalary"=>$maxFixedSalary, "variableSalary"=>$variableSalary, "functionalAreaId"=>$functionalAreaId, "clientBriefNote"=>$clientBriefNote);
 
 $jobrole = new Jobrole();
 

@@ -50,7 +50,6 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 							<th>Company Name</th>
 							<th>Role</th>
 							 <th>SPOC</th> 
-							 <th>City</th>
 							<th>CTC</th>
 							<th>Experience</th>
 							<th>Open On</th> 
@@ -69,10 +68,8 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 								href="./view-assingment-description.php?assingmentId=<?php echo $assingment['assingmentId']; ?>">
 								<?php echo $assingment['jobRoleTitle'];?>
 								</a>
-							</td>
-								
-							<td><?php echo $assingment['employeeName']; ?></td> 
-							<td><?php echo $assingment['cityName']; ?></td>							
+							</td>	
+							<td><?php echo $assingment['employeeName']; ?></td> 							
 							<td><?php echo $assingment['minFixedSalary']; ?> - <?php echo $assingment['maxFixedSalary']; ?></td>
 							<td>
 							<?php echo $assingment['minWorkExperience']; ?> - <?php echo $assingment['maxWorkExperience'];?> yrs</td> 
@@ -88,34 +85,8 @@ if (!$assingmentData = $employee->getEmployeeLeaderAssingment(Session::get('empl
 					</tbody>
 				</table> 
 			</div>
-	
 		</div>
 	</div>
-</div>
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="profilePictureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Photo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <?php require_once  '../include/footer.php'; ?>
