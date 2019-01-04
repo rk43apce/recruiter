@@ -2,7 +2,7 @@
 require_once '../core/init.php';
 require_once '../functions/sanitize.php';
 
-Login::auth('employeeId');
+Login::isUservalid('admin');  
 
 if(isset($_POST["image"]))
 {

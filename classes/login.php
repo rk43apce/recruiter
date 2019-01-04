@@ -59,6 +59,7 @@ class Login
 			Session::put("userId", $resultArray['userId']);
 			Session::put("userType",$resultArray['userType']);
 			Session::put("employeeName",$resultArray['name']);
+			
 			return true;
 				
 		}else {
@@ -201,7 +202,7 @@ class Login
 		public function getEmployee($employeeId)
 	{
 
-		$sql = "SELECT employeeId, employeeName, employeeTypeId 
+		$sql = "SELECT employeeId, employeeName, employeeTypeId, picture 
 		FROM employee
 		where 
 		employeeId = '$employeeId' ";
@@ -213,7 +214,8 @@ class Login
 			$resultArray = $this->db->processRowSet($result, true);	
 			Session::put("employeeId", $resultArray['employeeId']);	
 			Session::put("employeeTypeId", $resultArray['employeeTypeId']);	
-			Session::put("employeeName", $resultArray['employeeName']);	
+			Session::put("employeeName", $resultArray['employeeName']);
+			Session::put("pictureName", $resultArray['picture']);
 					
 			return true;
 				

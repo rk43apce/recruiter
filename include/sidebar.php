@@ -5,7 +5,12 @@
 
             <ul class="list-unstyled components">
             <center>
-            <img id="profilePicture" style="cursor: pointer; " data-toggle="modal" data-target="#profilePictureModal"  class="rounded-circle" src="https://media.licdn.com/dms/image/C4E03AQEMEL2XAquuvQ/profile-displayphoto-shrink_200_200/0?e=1551916800&amp;v=beta&amp;t=biDfo3MsU_lZAPuJ_K0DrpTuJhgb3pdxUjxKYARGMk8"  alt="Edit photo" height="128" width="128">
+            <a href="./profile.php">
+            	 <img id="profilePicture" style="cursor: pointer; " class="rounded-circle" src="../upload/pic/<?php echo (Session::exists('pictureName')) ? Session::get('pictureName') : "profilepic.png"; ?>"  alt="Edit photo" height="128" width="128">
+            </a>
+           
+            
+            
             </center>
                 <p style="text-align:center;"><?php echo Session::get('employeeName'); ?> </p>
 <!--

@@ -33,9 +33,11 @@ if (Session::exists('employeeId')) {
             <div  class="card">       
             <div class="card-body">     
                     <!-- <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> -->
+<!--
                     <form action="" method="post">
                         <fieldset>
-                            <legend align="center">Welcome!</legend>
+-->
+                            <legend  style="text-align: center;">Welcome!</legend>
                             <p align="center">Sign in by entering the information below</p>  
                             <p class="text-danger">
                             <?php echo (Session::exists('errorMsg'))? Session::flash('errorMsg') : "" ;?>
@@ -61,8 +63,10 @@ if (Session::exists('employeeId')) {
                             </div>
 
                             <button id="verifyotp" onclick="verifyOTP();"  class="btn btn-primary btn-lg btn-block" disabled="">Verify OTP</button>
+<!--
                         </fieldset>
                     </form> 
+-->
                 </div>          
             </div>
         </div>
@@ -77,7 +81,7 @@ if (Session::exists('employeeId')) {
 			// YES, the user is suspected to support look-behind regexps 
 			} else { 
 				
-				alert('please user ');
+				alert('Please use Google Chrome for better support!');
 			
 			}
 			
@@ -179,9 +183,7 @@ if (Session::exists('employeeId')) {
 
     function verifyOTP(argument) {
         // body...
-        event.preventDefault();
-
-        if (confirm('Are you sure?')) {
+//        event.preventDefault();
 
         let otp =  $('#otp').val();
         let email =  $('#email').val();
@@ -205,10 +207,7 @@ if (Session::exists('employeeId')) {
             }
         } );
 
-       } else {
-
-            return false;
-       }     
+         
     }
 
     function refresh(argument) {

@@ -50,7 +50,13 @@ class Database
 
 	}
 
+	
+	public function  queryDelet($sql) 
+	{
 
+	 return	$result =$this->db->mysqli->query($sql);
+
+	}
 
 	public function  checkResultCountZero($result)
 	{

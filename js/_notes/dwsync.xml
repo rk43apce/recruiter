@@ -3,4 +3,6 @@
 <file name="script.js" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131895981063307129" remote="131895981060000000" Dst="0" />
 <file name="fileUpload.js" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131897775704881731" remote="131897775740000000" Dst="0" />
 <file name="croppie.js" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131908831502038773" remote="131908831660000000" Dst="0" />
+<file name="interview.js" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131910749008889711" remote="131910749040000000" Dst="0" />
+<file name="comment.js" server="35.200.193.88//var/www/html/blumonkey/rms/" local="131910627793891582" remote="131910627830000000" Dst="0" />
 </dwsync>

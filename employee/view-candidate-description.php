@@ -2,7 +2,7 @@
 require_once '../core/init.php';
 require_once '../functions/helper.php';
 require_once '../functions/sanitize.php';
-
+Login::auth('employeeId');
 if (!Input::exists('get')) {
 
 	Redirect::to('dashboard.php');
@@ -77,7 +77,14 @@ if ($candidateData = $candidate->getCandidatebyId(escape(Input::get('candidateId
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Material Design Lite -->
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css">
+
+  <!-- Material Design icon font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <?php require_once  '../include/css.php'; ?>
+
 <style type="text/css">
 
 .profile-head .nav-tabs{
@@ -103,6 +110,18 @@ font-weight: 600;
 font-weight: 300;
 color: inherit;
 }
+.actionButton {
+	
+	display: none;
+
+}	
+.interviewDescription{
+	cursor: pointer
+}	
+.interviewDescription:hover .actionButton {
+	
+   display:inline-block;
+}	
 </style>    
 </head>
 <body>
@@ -132,24 +151,16 @@ color: inherit;
 				</ol>	
 
 
-				<?php	} else {
+				<?php	} else { ?>
 
-				?>
-
-				<ol class="breadcrumb">                  
-				
-				<li class="breadcrumb-item "><a href="./candidates.php" class="btn-link">Canidates</a></li> 
-				<li class="breadcrumb-item text-success">
-				<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
-				</li>                   
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item "><a href="./candidates.php" class="btn-link">Canidates</a></li> 
+					<li class="breadcrumb-item text-success">
+					<?php echo  (Session::exists('errorMsg')) ? Session::flash('errorMsg') : ""; ?>
+					</li>                   
 				</ol>
 
-				<?php
-				}
-
-
-
-				?>
+				<?php } ?>
 				
 			</div>
 			<div class="card">
@@ -166,9 +177,12 @@ color: inherit;
 								
 								</div>
 								<div class="col-md-3">
+								
+							
 									<a class="btn-link" href="edit-candidate.php?candidateId=<?php echo $candidateId;?>">
-										Edit profile
+									Edit profile
 									</a>
+								
 								</div>
 							</div>
 							<div class="row">
@@ -188,11 +202,12 @@ color: inherit;
 								</li>
 
 								<li class="nav-item">
-									<a class="nav-link" id="interview-tab" data-toggle="tab" href="#interview" role="tab" aria-controls="interview" aria-selected="false"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp; Shedule an Interview </a>
+									<a class="nav-link" id="interview-tab" data-toggle="tab" href="#interview" role="tab" aria-controls="interview" aria-selected="false" onClick="loadInterview();"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp; Shedule an Interview </a> 
+											
 								</li>
 
 								<li class="nav-item">
-									<a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">
+									<a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false" onClick="loadComments();">
 										<i class="fa fa-comments" aria-hidden="true"></i> &nbsp; Comments 
 									</a>
 								</li>
@@ -331,23 +346,39 @@ color: inherit;
 							<div class="tab-pane fade" id="interview" role="tabpanel" aria-labelledby="interview-tab">
 								<div class="row">
 									<!-- Button trigger modal -->
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sheduleInterviewModal">
-									Schedule an Interview
+									<div class="col-md-12">
+									<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#sheduleInterviewModal" > <i class="fa fa-plus" aria-hidden="true"></i> &nbsp;
+									Interview
 									</button>
-	
+									</div>	
 								</div>		
+								<div class="line"></div>
+								<div class="box-scheduled-interview">
+									<div id="scheduleInterviews" class="">
+										
+									</div>	
+								</div>
 							</div>
 
 							<div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-								<div class="form-group">
-								<label><i class="fa fa-comments" aria-hidden="true"></i> &nbsp; Comments  Add a comment</label>
-								<textarea rows="3" class="form-control"></textarea>
+								
+								<div class="box-add-comment">								
+									<div class="form-group">
+									<label><i class="fa fa-comments" aria-hidden="true"></i> &nbsp; Add a comment</label>
+									<textarea  id="comment" rows="3" class="form-control" placeholder="Write hee..." autofocus >
+										
+									</textarea>									
+									</div>
+									<div class="form-group">
+									<input type="hidden" id="candidateId"  value="<?php echo $candidateId; ?>" >
+									<button onClick="return addComment();" id="test" class="btn btn-primary">Submit Comment</button>
+									</div>	
 								</div>
-								<div class="form-group">
-									<button class="btn btn-primary">Submit Comment</button>
-								</div>
-							</div>
-							
+								<div class="line"></div>
+								<div class="box-view-comments">
+									<div id="commentData"></div>
+								</div>	
+							</div>							
 						</div>
 					</div>
 				</div>                   
@@ -358,115 +389,10 @@ color: inherit;
 </div>
 <?php require_once  '../include/footer.php'; ?>
 
+<?php require_once  './interviewModal.php'; ?>
 
-<!-- Modal -->
-<div class="modal fade" id="sheduleInterviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Schedule an Interview</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<div class="card">
-			<div class="card-body">
-				<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label">Type</label>	
-			<div class="col-sm-9">
-				<select class="form-control">
-					<option>Call</option>
-					<option>On site interview</option>
-					<option>Meeting</option>
-					<option>Internal meeting</option>
-				</select>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label">Date</label>
-			<div class="col-sm-9">	
-				<input type="date" class="form-control" placeholder="Date" name="Date" required="">
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label">Schedule</label>
-			<div class="col-sm-4">
-				<select class="form-control">
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>												
-				</select>
-			</div>
-			to
-			<div class="col-sm-4">
-				<select class="form-control">
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>
-					<option>
-						12:00 AM
-					</option>												
-				</select>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label">Location</label>
-			<div class="col-sm-9">	
-				<input type="text" class="form-control" placeholder="Location" name="Date" required="">
-			</div>											
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label">Event title</label>
-			<div class="col-sm-9">	
-				<input type="text" class="form-control" placeholder="Event title" name="Date" required="">
-			</div>											
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label">Description</label>
-			<div class="col-sm-9">	
-				<textarea rows="3" class="form-control"></textarea>
-			</div>											
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label"></label>
-			<div class="col-sm-9">										
-				<button class="btn btn-primary"> Shedule Interview </button>
-			</div>											
-		</div>
-			</div>
-		</div>	
-      </div>
-      
-    </div>
-  </div>
-</div>
+<script src="../js/comment.js"></script>
+<script src="../js/interview.js"></script>
+
 </body>
 </html>

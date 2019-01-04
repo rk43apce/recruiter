@@ -67,6 +67,20 @@ class Employee extends Assingment {
 		return true;			
 
 	}
+	
+	public function picture ($picture, $employeeId) 
+	{
+		
+		$sql = "UPDATE employee SET picture = '$picture' where employeeId = '$employeeId'";	
+		
+		if (!$this->db->queryUpdate($sql)) {
+					
+				return false;
+			}	
+
+			return true;
+		
+	}
 
 
 
@@ -115,7 +129,7 @@ class Employee extends Assingment {
 
 	}
 
-
+	
 
 
 	public function getEmployeeById($employeeId)

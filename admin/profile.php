@@ -2,27 +2,9 @@
 require_once '../core/init.php';
 require_once '../functions/sanitize.php';
 
-Login::auth('employeeId');
+Login::isUservalid('admin');  
 
-if (Session::exists('employeeId') ) {
-	# code...
-	$employee = new Employee();  
-	
-    if ($employeeDaTa = $employee->getEmployeeById(Session::get('employeeId'))) {
-    	$employeeName =  $employeeDaTa['employeeName']; 
-    	$employeeId =  $employeeDaTa['employeeId'];
-        $employeeMobileNumber =  $employeeDaTa['employeeMobileNumber'];
-        $employeeEmailId =  $employeeDaTa['employeeEmailId'];
-        $employeeTypeId =  $employeeDaTa['employeeTypeId'];
-        $employeeRoleName =  $employeeDaTa['employeeRoleName'];
-        $isActive =  $employeeDaTa['isActive'];
-        $createdAt =  $employeeDaTa['createdAt'];
-    } else {
-    	Session::put("errorMsg", 'Sorry, No record found!');
-    }
 
-}  
-    
 ?>
 
 <!DOCTYPE html>
@@ -45,11 +27,14 @@ if (Session::exists('employeeId') ) {
 					<div class="card-body">	
 						<div class="form-group">
 							<div class="row col-md-12">
+							<h3>Page under construction!</h3>
+<!--
 							<div class="input-group mb-3">
-								<div class="custom-file">
+								<div class="custom-file">								
 									<input class="form-control" type="file" name="upload_image" id="upload_image" />	
 								</div>								
 							</div>
+-->
 							
 							</div>
 						</div>	
